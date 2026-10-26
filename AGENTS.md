@@ -1,6 +1,6 @@
 # Working agreement
 
-This repository currently contains a requirements draft, not an implemented app.
+This repository contains a requirements draft and an Issue #1 technical core. The final product UI remains undecided.
 
 - Read README.md and docs/plan.md before changing product code.
 - Treat user-confirmed requirements, proposed decisions, and measured results as different states. Never label a proposal approved or a test passed without evidence.
@@ -14,3 +14,5 @@ This repository currently contains a requirements draft, not an implemented app.
 - Do not infer performance from the absence of JavaScript. Measure the selected scene on a stated device.
 - Do not add deployment, public access, telemetry, external fonts, or third-party scripts as a routine setup step in this requirements phase.
 - Do not invent approval gates for routine reversible work. Do keep open product decisions visible and do not silently promote assumptions into requirements.
+- Create or select an Issue before implementation. Use an Issue-specific branch and a reviewable pull request; do not put feature work directly on main.
+- Write Issue titles/bodies and PR titles/descriptions in Japanese. Reference the relevant Issue and report observed checks and unverified limits accurately.

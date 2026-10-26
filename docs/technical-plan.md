@@ -20,7 +20,7 @@ random、border-shape、corner-shape、Grid Lanes、interestforは今回の主�
 
 ## 2. スパイク
 
-すべて、最終UIと分けた最小ページで確認する。まだ作成・実行していない。
+すべて、最終UIと分けた最小ページで確認する。Issue #1ではS-01/02/04をChromeで照合し、S-05は通常操作とCSS分岐fixtureを確認した。S-03の実機タッチとS-06の性能比較は未実施。[検証記録](validation/issue-1.md)に環境と限界を記載する。
 
 | ID | 検証する仮説 | 合格条件 | 失敗した場合 |
 | --- | --- | --- | --- |

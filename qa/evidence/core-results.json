@@ -1,0 +1,626 @@
+{
+  "date": "2026-10-26",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "hardware": "cloud browser; physical CPU, DPR and power state not recorded",
+    "touch": "not tested",
+    "reducedMotion": "CSS-branch fixture, not OS emulation"
+  },
+  "toleranceCSSPixels": 0.1,
+  "baseline": {
+    "amplitude": 0.8,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 0",
+      "phase 90",
+      "amplitude 80"
+    ],
+    "k": 3,
+    "maxErrorCSSPixels": 0.007831615015485877,
+    "mode": "lissajous",
+    "phaseDegrees": 90,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 820,
+        "max": 2870
+      },
+      {
+        "left": 410,
+        "max": 1640
+      },
+      {
+        "left": 4510,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.0567225,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "keyboard": {
+    "amplitude": 0.8,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 10",
+      "phase 90",
+      "amplitude 80"
+    ],
+    "k": 3.1,
+    "maxErrorCSSPixels": 0.007823506101400146,
+    "mode": "lissajous",
+    "phaseDegrees": 90,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 860,
+        "max": 2870
+      },
+      {
+        "left": 410,
+        "max": 1640
+      },
+      {
+        "left": 4510,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.0436414,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "edited": {
+    "amplitude": 0.79,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 10",
+      "phase 99",
+      "amplitude 79"
+    ],
+    "k": 3.1,
+    "maxErrorCSSPixels": 0.00782732689661392,
+    "mode": "lissajous",
+    "phaseDegrees": 99,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 860,
+        "max": 2870
+      },
+      {
+        "left": 450,
+        "max": 1640
+      },
+      {
+        "left": 4430,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.0436414,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "maximum": {
+    "amplitude": 1,
+    "count": 192,
+    "counters": [
+      "whole 8 fraction 0",
+      "phase 360",
+      "amplitude 100"
+    ],
+    "k": 8,
+    "maxErrorCSSPixels": 0.007828329629541057,
+    "mode": "wave",
+    "phaseDegrees": 360,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 2870,
+        "max": 2870
+      },
+      {
+        "left": 1640,
+        "max": 1640
+      },
+      {
+        "left": 6150,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.0567225,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "minimum": {
+    "amplitude": 0.25,
+    "count": 192,
+    "counters": [
+      "whole 1 fraction 0",
+      "phase 0",
+      "amplitude 25"
+    ],
+    "k": 1,
+    "maxErrorCSSPixels": 0.007827288027572857,
+    "mode": "wave",
+    "phaseDegrees": 0,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 0,
+        "max": 2870
+      },
+      {
+        "left": 0,
+        "max": 1640
+      },
+      {
+        "left": 0,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.0567225,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "resumed": {
+    "amplitude": 0.25,
+    "count": 192,
+    "counters": [
+      "whole 1 fraction 0",
+      "phase 0",
+      "amplitude 25"
+    ],
+    "k": 1,
+    "maxErrorCSSPixels": 0.007815432322333995,
+    "mode": "wave",
+    "phaseDegrees": 0,
+    "playState": "running, running, running, running",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 0,
+        "max": 2870
+      },
+      {
+        "left": 0,
+        "max": 1640
+      },
+      {
+        "left": 0,
+        "max": 6150
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.074117,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "portrait": {
+    "A": 0.8,
+    "count": 192,
+    "height": 360,
+    "k": 3,
+    "maxError": 0.000019663038376258732,
+    "phase": 90,
+    "playState": "running, running, running, paused",
+    "t": 0.580308,
+    "width": 313
+  },
+  "landscape": {
+    "A": 0.8,
+    "count": 192,
+    "height": 456,
+    "k": 3,
+    "maxError": 0.00003617911542256421,
+    "phase": 90,
+    "playState": "running, running, running, paused",
+    "t": 0.593388,
+    "width": 737
+  },
+  "square": {
+    "A": 0.8,
+    "count": 192,
+    "height": 500,
+    "k": 3,
+    "maxError": 0.000021833214175334825,
+    "phase": 90,
+    "playState": "running, running, running, paused",
+    "t": 0.0566963,
+    "width": 500
+  },
+  "densities": [
+    {
+      "A": 0.8,
+      "count": 96,
+      "height": 533.515625,
+      "k": 3,
+      "maxError": 0.00782703922576472,
+      "phase": 90,
+      "playState": "running, running, running, paused",
+      "t": 0.0523683,
+      "width": 1300
+    },
+    {
+      "A": 0.8,
+      "count": 384,
+      "height": 533.515625,
+      "k": 3,
+      "maxError": 0.007815536894941248,
+      "phase": 90,
+      "playState": "running, running, running, paused",
+      "t": 0.35773,
+      "width": 1300
+    }
+  ],
+  "reducedAuto": {
+    "A": 0.8,
+    "count": 192,
+    "height": 533.515625,
+    "k": 3,
+    "maxError": 0.00781893520023525,
+    "phase": 90,
+    "playState": "running, running, running, paused",
+    "t": 0,
+    "width": 1300
+  },
+  "reducedRestored": {
+    "A": 0.8,
+    "count": 192,
+    "height": 533.515625,
+    "k": 3,
+    "maxError": 0.007839607425265386,
+    "phase": 90,
+    "playState": "running, running, running, paused",
+    "t": 5.60561,
+    "width": 1300
+  },
+  "finalBaseline": {
+    "amplitude": 0.8,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 0",
+      "phase 90",
+      "amplitude 80"
+    ],
+    "k": 3,
+    "maxErrorCSSPixels": 0.007815866694127201,
+    "mode": "lissajous",
+    "phaseDegrees": 90,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 800,
+        "max": 2800
+      },
+      {
+        "left": 360,
+        "max": 1440
+      },
+      {
+        "left": 1100,
+        "max": 1500
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.414501,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "finalEdited": {
+    "amplitude": 0.78,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 10",
+      "phase 100",
+      "amplitude 78"
+    ],
+    "k": 3.1,
+    "maxErrorCSSPixels": 0.007823333077600112,
+    "mode": "lissajous",
+    "phaseDegrees": 100,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 840,
+        "max": 2800
+      },
+      {
+        "left": 400,
+        "max": 1440
+      },
+      {
+        "left": 1060,
+        "max": 1500
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.545396,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "afterCapture": {
+    "amplitude": 0.78,
+    "count": 192,
+    "counters": [
+      "whole 3 fraction 10",
+      "phase 100",
+      "amplitude 78"
+    ],
+    "k": 3.1,
+    "maxErrorCSSPixels": 0.007823333077600112,
+    "mode": "lissajous",
+    "phaseDegrees": 100,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 840,
+        "max": 2800
+      },
+      {
+        "left": 400,
+        "max": 1440
+      },
+      {
+        "left": 1060,
+        "max": 1500
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1315
+    },
+    "time": 0.545396,
+    "viewport": {
+      "height": 936,
+      "width": 1363
+    }
+  },
+  "finalMaximum": {
+    "amplitude": 1,
+    "count": 192,
+    "counters": [
+      "whole 8 fraction 0",
+      "phase 360",
+      "amplitude 100"
+    ],
+    "k": 8,
+    "maxErrorCSSPixels": 0.007828032099803083,
+    "mode": "lissajous",
+    "phaseDegrees": 360,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 2800,
+        "max": 2800
+      },
+      {
+        "left": 1440,
+        "max": 1440
+      },
+      {
+        "left": 1500,
+        "max": 1500
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.545396,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "finalMinimum": {
+    "amplitude": 0.25,
+    "count": 192,
+    "counters": [
+      "whole 1 fraction 0",
+      "phase 0",
+      "amplitude 25"
+    ],
+    "k": 1,
+    "maxErrorCSSPixels": 0.00781969500535241,
+    "mode": "wave",
+    "phaseDegrees": 0,
+    "playState": "running, running, running, paused",
+    "scripts": 0,
+    "scrolls": [
+      {
+        "left": 0,
+        "max": 2800
+      },
+      {
+        "left": 0,
+        "max": 1440
+      },
+      {
+        "left": 0,
+        "max": 1500
+      }
+    ],
+    "stage": {
+      "height": 533.515625,
+      "width": 1300
+    },
+    "time": 0.545396,
+    "viewport": {
+      "height": 936,
+      "width": 1348
+    }
+  },
+  "valueResults": [
+    {
+      "fixture": "fraction",
+      "amplitude": 0.8,
+      "count": 192,
+      "counters": [
+        "whole 3 fraction 9",
+        "phase 90",
+        "amplitude 80"
+      ],
+      "k": 3.09,
+      "maxErrorCSSPixels": 0.007818953908902358,
+      "mode": "lissajous",
+      "phaseDegrees": 90,
+      "playState": "running",
+      "scripts": 0,
+      "scrolls": [
+        {
+          "left": 800,
+          "max": 2800
+        },
+        {
+          "left": 360,
+          "max": 1440
+        },
+        {
+          "left": 1100,
+          "max": 1500
+        }
+      ],
+      "stage": {
+        "height": 533.515625,
+        "width": 1300
+      },
+      "time": 0,
+      "viewport": {
+        "height": 936,
+        "width": 1348
+      }
+    },
+    {
+      "fixture": "carry",
+      "amplitude": 1,
+      "count": 192,
+      "counters": [
+        "whole 4 fraction 0",
+        "phase 360",
+        "amplitude 100"
+      ],
+      "k": 4,
+      "maxErrorCSSPixels": 0.007823402934938509,
+      "mode": "lissajous",
+      "phaseDegrees": 360,
+      "playState": "running",
+      "scripts": 0,
+      "scrolls": [
+        {
+          "left": 800,
+          "max": 2800
+        },
+        {
+          "left": 360,
+          "max": 1440
+        },
+        {
+          "left": 1100,
+          "max": 1500
+        }
+      ],
+      "stage": {
+        "height": 533.515625,
+        "width": 1300
+      },
+      "time": 0,
+      "viewport": {
+        "height": 936,
+        "width": 1348
+      }
+    },
+    {
+      "fixture": "upper",
+      "amplitude": 1,
+      "count": 192,
+      "counters": [
+        "whole 8 fraction 0",
+        "phase 360",
+        "amplitude 100"
+      ],
+      "k": 8,
+      "maxErrorCSSPixels": 0.00782342581071785,
+      "mode": "lissajous",
+      "phaseDegrees": 360,
+      "playState": "running",
+      "scripts": 0,
+      "scrolls": [
+        {
+          "left": 800,
+          "max": 2800
+        },
+        {
+          "left": 360,
+          "max": 1440
+        },
+        {
+          "left": 1100,
+          "max": 1500
+        }
+      ],
+      "stage": {
+        "height": 533.515625,
+        "width": 1300
+      },
+      "time": 0,
+      "viewport": {
+        "height": 936,
+        "width": 1348
+      }
+    }
+  ]
+}

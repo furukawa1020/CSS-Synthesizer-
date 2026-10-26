@@ -2,7 +2,7 @@
 
 HTML / CSSを使って、自分の操作から模様を作るブラウザ上の視覚シンセサイザー。
 
-**状態：要件定義 draft 0.1。アプリケーションは未実装。**
+**状態：要件定義 draft 0.1 ＋ Issue #1の入力・数理コア検証。完成版のUIは未決定です。**
 
 リポジトリ：<https://github.com/furukawa1020/CSS-Synthesizer->。ユーザーが作成した公開リポジトリを使用します。
 
@@ -34,4 +34,31 @@ HTML / CSSを使って、自分の操作から模様を作るブラウザ上の�
 
 ## リポジトリ構成
 
-現時点で入っているのは要件・設計・根拠・検証計画です。フレームワーク、アプリ用パッケージ、ビルド設定、ホスティング設定はまだ追加していません。実装方針は技術スパイクの結果を受けて選びます。
+`src/`がHTML/CSSの検証画面、`scripts/`がNodeの生成・監査・ローカル配信、`tests/`が静的ガードのテスト、`qa/`がブラウザ検証用コードと記録です。`build/`は生成物でGitには含めません。
+
+ブラウザに配信するアプリケーションはHTML/CSSのみです。Nodeは開発用です。npm依存パッケージ、フレームワーク、Canvas、SVGによる信号描画はありません。
+
+## ローカルで動かす
+
+Node 22以上を使用します。依存パッケージのインストールは不要です。
+
+```sh
+npm run build
+npm test
+npm run audit
+npm run dev
+```
+
+表示されたローカルURLを開きます。リサージュ／波形の選択、横スクロール帯での反復・位相・振幅の調整、時間停止・再開を試せます。`＋−`はブラウザのページ送りであり、0.01ずつの増減ではありません。
+
+`npm run build`は`build/`を作り直します。96/192/384点のページを生成しますが、最適な点数を決めたわけではありません。QA用ページを作る場合は続けて`node qa/create-fixtures.mjs`を実行します。QA用ページは次のbuildで削除されます。
+
+## 検証と次の作業
+
+- [入力コアの設計判断](docs/decisions/0002-css-input-core.md)
+- [ブラウザ検証の結果と再現方法](docs/validation/issue-1.md)
+- [Issue #1：入力・数理コア](https://github.com/furukawa1020/CSS-Synthesizer-/issues/1)
+- [Issue #2：作品中心のUI設計](https://github.com/furukawa1020/CSS-Synthesizer-/issues/2)
+- [Issue #3：実機・互換性・性能検証](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)
+
+現行Chrome/Edge向けの技術検証です。実機タッチ、読み上げの更新通知、実OSのreduced-motion設定、基準端末での性能は未検証です。完成デザインや全ブラウザ対応として扱わないでください。

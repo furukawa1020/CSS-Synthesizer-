@@ -1,0 +1,21 @@
+name: HTML・CSSの検証
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 検証ページを生成する
+        run: npm run build
+      - name: 静的ガードをテストする
+        run: npm test
+      - name: 配布HTMLを監査する
+        run: npm run audit

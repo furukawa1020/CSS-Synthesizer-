@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>CSS視覚シンセサイザー — 入力と描画の検証</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="engine.css">
+</head>
+<body>
+  <header class="page-header"><h1>CSS視覚シンセサイザー</h1><span>入力・数理コアの検証 / Issue #1</span></header>
+  <main class="lab">
+    <p class="notice">これは最終UIではなく、操作と数式の対応を確かめるための検証画面です。</p>
+    <p class="unsupported">このブラウザでは連続入力に必要なCSS機能が不足しています。入力帯は表示せず、描画機能が使える場合は基準値の図形を表示します。現行Chrome / Edgeで検証してください。</p>
+    <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。数式と入力の説明を参照できます。</p>
+    <div class="toolbar">
+      <fieldset class="model-controls"><legend>形</legend><label><input id="model-lissajous" type="radio" name="model" value="lissajous" checked>リサージュ</label><label><input id="model-wave" type="radio" name="model" value="wave">波形</label></fieldset>
+      <fieldset class="time-controls"><legend>時間</legend><label><input id="time-auto" type="radio" name="time" value="auto" checked>端末設定に従う</label><label><input id="time-play" type="radio" name="time" value="play">再生</label><label><input id="time-stop" type="radio" name="time" value="stop">停止</label></fieldset>
+    </div>
+    <div class="stage" role="img" aria-label="数式から計算した点の軌跡。時間停止中も入力を変更できます。">
+      <div class="axes" aria-hidden="true"></div>
+      <div class="plot" aria-hidden="true">@@SAMPLES@@</div>
+    </div>
+    <p class="time-status"><span class="auto-moving">端末設定：自動再生中</span><span class="auto-still">端末設定：動きを減らすため停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span>。停止中も形を調整できます。</p>
+    <div class="parameters continuous-controls">
+      <section class="parameter">
+        <h2 id="k-label"><span class="for-lissajous">横方向の反復</span><span class="for-wave">波の数</span> <output class="readout readout-k" aria-label="反復の有効値"></output></h2>
+        <p id="k-help">帯を横に動かすか、帯にフォーカスして左右キーで調整。1.00〜8.00。</p>
+        <div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div>
+      </section>
+      <section class="parameter">
+        <h2 id="phase-label">位相 <output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
+        <p id="phase-help">横方向の位相ずれ。0〜360°。</p>
+        <div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div>
+      </section>
+      <section class="parameter">
+        <h2 id="amplitude-label"><span class="for-lissajous">大きさ</span><span class="for-wave">高さ</span> <output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
+        <p id="amplitude-help"><span class="for-lissajous">横と縦の振幅。</span><span class="for-wave">縦の振幅。横幅は変わりません。</span>25〜100%。</p>
+        <div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div>
+      </section>
+    </div>
+    <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
+    <details class="explanation"><summary>数式・入力の意味・検証上の制限</summary>
+      <div class="equations"><p class="for-lissajous"><code>x = A sin(kθ + φ + t)<br>y = A sin(2θ + t)</code></p><p class="for-wave"><code>x = 2u − 1<br>y = A sin(2πku + φ + t)</code></p></div>
+      <p>uは点の位置を0〜1で表した値、θ=2πu。座標の倍率は横・縦とも描画領域の短辺の44%です。kは時間の速度ではありません。整数のkではリサージュの端点が一致し、非整数では開いた形になる場合があります。</p>
+      <p>表示と描画は同じ丸め済みの有効値を使います。kは小数2桁、位相は1°、振幅は1%単位です。帯の目盛り間も連続的に調整できます。</p>
+      <p>HTMLのラジオボタンとCSSのスクロールタイムラインを使っています。数値はCSS生成テキストであり、読み上げでの値の更新通知は未検証です。実機タッチ・別ブラウザ・性能の評価はIssue #3で行います。初期停止位置はscroll-initial-targetで指定し、履歴復元時はブラウザが復元した位置から値が決まります。</p>
+      <p>描画点数：@@DENSITIES@@。点数の比較用ページです。最適な点数を決定したものではありません。</p>
+    </details>
+    <footer>実行時のコードはHTML / CSSのみ。Nodeは生成・検証・ローカル配信用にだけ使います。</footer>
+  </main>
+</body>
+</html>
