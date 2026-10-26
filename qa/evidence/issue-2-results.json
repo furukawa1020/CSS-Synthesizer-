@@ -1,0 +1,556 @@
+{
+  "environment": {
+    "browser": "Chrome/155.0.0.0",
+    "osUserAgent": "X11; Linux x86_64",
+    "dpr": 1,
+    "viewport": [
+      1363,
+      936
+    ],
+    "date": "2026-10-27 Asia/Tokyo"
+  },
+  "sourceJavaScriptFiles": 0,
+  "runtimeScriptElements": 0,
+  "forbiddenRenderElements": 0,
+  "layout": [
+    {
+      "width": 360,
+      "buttons": [
+        {
+          "height": 48,
+          "width": 183.375,
+          "x": 16,
+          "y": 554.1875
+        },
+        {
+          "height": 48,
+          "width": 142.625,
+          "x": 201.375,
+          "y": 554.1875
+        },
+        {
+          "height": 48,
+          "width": 136,
+          "x": 16,
+          "y": 651.28125
+        },
+        {
+          "height": 48,
+          "width": 94,
+          "x": 154,
+          "y": 651.28125
+        },
+        {
+          "height": 48,
+          "width": 94,
+          "x": 250,
+          "y": 651.28125
+        }
+      ],
+      "clientWidth": 360,
+      "inputs": [
+        {
+          "height": 64,
+          "width": 240,
+          "x": 60,
+          "y": 814.375
+        },
+        {
+          "height": 64,
+          "width": 240,
+          "x": 60,
+          "y": 994.46875
+        },
+        {
+          "height": 64,
+          "width": 240,
+          "x": 60,
+          "y": 1174.5625
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 360,
+      "stage": {
+        "height": 340,
+        "width": 328,
+        "x": 16,
+        "y": 119
+      }
+    },
+    {
+      "width": 390,
+      "buttons": [
+        {
+          "height": 48,
+          "width": 198.375,
+          "x": 16,
+          "y": 527.1875
+        },
+        {
+          "height": 48,
+          "width": 157.625,
+          "x": 216.375,
+          "y": 527.1875
+        },
+        {
+          "height": 48,
+          "width": 146,
+          "x": 16,
+          "y": 624.28125
+        },
+        {
+          "height": 48,
+          "width": 104,
+          "x": 164,
+          "y": 624.28125
+        },
+        {
+          "height": 48,
+          "width": 104,
+          "x": 270,
+          "y": 624.28125
+        }
+      ],
+      "clientWidth": 390,
+      "inputs": [
+        {
+          "height": 64,
+          "width": 270,
+          "x": 60,
+          "y": 787.375
+        },
+        {
+          "height": 64,
+          "width": 270,
+          "x": 60,
+          "y": 967.46875
+        },
+        {
+          "height": 64,
+          "width": 270,
+          "x": 60,
+          "y": 1147.5625
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 390,
+      "stage": {
+        "height": 351,
+        "width": 358,
+        "x": 16,
+        "y": 81
+      }
+    },
+    {
+      "width": 768,
+      "buttons": [
+        {
+          "height": 48,
+          "width": 195.375,
+          "x": 20,
+          "y": 724.78125
+        },
+        {
+          "height": 48,
+          "width": 154.625,
+          "x": 217.375,
+          "y": 724.78125
+        },
+        {
+          "height": 48,
+          "width": 144,
+          "x": 396,
+          "y": 724.78125
+        },
+        {
+          "height": 48,
+          "width": 102,
+          "x": 542,
+          "y": 724.78125
+        },
+        {
+          "height": 48,
+          "width": 102,
+          "x": 646,
+          "y": 724.78125
+        }
+      ],
+      "clientWidth": 768,
+      "inputs": [
+        {
+          "height": 64,
+          "width": 640,
+          "x": 64,
+          "y": 885.875
+        },
+        {
+          "height": 64,
+          "width": 640,
+          "x": 64,
+          "y": 1065.96875
+        },
+        {
+          "height": 64,
+          "width": 640,
+          "x": 64,
+          "y": 1246.0625
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 768,
+      "stage": {
+        "height": 537.59375,
+        "width": 728,
+        "x": 20,
+        "y": 89
+      }
+    },
+    {
+      "width": 1280,
+      "buttons": [
+        {
+          "height": 48,
+          "width": 149.375,
+          "x": 973,
+          "y": 145.09375
+        },
+        {
+          "height": 48,
+          "width": 108.625,
+          "x": 1124.375,
+          "y": 145.09375
+        },
+        {
+          "height": 48,
+          "width": 113.328125,
+          "x": 973,
+          "y": 246.1875
+        },
+        {
+          "height": 48,
+          "width": 71.34375,
+          "x": 1088.328125,
+          "y": 246.1875
+        },
+        {
+          "height": 48,
+          "width": 71.328125,
+          "x": 1161.671875,
+          "y": 246.1875
+        }
+      ],
+      "clientWidth": 1265,
+      "inputs": [
+        {
+          "height": 64,
+          "width": 172,
+          "x": 1017,
+          "y": 398.875
+        },
+        {
+          "height": 64,
+          "width": 172,
+          "x": 1017,
+          "y": 564.5625
+        },
+        {
+          "height": 64,
+          "width": 172,
+          "x": 1017,
+          "y": 730.25
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 1265,
+      "stage": {
+        "height": 1472,
+        "width": 909,
+        "x": 32,
+        "y": 113
+      }
+    },
+    {
+      "width": 1440,
+      "buttons": [
+        {
+          "height": 48,
+          "width": 163.375,
+          "x": 1105,
+          "y": 145.09375
+        },
+        {
+          "height": 48,
+          "width": 122.625,
+          "x": 1270.375,
+          "y": 145.09375
+        },
+        {
+          "height": 48,
+          "width": 122.65625,
+          "x": 1105,
+          "y": 246.1875
+        },
+        {
+          "height": 48,
+          "width": 80.671875,
+          "x": 1229.65625,
+          "y": 246.1875
+        },
+        {
+          "height": 48,
+          "width": 80.671875,
+          "x": 1312.328125,
+          "y": 246.1875
+        }
+      ],
+      "clientWidth": 1425,
+      "inputs": [
+        {
+          "height": 64,
+          "width": 200,
+          "x": 1149,
+          "y": 398.875
+        },
+        {
+          "height": 64,
+          "width": 200,
+          "x": 1149,
+          "y": 564.5625
+        },
+        {
+          "height": 64,
+          "width": 200,
+          "x": 1149,
+          "y": 730.25
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 1425,
+      "stage": {
+        "height": 1472,
+        "width": 1041,
+        "x": 32,
+        "y": 113
+      }
+    }
+  ],
+  "text200Fixture": [
+    {
+      "width": 360,
+      "buttons": [
+        {
+          "height": 64.1875,
+          "width": 196.234375,
+          "x": 16,
+          "y": 761.3125
+        },
+        {
+          "height": 64.1875,
+          "width": 114.765625,
+          "x": 214.234375,
+          "y": 761.3125
+        },
+        {
+          "height": 64.1875,
+          "width": 197.5,
+          "x": 16,
+          "y": 897.6875
+        },
+        {
+          "height": 64.1875,
+          "width": 113.5,
+          "x": 215.5,
+          "y": 897.6875
+        },
+        {
+          "height": 64.1875,
+          "width": 313,
+          "x": 16,
+          "y": 963.875
+        }
+      ],
+      "clientWidth": 345,
+      "inputs": [
+        {
+          "height": 103,
+          "width": 225,
+          "x": 60,
+          "y": 1313.234375
+        },
+        {
+          "height": 103,
+          "width": 225,
+          "x": 60,
+          "y": 1641.609375
+        },
+        {
+          "height": 103,
+          "width": 225,
+          "x": 60,
+          "y": 1969.984375
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 345,
+      "stage": {
+        "height": 340,
+        "width": 313,
+        "x": 16,
+        "y": 183.5625
+      }
+    },
+    {
+      "width": 1280,
+      "buttons": [
+        {
+          "height": 64.1875,
+          "width": 260,
+          "x": 973,
+          "y": 196.1875
+        },
+        {
+          "height": 64.1875,
+          "width": 260,
+          "x": 973,
+          "y": 262.375
+        },
+        {
+          "height": 64.1875,
+          "width": 171,
+          "x": 973,
+          "y": 402.75
+        },
+        {
+          "height": 64.1875,
+          "width": 87,
+          "x": 1146,
+          "y": 402.75
+        },
+        {
+          "height": 64.1875,
+          "width": 260,
+          "x": 973,
+          "y": 468.9375
+        }
+      ],
+      "clientWidth": 1265,
+      "inputs": [
+        {
+          "height": 103,
+          "width": 172,
+          "x": 1017,
+          "y": 822.6875
+        },
+        {
+          "height": 103,
+          "width": 172,
+          "x": 1017,
+          "y": 1180.4375
+        },
+        {
+          "height": 103,
+          "width": 172,
+          "x": 1017,
+          "y": 1538.1875
+        }
+      ],
+      "parametersDisplay": "block",
+      "scrollWidth": 1265,
+      "stage": {
+        "height": 672,
+        "width": 909,
+        "x": 32,
+        "y": 141
+      }
+    }
+  ],
+  "keyboard": {
+    "stopped": {
+      "A": 0.8,
+      "count": 192,
+      "height": 708,
+      "k": 3,
+      "maxError": 0.000026091061088786913,
+      "phase": 90,
+      "playState": "running, running, running, paused",
+      "t": 5.69285,
+      "width": 979.40625
+    },
+    "adjusted": {
+      "A": 0.78,
+      "count": 192,
+      "height": 708,
+      "k": 3.1,
+      "maxError": 0.000041966947798719355,
+      "phase": 100,
+      "playState": "running, running, running, paused",
+      "t": 5.69285,
+      "width": 979.40625
+    },
+    "wave": {
+      "A": 0.78,
+      "count": 192,
+      "height": 708,
+      "k": 3.1,
+      "maxError": 0.00002024594062342665,
+      "phase": 100,
+      "playState": "running, running, running, paused",
+      "t": 5.69285,
+      "width": 979.40625
+    }
+  },
+  "history": {
+    "before": {
+      "A": 0.78,
+      "count": 192,
+      "height": 708,
+      "k": 3.1,
+      "maxError": 0.00002024594062342665,
+      "phase": 100,
+      "playState": "running, running, running, paused",
+      "t": 5.69285,
+      "width": 979.40625
+    },
+    "after": {
+      "A": 0.78,
+      "count": 192,
+      "height": 708,
+      "k": 3.1,
+      "maxError": 0.000021266852410862557,
+      "phase": 100,
+      "playState": "running, running, running, paused",
+      "t": 5.69285,
+      "width": 979.40625
+    },
+    "reload": {
+      "A": 0.8,
+      "count": 192,
+      "height": 708,
+      "k": 3,
+      "maxError": 0.000025614294394209926,
+      "phase": 90,
+      "playState": "running, running, running, running",
+      "t": 0.069813,
+      "width": 979.40625
+    }
+  },
+  "fallback": [
+    {
+      "width": 360,
+      "controls": "none",
+      "message": "block",
+      "scene": "none"
+    },
+    {
+      "width": 1280,
+      "controls": "none",
+      "message": "block",
+      "scene": "none"
+    }
+  ],
+  "limits": [
+    "iframe widths are not physical touch tests",
+    "text200 fixture is not browser UI zoom",
+    "OS reduced-motion and performance not measured"
+  ]
+}

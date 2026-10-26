@@ -12,7 +12,7 @@ This repository contains an HTML/CSS visual synthesizer and Python standard-libr
 - Keep mathematical model calculations independent of viewport aspect ratio unless distortion is explicit.
 - Use a focused technical spike for an uncertain browser capability. Record exact browser/OS/viewport and the result; an iframe-width test is not a mobile-touch test.
 - Do not infer performance from the absence of JavaScript. Measure the selected scene on a stated device.
-- Do not add deployment, public access, telemetry, external fonts, or third-party scripts as a routine setup step in this requirements phase.
+- Do not add deployment, public access, telemetry, external fonts, or third-party scripts without the user requesting that scope.
 - Do not invent approval gates for routine reversible work. Do keep open product decisions visible and do not silently promote assumptions into requirements.
 - Create or select an Issue before implementation. Use an Issue-specific branch and a reviewable pull request; do not put feature work directly on main.
 - Write Issue titles/bodies and PR titles/descriptions in Japanese. Reference the relevant Issue and report observed checks and unverified limits accurately.

@@ -27,6 +27,8 @@ python3 -m tools.package
 
 現在のソースを再ビルドし、`dist/css-synthesizer-v0.1.zip`と生成元・SHA-256のmanifestを作ります。[配布手順](docs/distribution.md)を参照してください。外部への公開・デプロイは行いません。
 
+[画面の設計と4状態](docs/validation/issue-2.md)、[受け入れ状況](docs/acceptance.md)に検証の範囲をまとめています。
+
 ## 構成と検証
 
 - `src/`：HTML / CSSの作品。通信、外部フォント、Canvas、SVG信号描画、WebAssemblyなし。

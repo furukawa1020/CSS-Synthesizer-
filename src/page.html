@@ -3,52 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="横に動かす、形が変わる。HTMLとCSSだけで触れる視覚シンセサイザー。">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
-  <title>CSS視覚シンセサイザー — 入力と描画の検証</title>
+  <title>CSS 視覚シンセサイザー</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="engine.css">
 </head>
 <body>
-  <header class="page-header"><h1>CSS視覚シンセサイザー</h1><span>入力・数理コアの検証 / Issue #1</span></header>
+  <a class="skip-link" href="#controls">調整へ進む</a>
+  <header class="page-header">
+    <h1><span class="title-mark" aria-hidden="true">∿</span> CSS <span>視覚シンセサイザー</span></h1>
+    <a href="#guide" class="guide-link">使い方と仕組み <span aria-hidden="true">↘</span></a>
+  </header>
   <main class="lab">
-    <p class="notice">これは最終UIではなく、操作と数式の対応を確かめるための検証画面です。</p>
-    <p class="unsupported">このブラウザでは連続入力に必要なCSS機能が不足しています。入力帯は表示せず、描画機能が使える場合は基準値の図形を表示します。現行Chrome / Edgeで検証してください。</p>
-    <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。数式と入力の説明を参照できます。</p>
-    <div class="toolbar">
-      <fieldset class="model-controls"><legend>形</legend><label><input id="model-lissajous" type="radio" name="model" value="lissajous" checked>リサージュ</label><label><input id="model-wave" type="radio" name="model" value="wave">波形</label></fieldset>
-      <fieldset class="time-controls"><legend>時間</legend><label><input id="time-auto" type="radio" name="time" value="auto" checked>端末設定に従う</label><label><input id="time-play" type="radio" name="time" value="play">再生</label><label><input id="time-stop" type="radio" name="time" value="stop">停止</label></fieldset>
+    <p class="unsupported">このブラウザではこの操作画面に必要なCSS機能が不足しています。調整帯は利用できません。描画機能が使える場合は、基準値の形を表示します。現行Chrome / Edgeが検証対象です。</p>
+    <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。下の「使い方と仕組み」で数式と対応環境を確認できます。</p>
+    <div class="workspace">
+      <figure class="scene">
+        <div class="stage" role="img" aria-label="数式から描いた点の軌跡。">
+          <div class="stage-heading" aria-hidden="true"><span class="for-lissajous">リサージュ</span><span class="for-wave">波形</span><span>@@COUNT@@ 点</span></div>
+          <div class="axes" aria-hidden="true"></div>
+          <div class="plot" aria-hidden="true">@@SAMPLES@@</div>
+          <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
+        </div>
+        <figcaption class="scene-caption"><span class="time-status"><span class="auto-moving">自動再生中</span><span class="auto-still">端末設定により停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span></span><span>止めたままでも、形を変えられます。</span></figcaption>
+      </figure>
+      <aside class="controls" id="controls" aria-label="形と時間の調整">
+        <fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices"><label><input id="model-lissajous" type="radio" name="model" value="lissajous" checked><span>リサージュ</span></label><label><input id="model-wave" type="radio" name="model" value="wave"><span>波形</span></label></div></fieldset>
+        <fieldset class="time-controls"><legend>時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto" checked><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"><span>停止</span></label></div></fieldset>
+        <div class="parameters continuous-controls">
+          <p class="input-intro">帯を横に動かすと、形が変わります。<br>帯を選んで、左右キーでも調整できます。</p>
+          <section class="parameter">
+            <h2 id="k-label"><span><small aria-hidden="true">01</small> <span class="for-lissajous">横方向の反復</span><span class="for-wave">波の数</span></span><output class="readout readout-k" aria-label="反復の有効値"></output></h2>
+            <p id="k-help">1.00–8.00 <span class="for-lissajous">横の折り返しを変える</span><span class="for-wave">波の密度を変える</span></p>
+            <div class="band-wrap"><div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help input-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
+          </section>
+          <section class="parameter">
+            <h2 id="phase-label"><span><small aria-hidden="true">02</small> 位相</span><output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
+            <p id="phase-help">0–360° <span>横方向の位相をずらす</span></p>
+            <div class="band-wrap"><div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help input-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
+          </section>
+          <section class="parameter">
+            <h2 id="amplitude-label"><span><small aria-hidden="true">03</small> <span class="for-lissajous">大きさ</span><span class="for-wave">高さ</span></span><output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
+            <p id="amplitude-help">25–100% <span class="for-lissajous">横と縦の振幅を変える</span><span class="for-wave">高さを変える。横幅は一定</span></p>
+            <div class="band-wrap"><div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help input-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
+          </section>
+          <p class="input-help" id="input-help">帯を横に動かすか、左右キーで調整。矢印は大きく送ります（一定刻みではありません）。</p>
+        </div>
+        <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
+      </aside>
     </div>
-    <div class="stage" role="img" aria-label="数式から計算した点の軌跡。時間停止中も入力を変更できます。">
-      <div class="axes" aria-hidden="true"></div>
-      <div class="plot" aria-hidden="true">@@SAMPLES@@</div>
-    </div>
-    <p class="time-status"><span class="auto-moving">端末設定：自動再生中</span><span class="auto-still">端末設定：動きを減らすため停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span>。停止中も形を調整できます。</p>
-    <div class="parameters continuous-controls">
-      <section class="parameter">
-        <h2 id="k-label"><span class="for-lissajous">横方向の反復</span><span class="for-wave">波の数</span> <output class="readout readout-k" aria-label="反復の有効値"></output></h2>
-        <p id="k-help">帯を横に動かすか、帯にフォーカスして左右キーで調整。1.00〜8.00。</p>
-        <div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div>
-      </section>
-      <section class="parameter">
-        <h2 id="phase-label">位相 <output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
-        <p id="phase-help">横方向の位相ずれ。0〜360°。</p>
-        <div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div>
-      </section>
-      <section class="parameter">
-        <h2 id="amplitude-label"><span class="for-lissajous">大きさ</span><span class="for-wave">高さ</span> <output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
-        <p id="amplitude-help"><span class="for-lissajous">横と縦の振幅。</span><span class="for-wave">縦の振幅。横幅は変わりません。</span>25〜100%。</p>
-        <div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div>
-      </section>
-    </div>
-    <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
-    <details class="explanation"><summary>数式・入力の意味・検証上の制限</summary>
-      <div class="equations"><p class="for-lissajous"><code>x = A sin(kθ + φ + t)<br>y = A sin(2θ + t)</code></p><p class="for-wave"><code>x = 2u − 1<br>y = A sin(2πku + φ + t)</code></p></div>
-      <p>uは点の位置を0〜1で表した値、θ=2πu。座標の倍率は横・縦とも描画領域の短辺の44%です。kは時間の速度ではありません。整数のkではリサージュの端点が一致し、非整数では開いた形になる場合があります。</p>
-      <p>表示と描画は同じ丸め済みの有効値を使います。kは小数2桁、位相は1°、振幅は1%単位です。帯の目盛り間も連続的に調整できます。</p>
-      <p>HTMLのラジオボタンとCSSのスクロールタイムラインを使っています。数値はCSS生成テキストであり、読み上げでの値の更新通知は未検証です。実機タッチ・別ブラウザ・性能の評価はIssue #3で行います。初期停止位置はscroll-initial-targetで指定し、履歴復元時はブラウザが復元した位置から値が決まります。</p>
-      <p>描画点数：@@DENSITIES@@。点数の比較用ページです。最適な点数を決定したものではありません。</p>
+    <details class="explanation" id="guide">
+      <summary><span>使い方と仕組み</span><span class="summary-note">操作・数式・対応環境</span><span class="disclosure" aria-hidden="true">+</span></summary>
+      <div class="guide-body">
+        <section><h2>形を見つけて、止める。</h2><p>まず形を選び、3つの帯のどれかを横に動かします。マウスではスクロールバーか両端の矢印、トラックパッドでは横スクロール、キーボードでは帯にフォーカスして左右キーを使います。</p><p>気に入った形で「停止」を選んでください。時間だけが止まるので、続けて形を調整できます。「再生」で止めた時刻から動き出します。「端末に従う」は、動きを減らす設定のとき自動再生を止めます。</p><p>入力位置の履歴復元はブラウザが行います。再読み込みは値を戻す操作ではありません。値を保存する機能はありません。</p></section>
+        <section><h2>形をつくる数式</h2><div class="equations"><p class="for-lissajous"><code>x = A sin(kθ + φ + t)<br>y = A sin(2θ + t)</code></p><p class="for-wave"><code>x = 2u − 1<br>y = A sin(2πku + φ + t)</code></p></div><p>uは点の位置を0〜1で表した値、θ=2πu。kは反復、φは位相、Aは振幅、tは自動で進む時間です。kは再生速度ではありません。非整数のkでは、リサージュが開いた形になる場合があります。</p><p>縦横を同じ倍率で描きます。波形も短辺を基準にするため、横長の画面いっぱいには引き伸ばしません。表示と描画は同じ丸め済みの値を使い、kは小数2桁、位相は1°、振幅は1%です。</p></section>
+        <section><h2>CSSがしていること</h2><p>HTMLのラジオボタンと<code>:has()</code>で状態を選び、scroll timelineで帯の位置を数値へ変えます。<code>@property</code>と三角関数が各点の座標を計算します。対応環境では<code>sibling-index()</code> / <code>sibling-count()</code>から点の順番を取得します。</p><p>アプリケーションの実行時コードはHTML / CSSのみ。音声・通信・外部フォントは使いません。開発用ツールはPython標準ライブラリのみです。</p><p>描画点数：@@DENSITIES@@。切り替えると別ページを開きます。入力と時間の保持は保証しません。</p></section>
+        <section><h2>対応環境と検証</h2><p>現行Chrome / Edge向けです。必要なCSS構文を検出し、不足する場合は調整帯や描画を表示しません。構文への対応だけで動作を保証するものではありません。</p><p>数値はCSS生成テキストです。読み上げによる更新通知、実機タッチ、他ブラウザ、実OSの動きを減らす設定、一般端末での描画性能は検証が残っています。</p><nav aria-label="実装と検証の参照"><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/src/engine.css">描画のソース ↗</a><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/math-and-input.md">数式の仕様 ↗</a><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/acceptance.md">検証状況 ↗</a></nav></section>
+      </div>
     </details>
-    <footer>実行時のコードはHTML / CSSのみ。開発用ツールはPython標準ライブラリのみです。</footer>
+    <footer><span>HTML + CSS · 視覚の実験</span><a href="https://github.com/furukawa1020/CSS-Synthesizer-">ソースコード ↗</a></footer>
   </main>
 </body>
 </html>
