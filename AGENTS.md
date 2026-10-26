@@ -9,6 +9,7 @@ This repository contains an HTML/CSS visual synthesizer and Python standard-libr
 - Resolve mathematical meaning, actual input behavior, and displayed precision before styling a control.
 - Do not add JavaScript or TypeScript anywhere in the current source, including build tools, tests, fixtures, or package manifests. Do not require Node. Use Python standard-library development tools. Do not introduce a framework, Canvas renderer, SVG signal renderer, WebAssembly, or polyfill to make a pure CSS claim pass. If the proposed HTML/CSS-only requirement is infeasible for a requested interaction, record the conflict and alternatives.
 - Do not build a decorative control that implies an unsupported interaction. A scroll input must look and behave like a scroll input.
+- Do not use accent-edge callouts or sticky-note-style cards for prose, equations, or notices. Do not arrange content as cards with heavy shadows or large corner radii. Use spacing and typographic hierarchy; preserve functional focus indicators and graph geometry.
 - Keep mathematical model calculations independent of viewport aspect ratio unless distortion is explicit.
 - Use a focused technical spike for an uncertain browser capability. Record exact browser/OS/viewport and the result; an iframe-width test is not a mobile-touch test.
 - Do not infer performance from the absence of JavaScript. Measure the selected scene on a stated device.

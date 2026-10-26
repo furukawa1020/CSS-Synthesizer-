@@ -20,7 +20,6 @@ h1 > span:last-child { font-size: 0.9375rem; font-weight: 500; }
 .axes { position: absolute; inset: 0; background: linear-gradient(90deg, transparent calc(50% - .5px), #ffffff10 calc(50% - .5px), #ffffff10 calc(50% + .5px), transparent calc(50% + .5px)), linear-gradient(transparent calc(50% - .5px), #ffffff10 calc(50% - .5px), #ffffff10 calc(50% + .5px), transparent calc(50% + .5px)); }
 .axes::before { content: ''; position: absolute; left: 50%; top: 50%; inline-size: 88cqmin; block-size: 88cqmin; border: 1px solid #ffffff0b; border-radius: 50%; transform: translate(-50%, -50%); }
 .stage-footnote { position: absolute; inset: auto 24px 18px; display: flex; justify-content: space-between; align-items: center; color: #a9b6ac; font-size: 0.875rem; }
-.sample { box-shadow: 0 0 5px #fda65c55; }
 .scene-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 15px 0; font-size: 0.875rem; color: var(--muted); }
 .time-status { color: var(--ink); }
 .time-status::before { content: ''; display: inline-block; inline-size: 7px; block-size: 7px; border-radius: 50%; background: currentColor; margin-inline-end: 8px; vertical-align: 1px; }
@@ -63,7 +62,6 @@ input { flex: 0 0 auto; accent-color: var(--ink); inline-size: 15px; block-size:
 .input-band::scroll-button(*):hover { background: #d2d8c9; }
 .input-band::scroll-button(*):disabled { color: #8f978a; background: #e6e8e0; cursor: default; }
 .parameter:focus-within h2 { color: var(--accent); }
-.parameter:focus-within .band-wrap { outline: 1px solid var(--accent); outline-offset: 4px; }
 .input-help { font-size: 0.875rem; color: var(--muted); margin: 0 0 10px; }
 .time-controls { margin-block-start: 16px; padding-block-start: 4px; }
 .time-controls .choices label { padding-inline: 5px; gap: 5px; }
@@ -81,13 +79,12 @@ details[open] .disclosure { transform: rotate(45deg); }
 .guide-body h2 { margin: 0 0 16px; font-size: 1.1875rem; font-weight: 550; }
 .guide-body p { font-size: 0.9375rem; margin: 12px 0; max-inline-size: 66ch; }
 .guide-body code { font: .95em/1.8 ui-monospace, monospace; overflow-wrap: anywhere; }
-.equations { border-inline-start: 2px solid var(--accent); padding-inline-start: 16px; }
 .equations code { font-size: 1rem; }
 .guide-body nav { display: flex; flex-wrap: wrap; gap: 4px 24px; }
 .guide-body nav a { display: inline-flex; align-items: center; min-block-size: 44px; font-size: 0.875rem; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding-block: 14px; color: var(--muted); font-size: 0.875rem; }
 footer a { display: inline-flex; align-items: center; min-block-size: 44px; }
-.unsupported, .render-unsupported { border-inline-start: 3px solid var(--accent); padding: 12px 16px; font-size: 0.9375rem; margin: 0 0 24px; }
+.unsupported, .render-unsupported { max-inline-size: 76ch; font-size: 0.9375rem; margin: 0 0 24px; }
 .continuous-controls, .render-unsupported { display: none; }
 .explicit-moving, .explicit-still, .auto-still { display: none; }
 .lab:has(#time-play:checked) .auto-moving, .lab:has(#time-stop:checked) .auto-moving { display: none; }
@@ -145,7 +142,7 @@ footer a { display: inline-flex; align-items: center; min-block-size: 44px; }
 }
 @media (forced-colors: active) {
   .stage { border: 1px solid CanvasText; }
-  .sample { background: CanvasText; box-shadow: none; }
+  .sample { background: CanvasText; }
   .choices label:has(:checked) { border-bottom-color: Highlight; }
   .band-cursor { background: Highlight; }
 }
