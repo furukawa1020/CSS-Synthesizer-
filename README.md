@@ -1,64 +1,52 @@
 # CSS Visual Synthesizer
 
-HTML / CSSを使って、自分の操作から模様を作るブラウザ上の視覚シンセサイザー。
+HTML / CSSだけで、操作から模様を作る視覚シンセサイザー。
 
-**状態：要件定義 draft 0.1 ＋ Issue #1の入力・数理コア検証。完成版のUIは未決定です。**
+**JavaScriptは開発用も含めて使用しません。** 現在のソースにJS / TSファイル、package.json、Node依存はありません。生成・監査・テスト・配布はPython標準ライブラリだけで実行します。作品の実行にはPythonも不要です。
 
-リポジトリ：<https://github.com/furukawa1020/CSS-Synthesizer->。ユーザーが作成した公開リポジトリを使用します。
+リポジトリ：<https://github.com/furukawa1020/CSS-Synthesizer->。
 
-前の試作とは履歴・ソース・配信先を分けた、新規リポジトリです。旧試作のUI、コード、架空のブランド、描画点数は引き継いでいません。この段階ではデプロイしません。
+## 動かす
 
-## 読む順序
-
-1. [要件定義](docs/requirements.md)：何を作り、何を完成とするか
-2. [数理モデルと入力](docs/math-and-input.md)：操作が何を変えるか
-3. [デザインブリーフ](docs/design-brief.md)：UIの判断基準と未確定事項
-4. [4状態のワイヤーフレーム](docs/design/wireframes.svg)：完成デザインではない構成案
-5. [技術検証計画](docs/technical-plan.md)：CSSだけで成立するか、先に確かめること
-6. [受け入れ条件](docs/acceptance.md)：要件と検証手順の対応
-7. [作業計画と判断待ち](docs/plan.md)：実装へ進める順序
-
-## 現時点の合意と仮定
-
-| 区分 | 内容 |
-| --- | --- |
-| ユーザーから確定 | 最新の素のHTML / CSSの力を試す作品を作りたい |
-| ユーザーから確定 | 題材はCSS視覚シンセサイザー |
-| ユーザーから確定 | 前作のUIと進め方は不採用。ゼロからリポジトリを作り、要件定義を先に行う |
-| 提案・未承認 | 主体験は「自分の操作で模様を作る」。技術解説は補助に置く |
-| 提案・未承認 | 画面を大きく作品に使い、必要な操作だけを見せる |
-| 提案・未承認 | ブラウザ内のアプリケーションコードはHTML / CSSのみ、JavaScriptは使わない |
-| 提案・未承認 | 最初の完成対象はリサージュと波形の2モデル |
-
-未承認の内容をユーザーの好み・合意として扱わないでください。
-
-## リポジトリ構成
-
-`src/`がHTML/CSSの検証画面、`scripts/`がNodeの生成・監査・ローカル配信、`tests/`が静的ガードのテスト、`qa/`がブラウザ検証用コードと記録です。`build/`は生成物でGitには含めません。
-
-ブラウザに配信するアプリケーションはHTML/CSSのみです。Nodeは開発用です。npm依存パッケージ、フレームワーク、Canvas、SVGによる信号描画はありません。
-
-## ローカルで動かす
-
-Node 22以上を使用します。依存パッケージのインストールは不要です。
+開発用にPython 3.11以上を使います。追加パッケージのインストールは不要です。
 
 ```sh
-npm run build
-npm test
-npm run audit
-npm run dev
+python3 -m tools.build
+python3 -m unittest discover -s tests -v
+python3 -m tools.audit
+python3 -m tools.serve
 ```
 
-表示されたローカルURLを開きます。リサージュ／波形の選択、横スクロール帯での反復・位相・振幅の調整、時間停止・再開を試せます。`＋−`はブラウザのページ送りであり、0.01ずつの増減ではありません。
+<http://127.0.0.1:3000>を開きます。リサージュ／波形を選び、横スクロール帯で反復・位相・振幅を変え、時間を停止・再開できます。両端の矢印はブラウザのページ送りで、一定の数値刻みではありません。
 
-`npm run build`は`build/`を作り直します。96/192/384点のページを生成しますが、最適な点数を決めたわけではありません。QA用ページを作る場合は続けて`node qa/create-fixtures.mjs`を実行します。QA用ページは次のbuildで削除されます。
+コミット済みのソースから配布ZIPを作る場合：
 
-## 検証と次の作業
+```sh
+python3 -m tools.package
+```
 
-- [入力コアの設計判断](docs/decisions/0002-css-input-core.md)
-- [ブラウザ検証の結果と再現方法](docs/validation/issue-1.md)
-- [Issue #1：入力・数理コア](https://github.com/furukawa1020/CSS-Synthesizer-/issues/1)
-- [Issue #2：作品中心のUI設計](https://github.com/furukawa1020/CSS-Synthesizer-/issues/2)
-- [Issue #3：実機・互換性・性能検証](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)
+現在のソースを再ビルドし、`dist/css-synthesizer-v0.1.zip`と生成元・SHA-256のmanifestを作ります。[配布手順](docs/distribution.md)を参照してください。外部への公開・デプロイは行いません。
 
-現行Chrome/Edge向けの技術検証です。実機タッチ、読み上げの更新通知、実OSのreduced-motion設定、基準端末での性能は未検証です。完成デザインや全ブラウザ対応として扱わないでください。
+## 構成と検証
+
+- `src/`：HTML / CSSの作品。通信、外部フォント、Canvas、SVG信号描画、WebAssemblyなし。
+- `tools/`：Python標準ライブラリによる開発用ツール。
+- `tests/`：Python unittest。JS/TSソースとNode manifestが再び入っていないかも検査。
+- `qa/evidence/`：ブラウザの観測記録。配布ZIPには入れません。
+- `build/`：生成物。`python3 -m tools.build`で作り直します。
+
+QA用のHTML/CSSは`python3 -m tools.fixtures`で生成できます。次のbuildで削除されます。96 / 192 / 384点は比較用であり、最適な点数や性能合格を示すものではありません。
+
+現行Chrome / Edge向けです。実機タッチ、読み上げの更新通知、実OSの動きを減らす設定、他ブラウザ、一般端末での性能は検証が残っています。
+
+## 設計資料
+
+1. [要件定義](docs/requirements.md)
+2. [数理モデルと入力](docs/math-and-input.md)
+3. [デザインブリーフ](docs/design-brief.md)
+4. [技術検証計画](docs/technical-plan.md)
+5. [受け入れ状況](docs/acceptance.md)
+6. [作業計画](docs/plan.md)
+7. [JavaScript全面撤去の判断](docs/decisions/0003-zero-javascript.md)
+
+過去のコミットには、撤去前のNode開発用コードが残ります。履歴を改変してJSゼロに見せることはしません。現在のソースと配布物をゼロにしています。旧試作のUI・コード・配信先は引き継いでいません。

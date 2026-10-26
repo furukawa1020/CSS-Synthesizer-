@@ -1,4 +1,4 @@
-name: HTML・CSSの検証
+name: HTML・CSSとJSゼロの検証
 on:
   push:
     branches: [main]
@@ -9,13 +9,23 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: 検証ページを生成する
-        run: npm run build
-      - name: 静的ガードをテストする
-        run: npm test
+      # Public repository: Git and Python only, no Node-based checkout action.
+      - name: 対象コミットを取得する
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin "https://github.com/${REPOSITORY}.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout --detach FETCH_HEAD
+      - name: 検証環境を記録する
+        run: python3 --version
+      - name: HTMLとCSSを生成する
+        run: python3 -m tools.build
+      - name: 監査・配布・JSゼロをテストする
+        run: python3 -m unittest discover -s tests -v
       - name: 配布HTMLを監査する
-        run: npm run audit
+        run: python3 -m tools.audit
+      - name: 現在のソースから配布物を生成する
+        run: python3 -m tools.package
