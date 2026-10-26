@@ -1,0 +1,16 @@
+# Working agreement
+
+This repository currently contains a requirements draft, not an implemented app.
+
+- Read README.md and docs/plan.md before changing product code.
+- Treat user-confirmed requirements, proposed decisions, and measured results as different states. Never label a proposal approved or a test passed without evidence.
+- Do not copy the rejected PHOSPHOR prototype, its styling, generated markup, branding, screenshots, or deployment configuration into this project.
+- Follow requirement IDs and update their acceptance checks when scope changes.
+- Resolve mathematical meaning, actual input behavior, and displayed precision before styling a control.
+- Do not introduce a JavaScript application, framework, Canvas renderer, SVG signal renderer, or polyfill to make a pure CSS claim pass. If the proposed HTML/CSS-only requirement is infeasible for a requested interaction, record the conflict and alternatives.
+- Do not build a decorative control that implies an unsupported interaction. A scroll input must look and behave like a scroll input.
+- Keep mathematical model calculations independent of viewport aspect ratio unless distortion is explicit.
+- Use a focused technical spike for an uncertain browser capability. Record exact browser/OS/viewport and the result; an iframe-width test is not a mobile-touch test.
+- Do not infer performance from the absence of JavaScript. Measure the selected scene on a stated device.
+- Do not add deployment, public access, telemetry, external fonts, or third-party scripts as a routine setup step in this requirements phase.
+- Do not invent approval gates for routine reversible work. Do keep open product decisions visible and do not silently promote assumptions into requirements.
