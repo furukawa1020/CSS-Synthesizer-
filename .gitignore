@@ -7,3 +7,6 @@ dist/
 build/
 tmp/
 qa/local/
+
+__pycache__/
+*.py[cod]

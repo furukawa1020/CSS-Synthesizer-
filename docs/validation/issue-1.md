@@ -1,6 +1,6 @@
 # Issue #1：入力・数理コアの検証記録
 
-検証日：2026-10-26。対象：`src/`と`qa/`のIssue #1実装。測定値は[JSON](../../qa/evidence/core-results.json)、読み取り専用の座標検査は[inspect-core.mjs](../../qa/inspect-core.mjs)に保存する。
+検証日：2026-10-26。対象：`src/`と`qa/`のIssue #1実装。測定値は[JSON](../../qa/evidence/core-results.json)、当時の読み取り専用の座標検査はPR #4の履歴に保存されている。現在のツリーではIssue #7により開発用JSも撤去した。
 
 ## 環境と限界
 
@@ -54,14 +54,14 @@ reduced-motionは、同じCSSのメディアクエリ部分を`@media all`に差
 ## 再現
 
 ```sh
-npm run build
-npm test
-npm run audit
-node qa/create-fixtures.mjs
-npm run dev
+python3 -m tools.build
+python3 -m unittest discover -s tests -v
+python3 -m tools.audit
+python3 -m tools.fixtures
+python3 -m tools.serve
 ```
 
-通常ページと`qa-frames.html`、`qa-square.html`、`qa-reduced.html`、`qa-values-fraction.html`等を開く。`qa/inspect-core.mjs`のinspectLab関数を読み取り専用のブラウザ検査で対象のmain.labに実行する。fixtureは次のbuildで削除される。
+通常ページと`qa-frames.html`、`qa-square.html`、`qa-reduced.html`、`qa-values-fraction.html`等を開く。現在は観測した座標JSONを`python3 -m tools.coordinates`で独立照合する。fixtureは次のbuildで削除される。
 
 ローカルの静的ガードは9テスト合格。3つのHTMLと2つのCSSを監査した。GitHub ActionsはPR作成後の実行結果を別途確認する。
 
