@@ -2,7 +2,7 @@
 
 ## 現在地
 
-要件定義 draft 0.1。旧試作の作り直しを始めた段階で、本実装・技術スパイク・配色選定は未着手。今回のコミットは要件と構成案を具体的にレビューできる状態にするためのもの。
+要件定義 draft 0.1に基づき、[Issue #1](https://github.com/furukawa1020/CSS-Synthesizer-/issues/1)の入力・数理コアを実装。Chromeでの照合結果は[検証記録](validation/issue-1.md)に記載。最終UI・配色は未決定で、[Issue #2](https://github.com/furukawa1020/CSS-Synthesizer-/issues/2)として分ける。実機・性能は[Issue #3](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)で扱う。
 
 ## 順序
 

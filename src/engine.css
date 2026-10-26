@@ -1,0 +1,69 @@
+/* M-01/M-02 equations and input mapping. Coordinates use the stage's short side. */
+@property --clock { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --k-raw { syntax: '<number>'; inherits: true; initial-value: 3; }
+@property --phase-raw { syntax: '<number>'; inherits: true; initial-value: 90; }
+@property --amplitude-raw { syntax: '<number>'; inherits: true; initial-value: .8; }
+@property --k-q { syntax: '<integer>'; inherits: true; initial-value: 300; }
+@property --phase-q { syntax: '<integer>'; inherits: true; initial-value: 90; }
+@property --amplitude-q { syntax: '<integer>'; inherits: true; initial-value: 80; }
+
+.lab {
+  --clock-state: running;
+  --k-q: round(nearest, calc(var(--k-raw) * 100), 1);
+  --phase-q: round(nearest, var(--phase-raw), 1);
+  --amplitude-q: round(nearest, calc(var(--amplitude-raw) * 100), 1);
+  --k: calc(var(--k-q) / 100);
+  --phase: calc(var(--phase-q) * 1deg);
+  --amplitude: calc(var(--amplitude-q) / 100);
+  animation: clock 24s linear infinite;
+  animation-play-state: var(--clock-state);
+  timeline-scope: --k-input, --phase-input, --amplitude-input;
+}
+@keyframes clock { from { --clock: 0; } to { --clock: 6.283185307179586; } }
+@keyframes k-input { from { --k-raw: 1; } to { --k-raw: 8; } }
+@keyframes phase-input { from { --phase-raw: 0; } to { --phase-raw: 360; } }
+@keyframes amplitude-input { from { --amplitude-raw: .25; } to { --amplitude-raw: 1; } }
+.input-k { scroll-timeline: --k-input inline; }
+.input-phase { scroll-timeline: --phase-input inline; }
+.input-amplitude { scroll-timeline: --amplitude-input inline; }
+@supports (animation-timeline: scroll()) and (timeline-scope: --a) and (scroll-initial-target: nearest) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (width: calc(sin(1rad) * 1px)) {
+  .lab {
+    animation: k-input 1s linear both, phase-input 1s linear both, amplitude-input 1s linear both, clock 24s linear infinite;
+    animation-timeline: --k-input, --phase-input, --amplitude-input, auto;
+    animation-play-state: running, running, running, var(--clock-state);
+  }
+}
+.lab:has(#time-stop:checked) { --clock-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .lab { --clock-state: paused; }
+  .lab:has(#time-play:checked) { --clock-state: running; }
+}
+.plot { position: absolute; inset: 0; pointer-events: none; }
+.sample {
+  --index: var(--index-fallback);
+  --count: var(--count-fallback);
+  --u: calc(var(--index) / (var(--count) - 1));
+  --theta: calc(var(--u) * 1turn);
+  --x: calc(var(--amplitude) * sin(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad));
+  --y: calc(var(--amplitude) * sin(var(--theta) * 2 + var(--clock) * 1rad));
+  position: absolute;
+  left: 50%; top: 50%;
+  inline-size: 3px; block-size: 3px;
+  border-radius: 50%; background: currentColor;
+  transform: translate(calc(var(--x) * 44cqmin), calc(var(--y) * -44cqmin)) translate(-50%, -50%);
+}
+@supports (z-index: sibling-index()) {
+  .sample { --index: calc(sibling-index() - 1); --count: sibling-count(); }
+}
+.lab:has(#model-wave:checked) .sample {
+  --x: calc(var(--u) * 2 - 1);
+  --y: calc(var(--amplitude) * sin(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad));
+}
+.readout-k {
+  counter-reset: whole round(down, calc(var(--k-q) / 100), 1) fraction mod(var(--k-q), 100);
+}
+.readout-k::after { content: counter(whole) '.' counter(fraction, decimal-leading-zero); }
+.readout-phase { counter-reset: phase var(--phase-q); }
+.readout-phase::after { content: counter(phase) '°'; }
+.readout-amplitude { counter-reset: amplitude var(--amplitude-q); }
+.readout-amplitude::after { content: counter(amplitude) '%'; }
