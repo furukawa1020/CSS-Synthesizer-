@@ -11,6 +11,7 @@ import zipfile
 
 from .audit import audit_css, audit_html
 from .build import build
+from .presets import PRESET_FILENAMES
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,17 +23,18 @@ ASSETS = (
     ("samples-384.html", 384),
     ("style.css", None),
     ("engine.css", None),
+    *((filename, 192) for filename in PRESET_FILENAMES),
 )
 INSTRUCTIONS = """CSS視覚シンセサイザー v0.1
 
 index.htmlと2つのCSSを同じ場所に置き、現行Chrome / Edgeで開いてください。
-点数比較用のsamples-96.html、samples-384.htmlも同梱しています。
+点数比較用のsamples-96.html、samples-384.htmlと、停止状態で始める4つのpreset-*.htmlも同梱しています。
 ブラウザ内の実行コードはHTML / CSSのみです。音声・永続保存はありません。
 非対応環境では画面に示す制限を確認してください。
 実機タッチ・他ブラウザ・実OSの動きを減らす設定・性能の確認状況は、
 リポジトリの受け入れ記録とIssue #3を参照してください。
 
-SHA256SUMSは同梱した5つのアプリファイルのSHA-256です。
+SHA256SUMSは同梱した9つのアプリファイルのSHA-256です。
 ZIP全体のSHA-256と生成元commitは、ZIPの隣のmanifest.jsonに記録します。
 ソース: https://github.com/furukawa1020/CSS-Synthesizer-
 """
@@ -75,7 +77,7 @@ def package_release(build_directory, output_directory, source_revision):
         ("SHA256SUMS", ("\n".join(checksums) + "\n").encode("utf-8")),
     ))
 
-    # These seven small files use STORE, so compressor versions cannot change
+    # These small files use STORE, so compressor versions cannot change
     # their bytes. Explicit date, order, platform and permissions omit host data.
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_STORED, allowZip64=False) as archive:

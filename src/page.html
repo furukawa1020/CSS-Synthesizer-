@@ -16,7 +16,7 @@
     @@FRAGMENT:guide-actions@@
     <a href="#guide" class="guide-link">使い方と仕組み <span aria-hidden="true">↘</span></a>
   </header>
-  <main class="lab">
+  <main class="lab" style="@@INITIAL_VALUES@@">
     <p class="unsupported">このブラウザではこの操作画面に必要なCSS機能が不足しています。調整帯は利用できません。描画機能が使える場合は、基準値の形を表示します。現行Chrome / Edgeが検証対象です。</p>
     <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。下の「使い方と仕組み」で数式と対応環境を確認できます。</p>
     <div class="workspace">
@@ -32,7 +32,7 @@
       </figure>
       <aside class="controls" id="controls" aria-label="形と時間の調整">
         <fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset>
-        <fieldset class="time-controls"><legend>時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto" checked><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"><span>停止</span></label></div></fieldset>
+        <fieldset class="time-controls"><legend>時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto"@@TIME_AUTO@@><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"@@TIME_PLAY@@><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"@@TIME_STOP@@><span>停止</span></label></div></fieldset>
         <div class="parameters continuous-controls">
           <p class="input-intro">帯を横に動かすと、形が変わります。<br>帯を選んで、左右キーでも調整できます。</p>
           <section class="parameter">
@@ -57,7 +57,7 @@
         </div>
         @@FRAGMENT:view-settings@@
         @@FRAGMENT:presets@@
-        <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
+        <p class="baseline-only">@@BASELINE_LABEL@@</p>
       </aside>
     </div>
     @@FRAGMENT:dialog@@

@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 
-from tools.audit import audit_css, audit_directory, audit_html
+from tools.audit import _PAGES, audit_css, audit_directory, audit_html
 
 
 def points(count: int) -> str:
@@ -136,19 +136,19 @@ class AuditTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory(prefix="css-synth-audit-") as temporary:
             directory = Path(temporary)
-            for filename, count in (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384)):
+            for filename, count in _PAGES:
                 (directory / filename).write_text(points(count), encoding="utf-8")
             (directory / "style.css").write_text('body{color:#222}', encoding="utf-8")
             (directory / "engine.css").write_text('.sample{left:50%;top:50%}', encoding="utf-8")
             result = audit_directory(directory)
             self.assertTrue(result["ok"])
-            self.assertEqual(len(result["files"]), 5)
+            self.assertEqual(len(result["files"]), len(_PAGES) + 2)
             good = subprocess.run(
                 [sys.executable, "-m", "tools.audit", str(directory)],
                 cwd=root, capture_output=True, text=True,
             )
             self.assertEqual(good.returncode, 0, good.stderr)
-            self.assertEqual(good.stdout.count("PASS "), 5)
+            self.assertEqual(good.stdout.count("PASS "), len(_PAGES) + 2)
             (directory / "index.html").write_text(points(192) + '<script></script>', encoding="utf-8")
             (directory / "style.css").write_text('@import "https://example.invalid/theme.css";', encoding="utf-8")
             (directory / "samples-96.html").unlink()

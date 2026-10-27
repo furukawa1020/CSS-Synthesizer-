@@ -7,6 +7,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 import re
 import sys
+from .presets import PRESET_FILENAMES
 
 
 _FORBIDDEN_ELEMENTS = {"script", "canvas", "svg", "iframe", "object", "embed"}
@@ -39,7 +40,7 @@ _CSS_URLS = re.compile(
     r'''url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)|@import\s+(?:"([^"]*)"|'([^']*)')''',
     re.IGNORECASE,
 )
-_PAGES = (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384))
+_PAGES = (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384), *((filename, 192) for filename in PRESET_FILENAMES))
 _STYLES = ("style.css", "engine.css")
 
 
@@ -178,7 +179,7 @@ def audit_html(html: str, samples: int | None = None) -> dict:
 
 
 def audit_directory(directory: Path) -> dict:
-    """3 HTML / 2 CSSの監査結果を集約する。欠落もerrorsとして返す。"""
+    """配布HTML / CSSの監査結果を集約する。欠落もerrorsとして返す。"""
     directory = Path(directory)
     files: list[dict] = []
     for filename, samples in (*_PAGES, *((filename, None) for filename in _STYLES)):

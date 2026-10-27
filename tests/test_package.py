@@ -10,16 +10,14 @@ import tempfile
 import unittest
 import zipfile
 
-from tools.package import package_release
+from tools.package import ASSETS, package_release
 
 
 ROOT = Path(__file__).resolve().parents[1]
 REVISION_A = "1" * 40
 REVISION_B = "2" * 40
-EXPECTED_NAMES = [
-    "index.html", "samples-96.html", "samples-384.html", "style.css",
-    "engine.css", "README.txt", "SHA256SUMS",
-]
+APP_NAMES = [name for name, _ in ASSETS]
+EXPECTED_NAMES = [*APP_NAMES, 'README.txt', 'SHA256SUMS']
 
 
 def digest(data):
@@ -33,7 +31,9 @@ class PackageTests(unittest.TestCase):
         directory = Path(temporary.name)
         build_directory = directory / "build"
         build_directory.mkdir()
-        for name, count in (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384)):
+        for name, count in ASSETS:
+            if count is None:
+                continue
             page = '<!doctype html><html lang="ja"><title>fixture</title>'
             page += '<i class="sample"></i>' * count
             (build_directory / name).write_text(page + "</html>", encoding="utf-8")
@@ -49,7 +49,7 @@ class PackageTests(unittest.TestCase):
         with zipfile.ZipFile(archive_path) as archive:
             self.assertIsNone(archive.testzip())
             self.assertEqual(archive.namelist(), EXPECTED_NAMES)
-            for name in EXPECTED_NAMES[:5]:
+            for name in APP_NAMES:
                 self.assertEqual(archive.read(name), (build_directory / name).read_bytes())
             for info in archive.infolist():
                 self.assertEqual(info.compress_type, zipfile.ZIP_STORED)
@@ -57,7 +57,7 @@ class PackageTests(unittest.TestCase):
                 self.assertEqual(info.create_system, 3)
                 self.assertEqual(info.external_attr >> 16, 0o100644)
             self.assertEqual(archive.getinfo("style.css").CRC, 0x352441C2)
-            checksums = "".join(f"{digest(archive.read(name))}  {name}\n" for name in EXPECTED_NAMES[:5])
+            checksums = "".join(f"{digest(archive.read(name))}  {name}\n" for name in APP_NAMES)
             self.assertEqual(archive.read("SHA256SUMS").decode("utf-8"), checksums)
             expected_files = [
                 {"name": name, "bytes": len(archive.read(name)), "sha256": digest(archive.read(name))}
