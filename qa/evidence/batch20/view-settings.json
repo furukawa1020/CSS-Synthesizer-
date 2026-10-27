@@ -1,0 +1,14 @@
+{
+  "thinWidth": "2px",
+  "thickWidth": "5px",
+  "polar": "repeating-radial-gradient(circle, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 76.88px, rgba(255, 255, 255, 0.063) 76.88px, rgba(255, 255, 255, 0.063) 77.88px), repeating-conic-gradient(rgba(255, 255, 255, 0.063) 0deg, rgba(255, 255, 255, 0.063) 0.3deg, rgba(0, 0, 0, 0) 0.3deg, rgba(0, 0, 0, 0) 30deg)",
+  "off": "hidden",
+  "ice": {
+    "bg": "rgb(16, 31, 44)",
+    "point": "rgb(214, 244, 255)"
+  },
+  "paper": {
+    "bg": "rgb(245, 242, 233)",
+    "point": "rgb(38, 53, 44)"
+  }
+}
