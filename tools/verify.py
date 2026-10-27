@@ -11,7 +11,7 @@ import stat
 import sys
 import zipfile
 
-from .audit import audit_css, audit_html
+from .audit import audit_css, audit_html, audit_document_links
 
 MAX_ARCHIVE_BYTES = 16 * 1024 * 1024
 MAX_MEMBER_BYTES = 2 * 1024 * 1024
@@ -75,6 +75,7 @@ def _inspect(path, manifest):
         checksums[match[2]] = match[1]
     if set(checksums) != set(assets):
         raise ValueError('SHA256SUMSの対象ファイルが配布定義と一致しません')
+    documents = {}
     for name, samples in assets.items():
         data = contents[name]
         if checksums[name] != _digest(data):
@@ -83,6 +84,12 @@ def _inspect(path, manifest):
         result = audit_css(text) if samples is None else audit_html(text, samples=samples)
         if not result['ok']:
             raise ValueError(f'{name}の静的監査に失敗しました: ' + '; '.join(result['errors']))
+        if samples is not None:
+            documents[name] = text
+    links = audit_document_links(documents, assets)
+    for name, errors in links.items():
+        if errors:
+            raise ValueError(f'{name}の参照監査に失敗しました: ' + '; '.join(errors))
     return {'ok': True, 'errors': [], 'sha256': archive_hash,
             'manifest_verified': manifest_verified, 'files': names}
 

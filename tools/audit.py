@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import argparse
 from html.parser import HTMLParser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import sys
 from .presets import PRESET_FILENAMES
+from urllib.parse import unquote, urlsplit
 
 
 _FORBIDDEN_ELEMENTS = {"script", "canvas", "svg", "iframe", "object", "embed"}
@@ -33,7 +34,7 @@ _URL_ATTRIBUTES = {
     "xlink:href", "ping",
 }
 _TEMPLATE_TOKEN = re.compile(
-    r"\{\{[^{}]+\}\}|__[A-Z][A-Z0-9_]*__|@@[A-Z][A-Z0-9_]*@@"
+    r"\{\{[^{}]+\}\}|__[A-Z][A-Z0-9_]*__|@@[A-Z][A-Z0-9_]*@@|@@FRAGMENT:[^@]*@@"
     r"|<!--\s*(?:SAMPLES|POINTS|[A-Z]+_STEPS)\s*-->", re.IGNORECASE,
 )
 _CSS_URLS = re.compile(
@@ -42,6 +43,23 @@ _CSS_URLS = re.compile(
 )
 _PAGES = (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384), *((filename, 192) for filename in PRESET_FILENAMES))
 _STYLES = ("style.css", "engine.css")
+_DIALOG_COMMANDS = {"show-modal", "close", "request-close"}
+_POPOVER_COMMANDS = {"toggle-popover", "show-popover", "hide-popover"}
+_ARIA_REFERENCES = {"aria-labelledby", "aria-describedby", "aria-controls", "aria-details",
+                    "aria-errormessage", "aria-owns", "aria-activedescendant"}
+_LABELABLE = {"button", "input", "meter", "output", "progress", "select", "textarea"}
+
+
+def _fragment_id(fragment: str) -> str:
+    # Text-fragment directives are browser navigation, not element IDs.
+    return unquote(fragment.split(':~:', 1)[0])
+
+
+def _local_link(value: str):
+    parsed = urlsplit(value)
+    if parsed.scheme or parsed.netloc:
+        return None
+    return unquote(parsed.path), _fragment_id(parsed.fragment)
 
 
 def _compact_url(value: str) -> str:
@@ -96,12 +114,58 @@ class _HTMLAuditParser(HTMLParser):
         self.errors: list[str] = []
         self.sample_count = 0
         self._style_parts: list[str] | None = None
+        self.ids: dict[str, tuple[str, dict[str, str]]] = {}
+        self.references: list[tuple[str, str, str]] = []
+        self.links: list[tuple[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = [(name, value or "") for name, value in attrs]
 
         def first(name: str) -> str:
             return next((value for key, value in values if key == name), "")
+
+        attributes = dict(reversed(values))
+        if (tag == 'button' and ('commandfor' in attributes or 'popovertarget' in attributes)
+                and first('type').lower() != 'button'):
+            # Project rule: do not let form activation supersede native commands.
+            self.errors.append('この作品のネイティブ操作buttonにはtype="button"を明示してください')
+        if 'id' in attributes and first('id'):
+            identifier = first('id')
+            if identifier in self.ids:
+                self.errors.append(f'重複したid: {identifier}')
+            else:
+                self.ids[identifier] = (tag, attributes)
+        for name, value in values:
+            if name == 'popovertarget':
+                self.references.append(('popover', value, tag))
+                if tag not in {'button', 'input'}:
+                    self.errors.append('popovertargetはbutton/inputから指定してください')
+                elif tag == 'input' and first('type').lower() not in {'button', 'submit', 'reset', 'image'}:
+                    self.errors.append('popovertargetはボタン型inputから指定してください')
+                if first('popovertargetaction').lower() not in {'', 'toggle', 'show', 'hide'}:
+                    self.errors.append('不明なpopovertargetaction')
+            elif name == 'commandfor':
+                command = first('command').lower()
+                kind = 'dialog' if command in _DIALOG_COMMANDS else 'popover' if command in _POPOVER_COMMANDS else 'command'
+                self.references.append((kind, value, tag))
+                if tag != 'button':
+                    self.errors.append('commandforはbuttonから指定してください')
+                if command not in _DIALOG_COMMANDS | _POPOVER_COMMANDS:
+                    self.errors.append('このJSゼロ作品では未採用のcommandを使用しません')
+            elif name in _ARIA_REFERENCES or (name == 'for' and tag == 'output'):
+                self.references.extend(('id', item, tag) for item in value.split())
+            elif name == 'for' and tag == 'label' and value:
+                self.references.append(('label', value, tag))
+            elif name == 'href':
+                try:
+                    link = _local_link(value)
+                except ValueError:
+                    self.errors.append(f'不正なhref: {value}')
+                else:
+                    if link is not None:
+                        self.links.append(link)
+        if tag == 'button' and 'command' in attributes and 'commandfor' not in attributes:
+            self.errors.append('commandの参照先commandforがありません')
 
         if tag in _FORBIDDEN_ELEMENTS:
             # Reject embedded documents regardless of local, remote, data: or
@@ -154,6 +218,23 @@ class _HTMLAuditParser(HTMLParser):
             _inspect_css("".join(self._style_parts), self.errors)
             self._style_parts = None
 
+    def finish_references(self) -> None:
+        for kind, identifier, source in self.references:
+            target = self.ids.get(identifier)
+            if target is None:
+                self.errors.append(f'{source}の参照先idがありません: {identifier}')
+                continue
+            tag, attributes = target
+            if kind == 'dialog' and tag != 'dialog':
+                self.errors.append(f'commandforの参照先はdialogではありません: {identifier}')
+            elif kind == 'popover' and 'popover' not in attributes:
+                self.errors.append(f'popoverの参照先にpopover属性がありません: {identifier}')
+            elif kind == 'label' and (tag not in _LABELABLE or (tag == 'input' and attributes.get('type', '').lower() == 'hidden')):
+                self.errors.append(f'labelの参照先はラベル対象の要素ではありません: {identifier}')
+        for path, fragment in self.links:
+            if not path and fragment and fragment.lower() != 'top' and fragment not in self.ids:
+                self.errors.append(f'リンクの参照先idがありません: {fragment}')
+
 
 def audit_html(html: str, samples: int | None = None) -> dict:
     """HTMLを検査し、ok/errors/sample_countを返す。HTMLを書き換えない。"""
@@ -167,6 +248,7 @@ def audit_html(html: str, samples: int | None = None) -> dict:
     parser.feed(html)
     parser.close()
     parser.finish_style()
+    parser.finish_references()
     if samples is not None and parser.sample_count != samples:
         parser.errors.append(
             f"サンプル数が不一致: expected {samples}, got {parser.sample_count}"
@@ -178,17 +260,52 @@ def audit_html(html: str, samples: int | None = None) -> dict:
     }
 
 
+def audit_document_links(documents: dict[str, str], available_names=None) -> dict[str, list[str]]:
+    """Check same-directory links without fetching or extracting documents."""
+    available = set(documents) if available_names is None else set(available_names)
+    parsed = {}
+    errors = {name: [] for name in documents}
+    for name, text in documents.items():
+        parser = _HTMLAuditParser()
+        parser.feed(text)
+        parser.close()
+        parsed[name] = parser
+    for name, parser in parsed.items():
+        for path, fragment in parser.links:
+            if not path:
+                continue  # Same-document IDs are checked by audit_html.
+            if '\\' in path or '\x00' in path or path.startswith('/') or '..' in PurePosixPath(path).parts:
+                errors[name].append(f'配布範囲外のローカル参照: {path}')
+                continue
+            target = str(PurePosixPath(name).parent / path)
+            if path.endswith('/') or path == '.':
+                target = str(PurePosixPath(target) / 'index.html')
+            if target not in available:
+                errors[name].append(f'ローカル参照先ファイルがありません: {path}')
+            elif fragment and fragment.lower() != 'top' and (
+                    target not in parsed or fragment not in parsed[target].ids):
+                errors[name].append(f'{path}の参照先idがありません: {fragment}')
+    return {name: _unique(values) for name, values in errors.items()}
+
+
 def audit_directory(directory: Path) -> dict:
     """配布HTML / CSSの監査結果を集約する。欠落もerrorsとして返す。"""
     directory = Path(directory)
     files: list[dict] = []
+    documents = {}
     for filename, samples in (*_PAGES, *((filename, None) for filename in _STYLES)):
         try:
             source = (directory / filename).read_text(encoding="utf-8")
             result = audit_html(source, samples) if samples is not None else audit_css(source)
+            if samples is not None:
+                documents[filename] = source
         except (OSError, UnicodeError) as error:
             result = {"ok": False, "errors": [f"ファイルを読み取れない: {error}"]}
         files.append({"path": filename, **result})
+    links = audit_document_links(documents, {name for name, _ in _PAGES} | set(_STYLES))
+    for item in files:
+        item['errors'].extend(links.get(item['path'], []))
+        item['ok'] = not item['errors']
     errors = [f"{item['path']}: {error}" for item in files for error in item["errors"]]
     return {"ok": not errors, "errors": errors, "files": files}
 
