@@ -1,0 +1,19 @@
+.view-settings { margin-block-start: 20px; grid-column: 1 / -1; }
+.view-settings button { min-block-size: 44px; padding: 8px 14px; border: 1px solid var(--rule); border-radius: 0; background: var(--paper); color: var(--ink); font: inherit; font-size: .875rem; cursor: pointer; }
+.view-settings button:hover { text-decoration: underline; text-underline-offset: .25em; }
+.view-settings-open, .view-settings-close { display: none; }
+.view-panel { inset: auto; margin: 0; padding: 20px; border: 1px solid var(--rule); border-radius: 0; background: var(--paper); color: var(--ink); max-inline-size: 100%; box-shadow: none; }
+.view-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.view-panel-header h2 { margin: 0; font-size: 1.125rem; font-weight: 550; }
+.view-description { margin: 12px 0 20px; font-size: .875rem; }
+.view-option { margin-block-start: 16px; padding-block-start: 12px; border-block-start: 1px solid var(--rule); }
+.view-option legend { margin: 0; padding-inline-end: 12px; font-size: .875rem; color: var(--ink); }
+.view-option label { display: flex; align-items: center; gap: 10px; min-block-size: 44px; padding-block: 6px; cursor: pointer; font-size: .875rem; }
+.view-option input { flex: none; }
+.view-option .view-choices { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.lab:has(#view-labels:not(:checked)) .stage-heading,
+.lab:has(#view-labels:not(:checked)) .stage-footnote { visibility: hidden; }
+@supports selector(:popover-open) {
+  .view-settings-open, .view-settings-close { display: inline-flex; align-items: center; justify-content: center; }
+  .view-panel:popover-open { position: fixed; inset: 0; margin: auto; inline-size: 32rem; max-inline-size: calc(100vw - 32px); max-block-size: calc(100dvh - 32px); overflow: auto; overscroll-behavior: contain; }
+}
