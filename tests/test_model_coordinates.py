@@ -50,3 +50,24 @@ class ExtraModelCoordinateTests(unittest.TestCase):
                 self.assertTrue(result['ok'], result['errors'])
         result = inspect_snapshot(self.snapshot('spiral', [(1,104.5,70),(2,121,70),(3,93.5,70),(4,132,70)], k=2, phase_degrees=0), tolerance=1e-10)
         self.assertTrue(result['ok'], result['errors'])
+
+    def test_orbit_weighted_cardinal_points_and_repetition(self):
+        for k, points in (
+            (2, [(0,132,70),(1,102.3,55.7),(2,103.4,70),(3,102.3,84.3),(4,132,70)]),
+            (3, [(0,132,70),(1,110,48),(2,88,70),(3,110,92),(4,132,70)]),
+        ):
+            with self.subTest(k=k):
+                result = inspect_snapshot(self.snapshot('orbit', points, k=k, phase_degrees=0), tolerance=1e-10)
+                self.assertTrue(result['ok'], result['errors'])
+                self.assertEqual(result['checked_points'], 5)
+
+    def test_orbit_phase_rotation_and_fractional_endpoints(self):
+        cases = [
+            (dict(phase_degrees=90), [(0,124.3,77.7)]),
+            (dict(phase_degrees=0, clock_radians=math.pi/2), [(0,110,48),(1,95.7,77.7)]),
+            (dict(phase_degrees=0, k=1.25), [(0,132,70),(4,124.3,77.7)]),
+        ]
+        for parameters, points in cases:
+            with self.subTest(parameters=parameters):
+                result = inspect_snapshot(self.snapshot('orbit', points, **parameters), tolerance=1e-10)
+                self.assertTrue(result['ok'], result['errors'])

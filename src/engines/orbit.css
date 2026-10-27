@@ -1,0 +1,7 @@
+/* M-05: opposite traversal with fixed 65/35 weights; clock rotates the sum. */
+.lab:has(#model-orbit:checked) .sample {
+  --orbit-main: calc(var(--theta) + var(--clock) * 1rad);
+  --orbit-sub: calc(var(--theta) * var(--k) + var(--phase) - var(--clock) * 1rad);
+  --x: calc(var(--amplitude) * (.65 * sin(var(--orbit-main) + 90deg) + .35 * sin(var(--orbit-sub) + 90deg)));
+  --y: calc(var(--amplitude) * (.65 * sin(var(--orbit-main)) - .35 * sin(var(--orbit-sub))));
+}
