@@ -1,0 +1,4 @@
+.lab { --view-x: 1; --view-y: 1; }
+.lab:has(#mirror-x:checked) { --view-x: -1; }
+.lab:has(#mirror-y:checked) { --view-y: -1; }
+.plot { scale: var(--view-x) var(--view-y); transform-origin: center; }
