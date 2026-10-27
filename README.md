@@ -50,5 +50,6 @@ QA用のHTML/CSSは`python3 -m tools.fixtures`で生成できます。次のbuil
 5. [受け入れ状況](docs/acceptance.md)
 6. [作業計画](docs/plan.md)
 7. [JavaScript全面撤去の判断](docs/decisions/0003-zero-javascript.md)
+8. [HTML-in-Canvasの採用調査と要件衝突](docs/research/html-in-canvas.md)（Issue #12、API実装は未完了）
 
 過去のコミットには、撤去前のNode開発用コードが残ります。履歴を改変してJSゼロに見せることはしません。現在のソースと配布物をゼロにしています。旧試作のUI・コード・配信先は引き継いでいません。
