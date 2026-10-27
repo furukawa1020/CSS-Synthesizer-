@@ -1,0 +1,30 @@
+.forced-colors-note { display: none; }
+@media (forced-colors: active) {
+  .lab .stage { background: Canvas; color: CanvasText; border: 1px solid CanvasText; }
+  .lab .stage-heading, .lab .stage-footnote { color: CanvasText; z-index: 2; }
+  .lab .sample { background: CanvasText; }
+  .lab .plot { z-index: 1; }
+  .lab .axes { background: none !important; }
+  .lab .axes::before { border: 1px solid CanvasText; }
+  .lab .axes::after {
+    content: ''; position: absolute; inset-inline-start: 50%; inset-block-start: 50%;
+    inline-size: 88cqmin; block-size: 0; border-block-start: 1px solid CanvasText;
+    transform: translate(-50%, -50%); pointer-events: none;
+  }
+  .lab .stage::after {
+    content: ''; position: absolute; inset-inline-start: 50%; inset-block-start: 50%;
+    inline-size: 0; block-size: 88cqmin; border-inline-start: 1px solid CanvasText;
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 0;
+  }
+  .lab:has(#grid-off:checked) .stage::after { display: none; }
+  .lab .forced-colors-note { display: block; color: CanvasText; font-size: .875rem; }
+  .lab .view-panel { border-color: CanvasText; background: Canvas; color: CanvasText; }
+  .lab .view-settings button, .lab .input-band::scroll-button(*) { border-color: ButtonText; background: ButtonFace; color: ButtonText; }
+  .lab .view-settings button:disabled, .lab .input-band::scroll-button(*):disabled { color: GrayText; }
+  .lab .view-option, .lab .choices, .lab .parameter { border-color: CanvasText; }
+  .lab .choices label:has(:checked) { border-bottom-color: Highlight; }
+  .lab .input-band { border: 1px solid ButtonText; background: Canvas; color: CanvasText; scrollbar-color: ButtonText Canvas; }
+  .lab .band-cursor { background: Highlight; }
+  .lab input { accent-color: Highlight; }
+  body :is(button, input, a, .input-band):focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
+}
