@@ -1,0 +1,27 @@
+{
+  "collapsed": [
+    "5 link Description: 使い方と仕組み, URL: terminal.local:4173/#guide",
+    "14 radio button (settable, integer) Description: リサージュ, Value: 1, ID: model-lissajous",
+    "22 radio button (settable, integer) Description: 端末に従う, Value: 1, ID: time-auto",
+    "37 button 反復を下げる方向に送る",
+    "38 button 反復を上げる方向に送る",
+    "39 container  横方向の反復 反復の有効値",
+    "49 button 位相を下げる方向に送る",
+    "50 button 位相を上げる方向に送る",
+    "51 container  位相 位相の有効値",
+    "61 button 振幅を下げる方向に送る",
+    "62 button 振幅を上げる方向に送る",
+    "63 container  大きさ 振幅の有効値",
+    "67 button (collapsed) 使い方と仕組み 操作・数式・対応環境, Secondary Actions: Expand",
+    "71 link Description: ソースコード ↗, URL: github.com/furukawa1020/CSS-Synthesizer-",
+    "Browser tab: 1, Title: \"CSS 視覚シンセサイザー\", URL: \"http://terminal.local:4173/\".\nThere has been no change in the accessibility tree."
+  ],
+  "expanded": [
+    "103 link Description: 96点, URL: terminal.local:4173/samples-96.html",
+    "107 link Description: 384点, URL: terminal.local:4173/samples-384.html",
+    "114 link Description: 描画のソース ↗, URL: github.com/furukawa1020/CSS-Synthesizer-/blob/main/src/engine.css",
+    "115 link Description: 数式の仕様 ↗, URL: github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/math-and-input.md",
+    "116 link Description: 検証状況 ↗, URL: github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/acceptance.md",
+    "71 link Description: ソースコード ↗, URL: github.com/furukawa1020/CSS-Synthesizer-"
+  ]
+}
