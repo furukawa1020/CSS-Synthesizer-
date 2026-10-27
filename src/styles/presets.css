@@ -1,0 +1,8 @@
+.preset-picker { margin-block-start: 16px; border-block: 1px solid var(--rule); }
+.preset-picker summary { min-block-size: 52px; gap: 12px; font-size: .875rem; }
+.preset-picker p { margin: 8px 0 12px; color: var(--muted); font-size: .875rem; }
+.preset-picker nav { display: flex; flex-direction: column; }
+.preset-picker a { display: flex; flex-direction: column; justify-content: center; min-block-size: 56px; padding: 8px 0; border-block-start: 1px solid var(--rule); text-decoration: none; font-size: .875rem; }
+.preset-picker a span { color: var(--muted); font-family: ui-monospace, monospace; font-size: .75rem; }
+.preset-picker a:hover { text-decoration: underline; }
+.preset-picker a[aria-current="page"] { font-weight: 650; }
