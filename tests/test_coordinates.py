@@ -57,6 +57,57 @@ class CoordinateTests(unittest.TestCase):
         self.assertAlmostEqual(shifted["max_error"], .25)
         self.assertIn("許容差", "\n".join(shifted["errors"]))
 
+    @staticmethod
+    def clock_endpoint_snapshot(clock, observed_y=50):
+        # At the left endpoint, k=1 and phase=0 leave y=-44*sin(clock)
+        # relative to the stage center. x stays fixed for the wave model.
+        return {
+            "model": "wave", "k": 1, "phase_degrees": 0,
+            "amplitude": 1, "clock_radians": clock,
+            "stage": {"x": 0, "y": 0, "width": 100, "height": 100},
+            "count": 2, "points": [{"index": 0, "x": 6, "y": observed_y}],
+        }
+
+    def test_exact_clock_endpoints_remain_valid(self):
+        for clock in (0, math.tau):
+            with self.subTest(clock=clock):
+                result = inspect_snapshot(self.clock_endpoint_snapshot(clock), tolerance=1e-10)
+                self.assertTrue(result["ok"], result["errors"])
+                self.assertEqual(result["checked_points"], 1)
+
+    def test_serialized_clock_endpoint_uses_observed_value_without_clamping(self):
+        clock = 6.28319
+        observed_y = 50 - 44 * math.sin(clock)
+        snapshot = self.clock_endpoint_snapshot(clock, observed_y)
+        result = inspect_snapshot(snapshot, tolerance=1e-9)
+        self.assertTrue(result["ok"], result["errors"])
+        self.assertEqual(result["checked_points"], 1)
+        # Clamping clock to 2π would silently accept the wrong centerline point.
+        snapshot["points"][0]["y"] = 50
+        clamped_point = inspect_snapshot(snapshot, tolerance=1e-9)
+        self.assertFalse(clamped_point["ok"])
+        self.assertGreater(clamped_point["max_error"], .0002)
+
+    def test_clock_serialization_margin_does_not_relax_coordinate_tolerance(self):
+        clock = 6.28319
+        snapshot = self.clock_endpoint_snapshot(clock, 50 - 44 * math.sin(clock))
+        snapshot["points"][0]["x"] += .25
+        result = inspect_snapshot(snapshot)
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["checked_points"], 1)
+        self.assertAlmostEqual(result["max_error"], .25)
+        self.assertIn("許容差", "\n".join(result["errors"]))
+
+    def test_clock_serialization_margin_stays_bounded_and_finite(self):
+        for clock in (-1e-9, math.tau + 5.1e-6, math.tau + 1e-4,
+                      float("nan"), float("inf"), -float("inf"), True):
+            with self.subTest(clock=clock):
+                # A large coordinate tolerance must never bypass clock bounds.
+                result = inspect_snapshot(self.clock_endpoint_snapshot(clock), tolerance=1000)
+                self.assertFalse(result["ok"])
+                self.assertEqual(result["checked_points"], 0)
+                self.assertIn("clock_radians", "\n".join(result["errors"]))
+
     def test_invalid_or_nonfinite_observations_cannot_pass(self):
         base = self.wave_snapshot()
         invalid = [None, {}, {**base, "k": float("nan")}, {**base, "amplitude": float("inf")},

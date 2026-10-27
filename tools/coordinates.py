@@ -9,6 +9,11 @@ from pathlib import Path
 import sys
 
 
+# 2π may be serialized as 6.28319 by a browser's computed-style API.
+# Keep this radian allowance separate from the coordinate tolerance in CSS px.
+_CLOCK_SERIALIZATION_MARGIN = 5e-6
+
+
 def _result(errors: list[str], checked: int = 0, maximum: float = 0.0) -> dict:
     return {
         "ok": not errors,
@@ -33,6 +38,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
 
     pointsのx/yはビューポートにおけるDOM点の中心、stageのx/yは
     同じ座標系の描画領域左上。max_errorは点中心間の距離（CSS px）。
+    clock_radiansの上端だけは数値シリアライズ用に5e-6 radまで許容し、
+    照合にはクランプせず観測値を使う。座標の許容差は緩めない。
     不正な入力はok:falseと日本語errorsを返す。
     """
     errors: list[str] = []
@@ -50,7 +57,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
         ("k", 1, 8),
         ("phase_degrees", 0, 360),
         ("amplitude", .25, 1),
-        ("clock_radians", 0, math.tau),
+        ("clock_radians", 0, math.tau + _CLOCK_SERIALIZATION_MARGIN),
     ):
         value = _finite_number(snapshot.get(key))
         if value is None or not lower <= value <= upper:
