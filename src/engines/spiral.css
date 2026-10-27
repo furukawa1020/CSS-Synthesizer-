@@ -1,0 +1,7 @@
+/* M-04: Archimedean spiral; phase and clock rotate the whole curve. */
+.lab:has(#model-spiral:checked) .sample {
+  --radius: calc(var(--amplitude) * var(--u));
+  --angle: calc(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad);
+  --x: calc(var(--radius) * sin(var(--angle) + 90deg));
+  --y: calc(var(--radius) * sin(var(--angle)));
+}
