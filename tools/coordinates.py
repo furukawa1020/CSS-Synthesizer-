@@ -40,6 +40,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
     同じ座標系の描画領域左上。max_errorは点中心間の距離（CSS px）。
     clock_radiansの上端だけは数値シリアライズ用に5e-6 radまで許容し、
     照合にはクランプせず観測値を使う。座標の許容差は緩めない。
+    mirror_x・mirror_yは任意の真偽値で、省略時はfalse。表示反転だけを検査する。
     不正な入力はok:falseと日本語errorsを返す。
     """
     errors: list[str] = []
@@ -64,6 +65,14 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
             errors.append(f"{key}は{lower}〜{upper}の有限数で指定してください")
         else:
             values[key] = value
+
+    mirrors = {}
+    for key in ("mirror_x", "mirror_y"):
+        value = snapshot.get(key, False)
+        if type(value) is not bool:
+            errors.append(f"{key}は真偽値で指定してください")
+        else:
+            mirrors[key] = value
 
     stage = snapshot.get("stage")
     dimensions = {}
@@ -134,6 +143,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
             secondary = values["k"] * theta + phase - clock
             x = amplitude * (.65 * math.cos(main) + .35 * math.cos(secondary))
             y = amplitude * (.65 * math.sin(main) - .35 * math.sin(secondary))
+        x *= -1 if mirrors["mirror_x"] else 1
+        y *= -1 if mirrors["mirror_y"] else 1
         expected_x = origin_x + scale * x
         expected_y = origin_y - scale * y
         if not math.isfinite(expected_x) or not math.isfinite(expected_y):
