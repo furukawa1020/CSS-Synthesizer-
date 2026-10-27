@@ -1,0 +1,3 @@
+.lab:has(#point-thin:checked) .sample { inline-size: 2px; block-size: 2px; }
+.lab:has(#point-standard:checked) .sample { inline-size: 3px; block-size: 3px; }
+.lab:has(#point-thick:checked) .sample { inline-size: 5px; block-size: 5px; }
