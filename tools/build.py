@@ -3,6 +3,7 @@ from pathlib import Path
 import re
 import shutil
 from .source import expand_fragments, compose_css
+from .models import load_models, model_tokens, model_styles
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -21,6 +22,7 @@ def build(root=ROOT):
     root = Path(root)
     destination = root / 'build'
     template = expand_fragments((root / 'src/page.html').read_text(encoding='utf-8'), root / 'src')
+    models = load_models(root / 'src')
     if destination.is_symlink():
         raise ValueError('buildはシンボリックリンクにできません')
     if destination.exists():
@@ -28,6 +30,7 @@ def build(root=ROOT):
     destination.mkdir()
     for count in COUNTS:
         tokens = {
+            **model_tokens(models),
             '@@COUNT@@': str(count),
             '@@SAMPLES@@': '\n'.join(
                 f'<i class="sample" data-index="{index}" '
@@ -51,7 +54,10 @@ def build(root=ROOT):
         filename = 'index.html' if count == 192 else f'samples-{count}.html'
         (destination / filename).write_text(html, encoding='utf-8')
     for name in ('style.css', 'engine.css'):
-        (destination / name).write_text(compose_css(root / 'src', name), encoding='utf-8')
+        css = compose_css(root / 'src', name)
+        if name == 'style.css':
+            css += '\n' + model_styles(models)
+        (destination / name).write_text(css, encoding='utf-8')
     return destination
 
 
