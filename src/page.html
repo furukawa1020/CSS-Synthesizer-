@@ -13,6 +13,7 @@
   <a class="skip-link" href="#controls">調整へ進む</a>
   <header class="page-header">
     <h1><span class="title-mark" aria-hidden="true">∿</span> CSS <span>視覚シンセサイザー</span></h1>
+    @@FRAGMENT:guide-actions@@
     <a href="#guide" class="guide-link">使い方と仕組み <span aria-hidden="true">↘</span></a>
   </header>
   <main class="lab">
@@ -20,6 +21,7 @@
     <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。下の「使い方と仕組み」で数式と対応環境を確認できます。</p>
     <div class="workspace">
       <figure class="scene">
+        @@FRAGMENT:scene-actions@@
         <div class="stage" role="img" aria-label="数式から描いた点の軌跡。">
           <div class="stage-heading" aria-hidden="true"><span class="for-lissajous">リサージュ</span><span class="for-wave">波形</span><span>@@COUNT@@ 点</span></div>
           <div class="axes" aria-hidden="true"></div>
@@ -36,23 +38,29 @@
           <section class="parameter">
             <h2 id="k-label"><span><small aria-hidden="true">01</small> <span class="for-lissajous">横方向の反復</span><span class="for-wave">波の数</span></span><output class="readout readout-k" aria-label="反復の有効値"></output></h2>
             <p id="k-help">1.00–8.00 <span class="for-lissajous">横の折り返しを変える</span><span class="for-wave">波の密度を変える</span></p>
+            @@FRAGMENT:help-k@@
             <div class="band-wrap"><div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help input-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
           </section>
           <section class="parameter">
             <h2 id="phase-label"><span><small aria-hidden="true">02</small> 位相</span><output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
             <p id="phase-help">0–360° <span>横方向の位相をずらす</span></p>
+            @@FRAGMENT:help-phase@@
             <div class="band-wrap"><div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help input-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
           </section>
           <section class="parameter">
             <h2 id="amplitude-label"><span><small aria-hidden="true">03</small> <span class="for-lissajous">大きさ</span><span class="for-wave">高さ</span></span><output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
             <p id="amplitude-help">25–100% <span class="for-lissajous">横と縦の振幅を変える</span><span class="for-wave">高さを変える。横幅は一定</span></p>
+            @@FRAGMENT:help-amplitude@@
             <div class="band-wrap"><div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help input-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
           </section>
           <p class="input-help" id="input-help">帯を横に動かすか、左右キーで調整。矢印は大きく送ります（一定刻みではありません）。</p>
         </div>
+        @@FRAGMENT:view-settings@@
+        @@FRAGMENT:presets@@
         <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
       </aside>
     </div>
+    @@FRAGMENT:dialog@@
     <details class="explanation" id="guide">
       <summary><span>使い方と仕組み</span><span class="summary-note">操作・数式・対応環境</span><span class="disclosure" aria-hidden="true">+</span></summary>
       <div class="guide-body">
