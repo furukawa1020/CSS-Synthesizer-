@@ -99,6 +99,18 @@ class ArchiveVerificationTests(unittest.TestCase):
         self.assertFalse(result['ok'])
         self.assertIn('静的監査', result['errors'][0])
 
+    def test_updated_internal_hash_does_not_allow_a_broken_cross_page_link(self):
+        archive, _ = self.fixture()
+        def change(entries):
+            content = {info.filename: data for info, data in entries}
+            content['index.html'] += b'<a href="samples-96.html#missing">link</a>'
+            content['SHA256SUMS'] = ''.join(f'{hashlib.sha256(content[name]).hexdigest()}  {name}\n' for name, _ in ASSETS).encode()
+            return [(info, content[info.filename]) for info, _ in entries]
+        self.rewrite(archive, change)
+        result = verify_archive(archive)
+        self.assertFalse(result['ok'])
+        self.assertIn('参照監査', result['errors'][0])
+
     def test_member_archive_and_total_size_limits_are_checked(self):
         archive, _ = self.fixture()
         for constant in ('MAX_ARCHIVE_BYTES', 'MAX_MEMBER_BYTES', 'MAX_TOTAL_BYTES'):
