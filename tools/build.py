@@ -3,6 +3,8 @@ from pathlib import Path
 from html import escape
 import re
 import shutil
+import tempfile
+import uuid
 from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import PRESET_FILENAMES, load_presets, preset_links
@@ -20,16 +22,10 @@ def stops(values, initial, formatter):
     )
 
 
-def build(root=ROOT):
-    root = Path(root)
-    destination = root / 'build'
+def _populate(root, destination):
     template = expand_fragments((root / 'src/page.html').read_text(encoding='utf-8'), root / 'src')
     models = load_models(root / 'src')
     presets = load_presets(root / 'src', {model['id'] for model in models})
-    if destination.is_symlink():
-        raise ValueError('buildはシンボリックリンクにできません')
-    if destination.exists():
-        shutil.rmtree(destination)
     destination.mkdir()
     pages = [('index.html' if count == 192 else f'samples-{count}.html', count, None) for count in COUNTS]
     pages += [(preset['file'], 192, preset) for preset in presets]
@@ -70,6 +66,39 @@ def build(root=ROOT):
         if name == 'style.css':
             css += '\n' + model_styles(models)
         (destination / name).write_text(css, encoding='utf-8')
+
+
+def build(root=ROOT):
+    """Validate a complete candidate before replacing the last successful build.
+
+    The two renames leave a short installation window; this is not an atomic
+    directory exchange or a promise of power-loss durability.
+    """
+    from .audit import audit_directory
+    root = Path(root)
+    destination = root / 'build'
+    if destination.is_symlink() or (destination.exists() and not destination.is_dir()):
+        raise ValueError('buildは通常のディレクトリで指定してください')
+    with tempfile.TemporaryDirectory(prefix='.build-candidate-', dir=root) as temporary:
+        candidate = Path(temporary) / 'build'
+        _populate(root, candidate)
+        result = audit_directory(candidate)
+        if not result['ok']:
+            raise ValueError('生成候補の静的監査に失敗しました: ' + '; '.join(result['errors']))
+        previous = root / f'.build-previous-{uuid.uuid4().hex}'
+        had_previous = destination.exists()
+        if had_previous:
+            destination.rename(previous)
+        try:
+            candidate.rename(destination)
+        except OSError:
+            if had_previous:
+                # The backup is outside the candidate directory, so even a
+                # failed rollback cannot be erased by TemporaryDirectory.
+                previous.rename(destination)
+            raise
+        if had_previous:
+            shutil.rmtree(previous)
     return destination
 
 
