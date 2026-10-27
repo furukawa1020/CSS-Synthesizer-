@@ -5,6 +5,38 @@ from pathlib import Path
 import re
 
 TEXT_FIELDS = ('name', 'k_label', 'k_help', 'phase_help', 'amplitude_label', 'amplitude_help', 'note')
+MATH_TOKEN = re.compile(r'sin|cos|\d+(?:\.\d+)?|[A-Za-z\u0370-\u03ff]|[=+−*/()\-]')
+
+
+def mathml_expression(expression):
+    """Render the project's deliberately small equation vocabulary as MathML."""
+    if not isinstance(expression, str) or not expression.strip():
+        raise ValueError('数式は空でない文字列にしてください')
+    compact = re.sub(r'\s+', '', expression)
+    tokens = MATH_TOKEN.findall(compact)
+    if ''.join(tokens) != compact:
+        raise ValueError('数式に未対応の記号が含まれています')
+    nesting = 0
+    output = []
+    for token in tokens:
+        if token == '(':
+            nesting += 1
+        elif token == ')':
+            nesting -= 1
+            if nesting < 0:
+                raise ValueError('数式の括弧が対応していません')
+        if token in {'sin', 'cos'}:
+            output.append(f'<mi mathvariant="normal">{token}</mi><mo>⁡</mo>')
+        elif token[0].isdigit():
+            output.append(f'<mn>{token}</mn>')
+        elif token.isalpha():
+            output.append(f'<mi>{escape(token)}</mi>')
+        else:
+            operator = {'-': '−', '*': '×'}.get(token, token)
+            output.append(f'<mo>{escape(operator)}</mo>')
+    if nesting:
+        raise ValueError('数式の括弧が対応していません')
+    return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>' + ''.join(output) + '</mrow></math>'
 
 
 def validate_models(models):
@@ -49,7 +81,8 @@ def model_tokens(models, selected='lissajous'):
         '@@MODEL_NOTES@@': copies('note'),
         '@@MODEL_EQUATIONS@@': ''.join(
             f'<div class="for-{m["id"]}" data-model-copy="{m["id"]}" style="--model-copy-display:block">'
-            '<code>' + '<br>'.join(escape(value) for value in m['equations']) + '</code></div>' for m in models),
+            + ''.join(mathml_expression(part.strip()) for value in m['equations'] for part in value.split(';'))
+            + '</div>' for m in models),
     }
     return result
 
