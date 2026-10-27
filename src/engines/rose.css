@@ -1,0 +1,6 @@
+/* M-03: signed polar radius; clock rotates the whole rose. */
+.lab:has(#model-rose:checked) .sample {
+  --radius: calc(var(--amplitude) * sin(var(--theta) * var(--k) + var(--phase)));
+  --x: calc(var(--radius) * sin(var(--theta) + var(--clock) * 1rad + 90deg));
+  --y: calc(var(--radius) * sin(var(--theta) + var(--clock) * 1rad));
+}

@@ -50,8 +50,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
         return _result(errors + ["snapshotはJSONオブジェクトで指定してください"])
 
     model = snapshot.get("model")
-    if not isinstance(model, str) or model not in {"lissajous", "wave"}:
-        errors.append("modelはlissajousまたはwaveで指定してください")
+    if not isinstance(model, str) or model not in {"lissajous", "wave", "rose"}:
+        errors.append("modelはlissajous・wave・roseで指定してください")
     values = {}
     for key, lower, upper in (
         ("k", 1, 8),
@@ -117,9 +117,13 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
         if model == "lissajous":
             x = amplitude * math.sin(values["k"] * theta + phase + clock)
             y = amplitude * math.sin(2 * theta + clock)
-        else:
+        elif model == "wave":
             x = 2 * u - 1
             y = amplitude * math.sin(values["k"] * theta + phase + clock)
+        else:
+            radius = amplitude * math.sin(values["k"] * theta + phase)
+            x = radius * math.cos(theta + clock)
+            y = radius * math.sin(theta + clock)
         expected_x = origin_x + scale * x
         expected_y = origin_y - scale * y
         if not math.isfinite(expected_x) or not math.isfinite(expected_y):
