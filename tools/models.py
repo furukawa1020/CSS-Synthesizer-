@@ -1,0 +1,61 @@
+"""Generate model descriptions from data; runtime equations stay in CSS."""
+from html import escape
+import json
+from pathlib import Path
+import re
+
+TEXT_FIELDS = ('name', 'k_label', 'k_help', 'phase_help', 'amplitude_label', 'amplitude_help', 'note')
+
+
+def validate_models(models):
+    if not isinstance(models, list) or not models:
+        raise ValueError('モデル定義は空でない配列にしてください')
+    seen = set()
+    for model in models:
+        if not isinstance(model, dict):
+            raise ValueError('モデル定義はオブジェクトにしてください')
+        identifier = model.get('id')
+        if not isinstance(identifier, str) or not re.fullmatch(r'[a-z][a-z0-9-]*', identifier) or identifier in seen:
+            raise ValueError('モデルIDが不正または重複しています')
+        seen.add(identifier)
+        if any(not isinstance(model.get(key), str) or not model[key].strip() for key in TEXT_FIELDS):
+            raise ValueError(f'{identifier}の表示説明が不足しています')
+        equations = model.get('equations')
+        if not isinstance(equations, list) or len(equations) != 2 or any(not isinstance(value, str) or not value.strip() for value in equations):
+            raise ValueError(f'{identifier}にはx・yの2式が必要です')
+    return models
+
+
+def load_models(source):
+    return validate_models(json.loads((Path(source) / 'models.json').read_text(encoding='utf-8')))
+
+
+def model_tokens(models, selected='lissajous'):
+    validate_models(models)
+    if selected not in {model['id'] for model in models}:
+        raise ValueError('既定のモデルが定義されていません')
+    def copies(key):
+        return ''.join(f'<span class="for-{m["id"]}" data-model-copy="{m["id"]}">{escape(m[key])}</span>' for m in models)
+    result = {
+        '@@MODEL_CHOICES@@': ''.join(
+            f'<label><input id="model-{m["id"]}" type="radio" name="model" value="{m["id"]}"'
+            f'{" checked" if m["id"] == selected else ""}><span>{escape(m["name"])}</span></label>' for m in models),
+        '@@MODEL_NAMES@@': copies('name'),
+        '@@MODEL_K_LABELS@@': copies('k_label'),
+        '@@MODEL_K_HELP@@': copies('k_help'),
+        '@@MODEL_PHASE_HELP@@': copies('phase_help'),
+        '@@MODEL_AMPLITUDE_LABELS@@': copies('amplitude_label'),
+        '@@MODEL_AMPLITUDE_HELP@@': copies('amplitude_help'),
+        '@@MODEL_NOTES@@': copies('note'),
+        '@@MODEL_EQUATIONS@@': ''.join(
+            f'<div class="for-{m["id"]}" data-model-copy="{m["id"]}" style="--model-copy-display:block">'
+            '<code>' + '<br>'.join(escape(value) for value in m['equations']) + '</code></div>' for m in models),
+    }
+    return result
+
+
+def model_styles(models):
+    validate_models(models)
+    return '[data-model-copy] { display: none; }\n' + '\n'.join(
+        f'.lab:has(#model-{m["id"]}:checked) [data-model-copy="{m["id"]}"] '
+        '{ display: var(--model-copy-display, inline); }' for m in models)

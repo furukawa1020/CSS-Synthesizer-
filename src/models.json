@@ -1,0 +1,18 @@
+[
+  {
+    "id": "lissajous", "name": "リサージュ",
+    "k_label": "横方向の反復", "k_help": "横の折り返しを変える",
+    "phase_help": "横軸の位相をずらす", "amplitude_label": "大きさ",
+    "amplitude_help": "横と縦の振幅を変える",
+    "equations": ["x = A sin(kθ + φ + t)", "y = A sin(2θ + t)"],
+    "note": "kは横軸側の反復数です。非整数では開いた曲線になる場合があります。"
+  },
+  {
+    "id": "wave", "name": "波形",
+    "k_label": "波の数", "k_help": "波の密度を変える",
+    "phase_help": "波の位相をずらす", "amplitude_label": "高さ",
+    "amplitude_help": "高さを変える。横幅は一定",
+    "equations": ["x = 2u − 1", "y = A sin(2πku + φ + t)"],
+    "note": "kは左端から右端までの周期数です。振幅で横幅は変わりません。"
+  }
+]
