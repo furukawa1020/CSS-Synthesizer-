@@ -1,0 +1,17 @@
+/* Display mode changes layout, never the model or the clock. */
+.scene-actions { display: flex; justify-content: flex-end; min-block-size: 44px; margin-block-end: 8px; }
+.focus-toggle { display: inline-flex; align-items: center; gap: 8px; min-block-size: 44px; padding-inline: 8px; cursor: pointer; font-size: .875rem; }
+.focus-exit { display: none; }
+.lab:has(#focus-view:checked) .focus-enter { display: none; }
+.lab:has(#focus-view:checked) .focus-exit { display: inline; }
+body:has(#focus-view:checked) .page-header,
+body:has(#focus-view:checked) .skip-link,
+.lab:has(#focus-view:checked) .explanation,
+.lab:has(#focus-view:checked) footer { display: none; }
+/* Scroll timelines need their source boxes even while the controls are hidden. */
+.lab:has(#focus-view:checked) .controls { visibility: hidden; position: fixed; inset-inline-start: -10000px; inset-block-start: 0; inline-size: clamp(260px, 20vw, 320px); block-size: auto; max-block-size: none; pointer-events: none; }
+.lab:has(#focus-view:checked) { padding-block-start: 8px; }
+.lab:has(#focus-view:checked) .workspace { grid-template-columns: minmax(0, 1fr); }
+.lab:has(#focus-view:checked) .scene { position: static; }
+.lab:has(#focus-view:checked) .scene-actions { position: sticky; inset-block-start: 0; z-index: 4; background: var(--paper); }
+.lab:has(#focus-view:checked) .stage { block-size: max(320px, calc(100svh - 128px)); }
