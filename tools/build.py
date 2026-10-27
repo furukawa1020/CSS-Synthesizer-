@@ -2,6 +2,7 @@
 from pathlib import Path
 import re
 import shutil
+from .source import expand_fragments, compose_css
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -19,7 +20,7 @@ def stops(values, initial, formatter):
 def build(root=ROOT):
     root = Path(root)
     destination = root / 'build'
-    template = (root / 'src/page.html').read_text(encoding='utf-8')
+    template = expand_fragments((root / 'src/page.html').read_text(encoding='utf-8'), root / 'src')
     if destination.is_symlink():
         raise ValueError('buildはシンボリックリンクにできません')
     if destination.exists():
@@ -50,7 +51,7 @@ def build(root=ROOT):
         filename = 'index.html' if count == 192 else f'samples-{count}.html'
         (destination / filename).write_text(html, encoding='utf-8')
     for name in ('style.css', 'engine.css'):
-        shutil.copyfile(root / 'src' / name, destination / name)
+        (destination / name).write_text(compose_css(root / 'src', name), encoding='utf-8')
     return destination
 
 
