@@ -45,3 +45,31 @@ class ModelTests(unittest.TestCase):
             for token in ('NAMES', 'K_LABELS', 'K_HELP', 'PHASE_HELP', 'AMPLITUDE_LABELS', 'AMPLITUDE_HELP', 'EQUATIONS', 'NOTES'):
                 with self.subTest(model=model['id'], token=token):
                     self.assertIn(f'data-model-copy="{model["id"]}"', tokens[f'@@MODEL_{token}@@'])
+
+    def test_initial_fallback_tracks_the_selected_model_in_every_copy(self):
+        class Parser(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.copies = []
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if 'data-model-copy' in attrs:
+                    self.copies.append((attrs['data-model-copy'], 'data-model-initial' in attrs))
+        models = load_models(ROOT / 'src')
+        for selected in ('lissajous', 'wave'):
+            tokens = model_tokens(models, selected=selected)
+            for token, source in tokens.items():
+                if token == '@@MODEL_CHOICES@@':
+                    continue
+                with self.subTest(selected=selected, token=token):
+                    parser = Parser(); parser.feed(source)
+                    self.assertEqual([identifier for identifier, initial in parser.copies if initial], [selected])
+                    self.assertEqual(len(parser.copies), len(models))
+
+    def test_css_keeps_initial_copy_visible_before_has_support_branch(self):
+        styles = model_styles(load_models(ROOT / 'src'))
+        fallback, interactive = styles.split('@supports selector(:has(*))', 1)
+        self.assertIn('[data-model-copy][data-model-initial]', fallback)
+        self.assertNotIn(':has(', fallback)
+        hide = interactive.index('.lab [data-model-copy] { display: none; }')
+        self.assertLess(hide, interactive.index('.lab:has(#model-lissajous:checked)'))
+        self.assertLess(hide, interactive.index('.lab:has(#model-wave:checked)'))

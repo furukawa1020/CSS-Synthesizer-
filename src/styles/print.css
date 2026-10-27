@@ -1,0 +1,23 @@
+.print-summary { display: none; }
+.print-clock { counter-reset: print-clock round(nearest, calc(var(--clock) * 1000), 1); }
+.print-clock::after { content: counter(print-clock) ' mrad'; }
+@media print {
+  @page { margin: 15mm; }
+  :root, body { color: #111; background: #fff; }
+  .lab { --clock-state: paused !important; max-inline-size: none; padding: 0 !important; }
+  .page-header, .skip-link, .scene-actions, .scene-caption, .explanation, footer,
+  .view-settings, .preset-picker, dialog, [popover] { display: none !important; }
+  dialog::backdrop, [popover]::backdrop { display: none !important; }
+  /* Scroll timelines need their boxes, even when the controls are not printed. */
+  .lab .controls { display: flex !important; position: fixed !important; inset: 0 auto auto -10000px !important; inline-size: 280px !important; visibility: hidden !important; pointer-events: none; }
+  .workspace { display: block; }
+  .lab .scene { position: static; margin: 0; }
+  .lab .stage { inline-size: 140mm !important; max-inline-size: 100%; block-size: 140mm !important; margin-inline: auto; background: #fff !important; color: #111 !important; outline: 1px solid #888; print-color-adjust: exact; break-inside: avoid; --grid-color: #ddd !important; --axis-color: #bbb !important; --circle-color: #ccc !important; }
+  .stage-heading, .stage-footnote { color: #444 !important; }
+  .sample { background: #111 !important; border: 1px solid #111; }
+  .print-summary { display: block; margin-block-start: 8mm; font-size: 10pt; line-height: 1.5; }
+  .print-summary h2 { margin: 0 0 3mm; font-size: 13pt; font-weight: 600; }
+  .print-summary p { margin: 2mm 0; }
+  .print-equations { margin-block-start: 4mm; }
+  .print-equations math { font-size: 12pt; }
+}

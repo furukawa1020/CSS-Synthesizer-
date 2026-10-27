@@ -4,11 +4,14 @@
 .parameter-help { border: 1px solid var(--rule); border-radius: 0; padding: 16px; background: var(--paper); color: var(--ink); font-size: .9375rem; }
 .parameter-help h3 { font-size: 1rem; font-weight: 600; margin: 0 0 12px; }
 .parameter-help p { display: block; font-size: .9375rem; line-height: 1.7; color: var(--ink); margin: 12px 0; }
-.parameter-help button { min-block-size: 44px; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.parameter-help button { display: none; min-block-size: 44px; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 @supports selector(:popover-open) {
-  .parameter > p { padding-inline-end: 44px; }
-  .parameter-help-trigger { display: inline-grid; place-items: center; position: absolute; inset-inline-end: 0; inset-block-start: calc(12px + 2.1rem); inline-size: 44px; block-size: 44px; border: 0; border-radius: 0; background: transparent; color: var(--muted); font: 1rem/1 ui-monospace, monospace; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+  .parameter { display: grid; grid-template-columns: minmax(0, 1fr) 44px; }
+  .parameter > h2, .parameter > .band-wrap { grid-column: 1 / -1; }
+  .parameter > p { grid-column: 1; margin-block: 6px; padding-inline-end: 0; min-block-size: 44px; align-items: center; }
+  .parameter-help-trigger { display: inline-grid; place-items: center; position: static; grid-column: 2; align-self: center; inline-size: 44px; block-size: 44px; border: 0; border-radius: 0; background: transparent; color: var(--muted); font: 1rem/1 ui-monospace, monospace; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
   .parameter-help-trigger:hover { color: var(--accent); }
+  .parameter-help button { display: inline-flex; align-items: center; }
   .parameter-help { position: fixed; margin: 0; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); inline-size: min(24rem, calc(100vw - 32px)); max-block-size: calc(100svh - 32px); overflow: auto; }
   @supports (position-area: block-end) {
     .parameter-help { inset: auto; margin: 8px; transform: none; position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; }

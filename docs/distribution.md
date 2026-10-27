@@ -1,44 +1,60 @@
-# v0.1の静的配布物
+# 静的配布物と検査
 
-この手順はZIPをローカルに生成する。公開・デプロイ・GitHub Releaseの発行は行わない。実機タッチ・他ブラウザ・性能等の未検証項目は[受け入れ記録](acceptance.md)と[Issue #3](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)で管理する。
+Python標準ライブラリでZIPとSHA-256のmanifestをローカルに生成する。公開・デプロイ・GitHub Releaseの発行は行わない。作品の動作確認の範囲は[今回の検証](batch20/validation.md)と[受け入れ状況](acceptance.md)を参照する。
 
 ## 生成する
 
-Python 3とGitを使う。Pythonの標準ライブラリだけを使い、追加パッケージのインストールは不要。
+Python 3.11以上とGitを使う。追加パッケージのインストールは不要。
 
 ```sh
 python3 -m tools.build
-python3 -m unittest discover -s tests
+python3 -m unittest discover -s tests -v
 python3 -m tools.audit
 python3 -m tools.package
 ```
 
-`dist/css-synthesizer-v0.1.zip`と`dist/css-synthesizer-v0.1.manifest.json`を生成する。`python3 -m tools.package`単体でも、未コミット変更がないことを確認してから現在のソースを必ず再ビルドし、監査・ZIP生成へ進む。以前の`build/`とQA fixtureはこの再ビルドで削除される。
+`tools.package`は未コミット変更がないことを確認し、現在のソースを必ず再ビルドしてから監査・配布生成へ進む。正常な再生成では古いQA fixtureを除去する。生成や候補監査に失敗した場合は前回の`build/`を残す。配置は二段階のrenameであり、電源断や並行HTTPリクエストに対する完全な原子性は保証しない。
 
-ZIPを展開し、HTMLとCSSを同じディレクトリに置く。現行Chrome / Edgeで`index.html`を開く。Pythonは作品の実行時には不要。配布ページも開発ツールもJavaScriptを使わない。
+出力は`dist/css-synthesizer-v0.1.zip`と`dist/css-synthesizer-v0.1.manifest.json`。ZIPを展開してHTMLとCSSを同じディレクトリに置き、現行Chrome / Edgeで`index.html`を開く。Pythonはブラウザ内の実行には不要。
 
-ZIPに入るものは、次の7ファイルだけである。
+## 同梱する11ファイル
 
 | ファイル | 役割 |
 | --- | --- |
-| index.html | 192点の作品 |
-| samples-96.html | 96点の比較用ページ |
-| samples-384.html | 384点の比較用ページ |
-| style.css | 画面・操作の表示 |
-| engine.css | 入力・数理モデル・時間 |
-| README.txt | 展開後の使い方と制限の参照先 |
-| SHA256SUMS | 5つのHTML/CSSのSHA-256一覧 |
+| `index.html` | 192点の作品・5モデル・操作画面 |
+| `samples-96.html`・`samples-384.html` | 点数の比較用ページ |
+| `preset-circle.html` | 反復2.00・位相90°・振幅70%のリサージュ |
+| `preset-weave.html` | 反復5.00・位相0°・振幅90%のリサージュ |
+| `preset-two-waves.html` | 反復2.00・位相180°・振幅60%の波形 |
+| `preset-fine-wave.html` | 反復7.00・位相90°・振幅40%の波形 |
+| `style.css` | 分割した画面用CSSを合成したもの |
+| `engine.css` | 入力・時計・全モデルの描画用CSSを合成したもの |
+| `README.txt` | 展開後の使い方と制限の参照先 |
+| `SHA256SUMS` | 上記9つのHTML/CSSのSHA-256一覧 |
 
-配布APIの`package_release()`は5つのHTML/CSSを再監査してからZIPを作る。入力ディレクトリに余分なファイル、ディレクトリ、シンボリックリンクがある場合は失敗させる。CLIはこのAPIの前にビルドを実行する。開発用コード、検証用コード、ソース、Git情報をZIPへ入れない。
+プリセットは各192点で、指定値・時間停止・時計0から始まる別ページ。編集状態を保存したファイルではない。点数ページやプリセット間を移動する際、現在の値や時間の保持は保証しない。
+
+`package_release()`は許可された9つのアプリファイルを再監査する。余分なファイル・不足・ディレクトリ・シンボリックリンクは拒否する。開発ソース、検証資料、Git情報はZIPへ入れない。
+
+## 展開せずに検査する
+
+```sh
+python3 -m tools.verify dist/css-synthesizer-v0.1.zip
+python3 -m tools.verify dist/css-synthesizer-v0.1.zip --manifest dist/css-synthesizer-v0.1.manifest.json
+```
+
+成功時のJSONは`ok: true`、終了コードは0。失敗時は`ok: false`と理由を返し、終了コードは1となる。検査中にZIPのファイルをディスクへ展開しない。
+
+検査する内容は、配布定義と一致するファイル名・数、重複、通常ファイル性、パス逸脱、暗号化、無圧縮形式、サイズ上限、内部SHA-256、HTML/CSSの禁止内容、ネイティブ操作と同梱ページ間の参照先。内部のハッシュ一覧を作り直しても、スクリプトや壊れた操作参照は静的監査で拒否する。
+
+この検査器は本プロジェクトの無圧縮ZIP形式専用で、一般のZIP検査器ではない。上限はZIP全体16MiB、各メンバー2MiB、総展開サイズ8MiB。ZIP全体の上限はファイル読み取り前にも確認し、各メンバーのサイズ・形式はメンバーデータの読み取り前に検査する。
+
+外部manifestを指定した場合はZIP全体のSHA-256も照合する。指定しない場合、同梱の`SHA256SUMS`によるアプリファイルの整合性を調べるだけで、READMEやZIP全体の改変を保証して検出するものではない。manifestも含めて置き換えられた場合の発行者の真正性は、これらのハッシュだけでは証明できない。
 
 ## 再現性と生成元
 
-ZIPのファイル順・時刻・属性は固定し、圧縮なしのZIP STORE形式を使う。同じHTML/CSSなら、元ファイルの更新時刻や生成元commitが違ってもZIPのバイト列は同じになる。
+ZIPはファイル順・時刻・属性を固定したZIP STORE形式。同じHTML/CSSなら、元ファイルの更新時刻や生成元commitが違ってもZIPのバイト列は同じになる。
 
-生成元の完全なcommit SHAはZIPの外のmanifestに記録する。manifestはZIP全体のSHA-256と同梱全ファイルのSHA-256も持つ。生成日時は記録しない。これにより、ソースを追跡しつつZIP自体の再現性を維持する。
+完全な生成元commit SHAはZIPの外のmanifestへ記録する。manifestはZIP全体と全同梱ファイルのSHA-256を持ち、生成日時は含めない。CLIは未コミット変更を拒否し、その時点の`HEAD`から再生成した内容を使う。
 
-CLIは未コミット変更があると失敗させ、manifestにパッケージ実行時の`HEAD`を記録する。ZIPはそのソースから再生成した成果物だけを使う。SHA-256は改変の比較用で、発行者の署名や動作保証ではない。
-
-## 確認範囲
-
-`tests/test_package.py`はZIPの格納内容、既知のCRC-32、SHA-256一覧、同一入力の再現一致、入力変更の反映、QAファイル等の拒否、禁止スクリプトの拒否を確認する。CLIは未コミット変更のある環境では拒否を確認し、変更のない環境では古い生成物・QA fixtureを再生成で置き換えて現在のcommitを記録することを確認する。これは実ブラウザでの作品の操作・描画・性能の検証を置き換えない。
+配布検査は実ブラウザの操作、実機タッチ、読み上げ、描画性能、file://での直接表示、実際の印刷の検証を置き換えない。未確認の環境は[Issue #3](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)へ残す。

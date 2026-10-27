@@ -66,8 +66,10 @@ def model_tokens(models, selected='lissajous'):
     validate_models(models)
     if selected not in {model['id'] for model in models}:
         raise ValueError('既定のモデルが定義されていません')
+    def initial(model):
+        return ' data-model-initial=""' if model['id'] == selected else ''
     def copies(key):
-        return ''.join(f'<span class="for-{m["id"]}" data-model-copy="{m["id"]}">{escape(m[key])}</span>' for m in models)
+        return ''.join(f'<span class="for-{m["id"]}" data-model-copy="{m["id"]}"{initial(m)}>{escape(m[key])}</span>' for m in models)
     result = {
         '@@MODEL_CHOICES@@': ''.join(
             f'<label><input id="model-{m["id"]}" type="radio" name="model" value="{m["id"]}"'
@@ -80,7 +82,7 @@ def model_tokens(models, selected='lissajous'):
         '@@MODEL_AMPLITUDE_HELP@@': copies('amplitude_help'),
         '@@MODEL_NOTES@@': copies('note'),
         '@@MODEL_EQUATIONS@@': ''.join(
-            f'<div class="for-{m["id"]}" data-model-copy="{m["id"]}" style="--model-copy-display:block">'
+            f'<div class="for-{m["id"]}" data-model-copy="{m["id"]}"{initial(m)} style="--model-copy-display:block">'
             + ''.join(mathml_expression(part.strip()) for value in m['equations'] for part in value.split(';'))
             + '</div>' for m in models),
     }
@@ -89,6 +91,9 @@ def model_tokens(models, selected='lissajous'):
 
 def model_styles(models):
     validate_models(models)
-    return '[data-model-copy] { display: none; }\n' + '\n'.join(
+    return ('[data-model-copy] { display: none; }\n'
+        '[data-model-copy][data-model-initial] { display: var(--model-copy-display, inline); }\n'
+        '@supports selector(:has(*)) {\n'
+        '.lab [data-model-copy] { display: none; }\n' + '\n'.join(
         f'.lab:has(#model-{m["id"]}:checked) [data-model-copy="{m["id"]}"] '
-        '{ display: var(--model-copy-display, inline); }' for m in models)
+        '{ display: var(--model-copy-display, inline); }' for m in models) + '\n}')

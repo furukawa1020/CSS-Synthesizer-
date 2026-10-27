@@ -1,0 +1,27 @@
+{
+  "fontPercent": 200,
+  "iframeWidth": 360,
+  "bounds": [
+    {
+      "buttonHeight": 44,
+      "buttonY": 1514.890625,
+      "headingHeight": 132.796875,
+      "headingOverlap": false,
+      "headingY": 1326.8125
+    },
+    {
+      "buttonHeight": 44,
+      "buttonY": 1862.359375,
+      "headingHeight": 72,
+      "headingOverlap": false,
+      "headingY": 1758.171875
+    },
+    {
+      "buttonHeight": 44,
+      "buttonY": 2209.828125,
+      "headingHeight": 72,
+      "headingOverlap": false,
+      "headingY": 2082.546875
+    }
+  ]
+}

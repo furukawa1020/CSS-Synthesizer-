@@ -1,0 +1,16 @@
+{
+  "mobilePanel": {
+    "height": 623.65625,
+    "width": 328,
+    "x": 8.5,
+    "y": 138.171875
+  },
+  "mobileHelp": {
+    "height": 318.890625,
+    "width": 328,
+    "x": 9,
+    "y": 480.15625
+  },
+  "cssWidth": 360,
+  "frameHeight": 900
+}
