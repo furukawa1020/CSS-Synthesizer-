@@ -1,0 +1,14 @@
+@media not (forced-colors: active) {
+  .lab:has(#palette-ice:checked) .stage {
+    background: #101f2c; color: #d6f4ff;
+    --grid-color: #d6f4ff18; --axis-color: #d6f4ff30; --circle-color: #d6f4ff18;
+  }
+  .lab:has(#palette-ice:checked) .stage-heading { color: #c2d9e7; }
+  .lab:has(#palette-ice:checked) .stage-footnote { color: #aec9dc; }
+  .lab:has(#palette-paper:checked) .stage {
+    background: #f5f2e9; color: #26352c;
+    --grid-color: #26352c18; --axis-color: #26352c33; --circle-color: #26352c22;
+  }
+  .lab:has(#palette-paper:checked) .stage-heading { color: #405048; }
+  .lab:has(#palette-paper:checked) .stage-footnote { color: #526359; }
+}
