@@ -24,7 +24,7 @@ def gallery_html(presets, models):
   <figure class="lab gallery-example" data-static-model="{preset['model']}" style="--k-raw:{preset['k']};--phase-raw:{preset['phase']};--amplitude-raw:{preset['amplitude']/100:g}">
     <div class="stage" role="img" aria-label="{escape(label, quote=True)}"><div class="axes" aria-hidden="true"></div><div class="plot" aria-hidden="true">{samples}</div></div>
     {unavailable}
-    <figcaption class="gallery-unsupported">このブラウザではCSS描画に必要な機能が不足しています。名前と初期値は右記のとおりです。</figcaption>
+    <figcaption class="gallery-unsupported">このブラウザではCSS描画に必要な機能が不足しています。名前と初期値は一覧の記載を確認してください。</figcaption>
   </figure>
   <section><h2><a href="{preset['file']}">{escape(preset['name'])}<span aria-hidden="true"> ↗</span></a></h2>
     <p>{escape(names[preset['model']])}</p>

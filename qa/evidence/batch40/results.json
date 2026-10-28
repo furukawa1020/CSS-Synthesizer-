@@ -1,0 +1,203 @@
+{
+  "cases": 28,
+  "points": 4704,
+  "maximum_error_css_px": 0.00012993246801526123,
+  "results": [
+    {
+      "case": "model-lissajous",
+      "ok": true,
+      "max_error": 4.752189470070028e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-wave",
+      "ok": true,
+      "max_error": 5.619121290063915e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-rose",
+      "ok": true,
+      "max_error": 4.6857136739501255e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-spiral",
+      "ok": true,
+      "max_error": 4.852487113206183e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-orbit",
+      "ok": true,
+      "max_error": 4.9508113650501276e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-fermat",
+      "ok": true,
+      "max_error": 5.414259792870206e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-damped-wave",
+      "ok": true,
+      "max_error": 5.40746134110978e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "model-standing-wave",
+      "ok": true,
+      "max_error": 6.052394846273082e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "square",
+      "ok": true,
+      "max_error": 4.608376224796659e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "wide",
+      "ok": true,
+      "max_error": 3.905392167038525e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "square-points",
+      "ok": true,
+      "max_error": 4.434777946653953e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "focus-before",
+      "ok": true,
+      "max_error": 4.434777946653953e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "focus-on",
+      "ok": true,
+      "max_error": 4.553090581868671e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "focus-after",
+      "ok": true,
+      "max_error": 6.052394846273082e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "preset-rose",
+      "ok": true,
+      "max_error": 5.191260863294695e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "preset-spiral",
+      "ok": true,
+      "max_error": 5.0608598457815124e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "preset-orbit",
+      "ok": true,
+      "max_error": 5.040147235318623e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "fraction-fermat",
+      "ok": true,
+      "max_error": 5.2429800307134666e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "fraction-damped-wave",
+      "ok": true,
+      "max_error": 4.816257829459541e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "fraction-standing-wave",
+      "ok": true,
+      "max_error": 5.179428393037152e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "print",
+      "ok": true,
+      "max_error": 4.5196236485528824e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "gallery-1",
+      "ok": true,
+      "max_error": 4.092348545956754e-05,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-2",
+      "ok": true,
+      "max_error": 4.0503051877749385e-05,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-3",
+      "ok": true,
+      "max_error": 7.212327856404579e-05,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-4",
+      "ok": true,
+      "max_error": 7.216712743945785e-05,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-5",
+      "ok": true,
+      "max_error": 6.803749239067699e-05,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-6",
+      "ok": true,
+      "max_error": 0.00012993246801526123,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "gallery-7",
+      "ok": true,
+      "max_error": 0.000124715727292643,
+      "checked_points": 96,
+      "errors": []
+    }
+  ]
+}
