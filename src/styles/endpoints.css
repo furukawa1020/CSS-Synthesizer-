@@ -1,0 +1,18 @@
+/* Endpoint marks live on pseudo-elements; sample centers are unchanged. */
+.lab:has(#view-endpoints:checked) .sample:first-child,
+.lab:has(#view-endpoints:checked) .sample:last-child { z-index: 2; }
+.lab:has(#view-endpoints:checked) .sample:first-child::before,
+.lab:has(#view-endpoints:checked) .sample:last-child::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%; inset-block-start: 50%;
+  inline-size: 14px; block-size: 14px;
+  border: 2px solid currentColor;
+  border-radius: 50%; background: transparent;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.lab:has(#view-endpoints:checked) .sample:last-child::before {
+  inline-size: 9px; block-size: 9px; border-radius: 0;
+}
+.view-endpoint-note { margin: 4px 0 0; font-size: .8125rem; }
