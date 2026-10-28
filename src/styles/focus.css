@@ -14,4 +14,4 @@ body:has(#focus-view:checked) .skip-link,
 .lab:has(#focus-view:checked) .workspace { grid-template-columns: minmax(0, 1fr); }
 .lab:has(#focus-view:checked) .scene { position: static; }
 .lab:has(#focus-view:checked) .scene-actions { position: sticky; inset-block-start: 0; z-index: 4; background: var(--paper); }
-.lab:has(#focus-view:checked) .stage { block-size: max(320px, calc(100svh - 128px)); }
+.lab:has(#focus-view:checked) .stage { block-size: max(320px, calc(100svh - 220px)); }
