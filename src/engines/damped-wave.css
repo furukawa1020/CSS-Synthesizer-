@@ -1,0 +1,7 @@
+/* M-07: fixed spatial envelope exp(-3u); clock advances wave phase. */
+@supports (width: calc(exp(0) * 1px)) {
+  .lab:has(#model-damped-wave:checked) .sample {
+    --x: calc(var(--u) * 2 - 1);
+    --y: calc(var(--amplitude) * exp(-3 * var(--u)) * sin(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad));
+  }
+}
