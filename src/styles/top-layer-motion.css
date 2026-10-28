@@ -1,0 +1,14 @@
+/* Opacity leaves implicit anchors and keyboard focus behavior unchanged. */
+@supports (transition-behavior: allow-discrete) and (overlay: auto) and selector(:popover-open) {
+  .operation-dialog, .view-panel[popover], .parameter-help[popover] {
+    opacity: 0;
+    transition: opacity 120ms ease-out, display 120ms allow-discrete, overlay 120ms allow-discrete;
+  }
+  .operation-dialog[open], .view-panel:popover-open, .parameter-help:popover-open { opacity: 1; }
+  @starting-style {
+    .operation-dialog[open], .view-panel:popover-open, .parameter-help:popover-open { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .operation-dialog, .view-panel[popover], .parameter-help[popover] { transition: none; }
+  }
+}
