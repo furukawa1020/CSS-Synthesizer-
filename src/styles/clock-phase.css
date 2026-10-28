@@ -1,0 +1,3 @@
+.clock-phase { counter-reset: clock-degrees round(nearest, calc(var(--clock) * 57.29577951308232), 1); font-variant-numeric: tabular-nums; }
+.clock-phase::after { content: counter(clock-degrees) '°'; }
+.clock-period { color: var(--muted); }
