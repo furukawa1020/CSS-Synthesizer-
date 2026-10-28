@@ -1,0 +1,31 @@
+/* Flat comparison rows; the same engine equations run without interactive input. */
+.gallery-main { inline-size: min(1100px, 100%); margin-inline: auto; padding: 28px 32px; }
+.gallery-main > h1 { font-size: 1.6rem; }
+.gallery-intro { max-inline-size: 70ch; font-size: .9375rem; }
+.gallery-list { list-style: none; margin: 28px 0 0; padding: 0; border-block-start: 1px solid var(--rule); }
+.gallery-list > li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; padding-block: 28px; border-block-end: 1px solid var(--rule); align-items: center; }
+.gallery-example.lab { margin: 0; padding: 0; animation: none; --clock: 0; timeline-scope: none; }
+.gallery-example .stage { block-size: clamp(220px, 25vw, 300px); }
+.gallery-list h2 { font-size: 1.25rem; font-weight: 550; margin: 0 0 10px; }
+.gallery-list p { font-size: .875rem; color: var(--muted); margin: 6px 0; }
+.gallery-list dl { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 16px 0; }
+.gallery-list dt { color: var(--muted); font-size: .8125rem; }
+.gallery-list dd { margin: 0; font: 1.125rem/1.6 ui-monospace, monospace; }
+.gallery-open { display: inline-flex; align-items: center; min-block-size: 44px; font-size: .9375rem; }
+.gallery-unsupported { display: none; font-size: .875rem; }
+@supports not ((container-type: size) and (width: 1cqmin) and (width: calc(sin(1rad) * 1px)) and selector(:has(*))) {
+  .gallery-example .stage { display: none; }
+  .gallery-unsupported { display: block; }
+}
+@media (max-width: 600px) {
+  .gallery-main { padding: 24px 16px; }
+  .gallery-list > li { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .gallery-example .stage { block-size: max(230px, 70vw); }
+}
+@media print {
+  .gallery-page .page-header { display: flex !important; padding: 0 0 5mm; }
+  .gallery-main { inline-size: 100%; padding: 0; }
+  .gallery-list > li { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8mm; padding-block: 6mm; break-inside: avoid; }
+  .gallery-example.lab .stage { inline-size: 65mm !important; block-size: 50mm !important; }
+  .gallery-page .gallery-open, .gallery-page footer { display: none; }
+}

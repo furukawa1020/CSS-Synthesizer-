@@ -14,4 +14,5 @@ def asset_specs(source=SOURCE):
         ('index.html', 192), ('samples-96.html', 96), ('samples-384.html', 384),
         ('style.css', None), ('engine.css', None),
         *((preset['file'], 192) for preset in presets),
+        ('gallery.html', 96 * len(presets)),
     )

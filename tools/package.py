@@ -21,6 +21,7 @@ INSTRUCTIONS = """CSS視覚シンセサイザー v0.1
 
 index.htmlと2つのCSSを同じ場所に置き、現行Chrome / Edgeで開いてください。
 点数比較用のsamples-96.html、samples-384.htmlと、停止状態で始めるpreset-*.htmlも同梱しています。
+gallery.htmlで停止した形を一覧比較できます。
 ブラウザ内の実行コードはHTML / CSSのみです。音声・永続保存はありません。
 非対応環境では画面に示す制限を確認してください。
 実機タッチ・他ブラウザ・実OSの動きを減らす設定・性能の確認状況は、
