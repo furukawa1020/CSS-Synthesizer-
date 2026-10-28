@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 import re
 import sys
-from .presets import PRESET_FILENAMES
+from .assets import asset_specs
 from urllib.parse import unquote, urlsplit
 
 
@@ -41,7 +41,6 @@ _CSS_URLS = re.compile(
     r'''url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)|@import\s+(?:"([^"]*)"|'([^']*)')''',
     re.IGNORECASE,
 )
-_PAGES = (("index.html", 192), ("samples-96.html", 96), ("samples-384.html", 384), *((filename, 192) for filename in PRESET_FILENAMES))
 _STYLES = ("style.css", "engine.css")
 _DIALOG_COMMANDS = {"show-modal", "close", "request-close"}
 _POPOVER_COMMANDS = {"toggle-popover", "show-popover", "hide-popover"}
@@ -288,12 +287,13 @@ def audit_document_links(documents: dict[str, str], available_names=None) -> dic
     return {name: _unique(values) for name, values in errors.items()}
 
 
-def audit_directory(directory: Path) -> dict:
+def audit_directory(directory: Path, assets=None) -> dict:
     """配布HTML / CSSの監査結果を集約する。欠落もerrorsとして返す。"""
     directory = Path(directory)
+    specs = asset_specs() if assets is None else tuple(assets)
     files: list[dict] = []
     documents = {}
-    for filename, samples in (*_PAGES, *((filename, None) for filename in _STYLES)):
+    for filename, samples in specs:
         try:
             source = (directory / filename).read_text(encoding="utf-8")
             result = audit_html(source, samples) if samples is not None else audit_css(source)
@@ -302,7 +302,7 @@ def audit_directory(directory: Path) -> dict:
         except (OSError, UnicodeError) as error:
             result = {"ok": False, "errors": [f"ファイルを読み取れない: {error}"]}
         files.append({"path": filename, **result})
-    links = audit_document_links(documents, {name for name, _ in _PAGES} | set(_STYLES))
+    links = audit_document_links(documents, {name for name, _ in specs})
     for item in files:
         item['errors'].extend(links.get(item['path'], []))
         item['ok'] = not item['errors']

@@ -4,7 +4,8 @@ import shutil
 import tempfile
 import threading
 import unittest
-from tools.build import ROOT, ASSETS, build
+from tools.build import ROOT, build
+from tools.assets import asset_specs
 from tools.serve import create_server
 
 
@@ -17,7 +18,7 @@ class DevelopmentToolsTest(unittest.TestCase):
             first = {p.name: p.read_bytes() for p in output.iterdir()}
             (output / 'qa-extra.html').write_text('QA only')
             build(root)
-            self.assertEqual(set(first), set(ASSETS))
+            self.assertEqual(set(first), {name for name, _ in asset_specs()})
             self.assertEqual(first, {p.name: p.read_bytes() for p in output.iterdir()})
 
     def test_server_confines_paths_and_keeps_csp(self):

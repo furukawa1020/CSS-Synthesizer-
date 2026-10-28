@@ -7,11 +7,11 @@ import tempfile
 import uuid
 from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
-from .presets import PRESET_FILENAMES, load_presets, preset_links
+from .presets import load_presets, preset_links
+from .assets import asset_specs
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
-ASSETS = ('index.html', 'samples-96.html', 'samples-384.html', 'style.css', 'engine.css', *PRESET_FILENAMES)
 
 
 def stops(values, initial, formatter):
@@ -82,7 +82,7 @@ def build(root=ROOT):
     with tempfile.TemporaryDirectory(prefix='.build-candidate-', dir=root) as temporary:
         candidate = Path(temporary) / 'build'
         _populate(root, candidate)
-        result = audit_directory(candidate)
+        result = audit_directory(candidate, assets=asset_specs(root / 'src'))
         if not result['ok']:
             raise ValueError('生成候補の静的監査に失敗しました: ' + '; '.join(result['errors']))
         previous = root / f'.build-previous-{uuid.uuid4().hex}'
