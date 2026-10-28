@@ -1,0 +1,5 @@
+/* M-08: stationary spatial nodes with temporal cosine oscillation. */
+.lab:has(#model-standing-wave:checked) .sample {
+  --x: calc(var(--u) * 2 - 1);
+  --y: calc(var(--amplitude) * sin(var(--theta) * var(--k) + var(--phase)) * cos(var(--clock) * 1rad));
+}
