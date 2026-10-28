@@ -1,5 +1,6 @@
 """Check starting-state consistency and reject unrepresentable scroll targets."""
 import copy
+import json
 from html.parser import HTMLParser
 from pathlib import Path
 import shutil
@@ -7,8 +8,9 @@ import tempfile
 import unittest
 
 from tools.audit import audit_html
-from tools.build import ROOT, ASSETS, build
-from tools.presets import PRESET_FILENAMES, load_presets, validate_presets, preset_links
+from tools.build import ROOT, build
+from tools.assets import asset_specs
+from tools.presets import load_presets, validate_presets, preset_links
 
 
 class InitialStateParser(HTMLParser):
@@ -44,7 +46,7 @@ class PresetTests(unittest.TestCase):
             root = Path(folder)
             shutil.copytree(ROOT / 'src', root / 'src')
             output = build(root)
-            self.assertEqual({p.name for p in output.iterdir()}, set(ASSETS))
+            self.assertEqual({p.name for p in output.iterdir()}, {name for name, _ in asset_specs()})
             presets = load_presets(root / 'src')
             for preset in presets:
                 with self.subTest(filename=preset['file']):
@@ -74,7 +76,37 @@ class PresetTests(unittest.TestCase):
         bad[0]['file'] = bad[1]['file']
         with self.assertRaises(ValueError):
             validate_presets(bad)
-        self.assertEqual(tuple(p['file'] for p in presets), PRESET_FILENAMES)
+        self.assertEqual(tuple(p['file'] for p in presets), tuple(name for name, _ in asset_specs() if name.startswith('preset-')))
+
+    def test_variable_counts_safe_names_and_uniqueness(self):
+        presets = load_presets(ROOT / 'src')
+        self.assertEqual(validate_presets(presets[:1]), presets[:1])
+        for value in ([], presets * 7):
+            with self.assertRaises(ValueError):
+                validate_presets(value)
+        for filename in ('index.html', 'preset-.html', 'preset-../x.html',
+                         'preset-X.html', 'preset-x.HTML', 'preset-x/y.html'):
+            changed = copy.deepcopy(presets[:1])
+            changed[0]['file'] = filename
+            with self.subTest(filename=filename), self.assertRaises(ValueError):
+                validate_presets(changed)
+        changed = copy.deepcopy(presets[:2])
+        changed[1]['name'] = ' ' + changed[0]['name'] + ' '
+        with self.assertRaises(ValueError):
+            validate_presets(changed)
+
+    def test_build_uses_each_fixture_registry_at_call_time(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            shutil.copytree(ROOT / 'src', root / 'src')
+            path = root / 'src/presets.json'
+            presets = load_presets(root / 'src')
+            for count in (1, 2):
+                path.write_text(json.dumps(presets[:count]), encoding='utf-8')
+                output = build(root)
+                expected = {name for name, _ in asset_specs(root / 'src')}
+                self.assertEqual({item.name for item in output.iterdir()}, expected)
+                self.assertEqual(len(expected), 5 + count)
 
     def test_names_are_text_and_selected_link_has_page_semantics(self):
         presets = copy.deepcopy(load_presets(ROOT / 'src'))

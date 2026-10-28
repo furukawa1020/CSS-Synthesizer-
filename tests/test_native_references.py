@@ -2,7 +2,10 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from tools.audit import _PAGES, audit_html, audit_directory, audit_document_links
+from tools.audit import audit_html, audit_directory, audit_document_links
+from tools.assets import asset_specs
+
+_PAGES = tuple((name, count) for name, count in asset_specs() if count is not None)
 
 
 class NativeReferenceTests(unittest.TestCase):

@@ -6,7 +6,10 @@ import sys
 import tempfile
 import unittest
 
-from tools.audit import _PAGES, audit_css, audit_directory, audit_html
+from tools.audit import audit_css, audit_directory, audit_html
+from tools.assets import asset_specs
+
+_PAGES = tuple((name, count) for name, count in asset_specs() if count is not None)
 
 
 def points(count: int) -> str:

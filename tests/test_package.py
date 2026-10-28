@@ -10,7 +10,10 @@ import tempfile
 import unittest
 import zipfile
 
-from tools.package import ASSETS, package_release
+from tools.package import package_release
+from tools.assets import asset_specs
+
+ASSETS = asset_specs()
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -24,8 +24,8 @@ def _digest(data):
 
 def _inspect(path, manifest):
     # Read the current distribution definition at call time, including presets.
-    from .package import ASSETS
-    assets = dict(ASSETS)
+    from .assets import asset_specs
+    assets = dict(asset_specs())
     expected = set(assets) | {'README.txt', 'SHA256SUMS'}
     if path.is_symlink() or not path.is_file():
         raise ValueError('ZIPは通常ファイルで指定してください')

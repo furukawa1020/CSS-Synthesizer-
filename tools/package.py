@@ -11,30 +11,22 @@ import zipfile
 
 from .audit import audit_css, audit_html
 from .build import build
-from .presets import PRESET_FILENAMES
+from .assets import asset_specs
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE_NAME = "css-synthesizer-v0.1.zip"
 MANIFEST_NAME = "css-synthesizer-v0.1.manifest.json"
-ASSETS = (
-    ("index.html", 192),
-    ("samples-96.html", 96),
-    ("samples-384.html", 384),
-    ("style.css", None),
-    ("engine.css", None),
-    *((filename, 192) for filename in PRESET_FILENAMES),
-)
 INSTRUCTIONS = """CSS視覚シンセサイザー v0.1
 
 index.htmlと2つのCSSを同じ場所に置き、現行Chrome / Edgeで開いてください。
-点数比較用のsamples-96.html、samples-384.htmlと、停止状態で始める4つのpreset-*.htmlも同梱しています。
+点数比較用のsamples-96.html、samples-384.htmlと、停止状態で始めるpreset-*.htmlも同梱しています。
 ブラウザ内の実行コードはHTML / CSSのみです。音声・永続保存はありません。
 非対応環境では画面に示す制限を確認してください。
 実機タッチ・他ブラウザ・実OSの動きを減らす設定・性能の確認状況は、
 リポジトリの受け入れ記録とIssue #3を参照してください。
 
-SHA256SUMSは同梱した9つのアプリファイルのSHA-256です。
+SHA256SUMSは同梱したアプリファイルのSHA-256です。
 ZIP全体のSHA-256と生成元commitは、ZIPの隣のmanifest.jsonに記録します。
 ソース: https://github.com/furukawa1020/CSS-Synthesizer-
 """
@@ -44,14 +36,15 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def package_release(build_directory, output_directory, source_revision):
+def package_release(build_directory, output_directory, source_revision, *, assets=None):
     """Package only this project's audited assets; do not regenerate API input."""
     build_directory = Path(build_directory)
     output_directory = Path(output_directory)
+    specs = asset_specs() if assets is None else tuple(assets)
     names = {path.name for path in build_directory.iterdir()}
-    allowed = {name for name, _ in ASSETS}
+    allowed = {name for name, _ in specs}
     unexpected = sorted(names - allowed)
-    missing = [name for name, _ in ASSETS if name not in names]
+    missing = [name for name, _ in specs if name not in names]
     if unexpected:
         raise ValueError(f"許可されていない配布ファイル: {', '.join(unexpected)}")
     if missing:
@@ -61,7 +54,7 @@ def package_release(build_directory, output_directory, source_revision):
 
     entries = []
     checksums = []
-    for name, samples in ASSETS:
+    for name, samples in specs:
         path = build_directory / name
         if path.is_symlink() or not path.is_file():
             raise ValueError(f"通常ファイルではありません: {name}")
