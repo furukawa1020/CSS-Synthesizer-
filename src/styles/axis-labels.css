@@ -1,0 +1,13 @@
+.axis-label { position: absolute; z-index: 1; font: .75rem/1.5 ui-monospace, monospace; color: #a9b6ac; pointer-events: none; white-space: nowrap; }
+.axis-x-negative { inset-inline-start: calc(50% - 44cqmin); inset-block-start: 50%; translate: -50% 6px; }
+.axis-x-positive { inset-inline-start: calc(50% + 44cqmin); inset-block-start: 50%; translate: -50% 6px; }
+.axis-y-positive { inset-inline-start: 50%; inset-block-start: calc(50% - 44cqmin); translate: 6px -50%; }
+.axis-y-negative { inset-inline-start: 50%; inset-block-start: calc(50% + 44cqmin); translate: 6px -50%; }
+.axis-origin { inset-inline-start: 50%; inset-block-start: 50%; translate: 6px 6px; }
+.lab:has(#view-labels:not(:checked)) .axis-label { visibility: hidden; }
+@media not (forced-colors: active) {
+  .lab:has(#palette-ice:checked) .axis-label { color: #aec9dc; }
+  .lab:has(#palette-paper:checked) .axis-label { color: #526359; }
+}
+@media (forced-colors: active) { .lab .axis-label { color: CanvasText; } }
+@media print { .axis-label { color: #444 !important; } }
