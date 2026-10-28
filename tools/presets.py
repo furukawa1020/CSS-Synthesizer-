@@ -1,8 +1,8 @@
 """Validated starting states for self-contained, script-free HTML pages."""
 from html import escape
-import json
 import re
 from pathlib import Path
+from .json_data import load_json
 
 MAX_PRESETS = 24
 DEFAULT_MODEL_IDS = ('lissajous', 'wave', 'rose', 'spiral', 'orbit')
@@ -37,7 +37,7 @@ def load_presets(source, model_ids=None):
     if model_ids is None:
         from .models import load_models
         model_ids = {model['id'] for model in load_models(source)}
-    return validate_presets(json.loads((source / 'presets.json').read_text(encoding='utf-8')), model_ids)
+    return validate_presets(load_json(source / 'presets.json'), model_ids)
 
 
 def preset_links(presets, selected=None):
