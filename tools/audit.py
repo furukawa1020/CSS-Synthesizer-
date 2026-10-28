@@ -8,6 +8,7 @@ from pathlib import Path, PurePosixPath
 import re
 import sys
 from .assets import asset_specs
+from .css_resources import css_resources
 from urllib.parse import unquote, urlsplit
 
 
@@ -36,10 +37,6 @@ _URL_ATTRIBUTES = {
 _TEMPLATE_TOKEN = re.compile(
     r"\{\{[^{}]+\}\}|__[A-Z][A-Z0-9_]*__|@@[A-Z][A-Z0-9_]*@@|@@FRAGMENT:[^@]*@@"
     r"|<!--\s*(?:SAMPLES|POINTS|[A-Z]+_STEPS)\s*-->", re.IGNORECASE,
-)
-_CSS_URLS = re.compile(
-    r'''url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)|@import\s+(?:"([^"]*)"|'([^']*)')''',
-    re.IGNORECASE,
 )
 _STYLES = ("style.css", "engine.css")
 _DIALOG_COMMANDS = {"show-modal", "close", "request-close"}
@@ -82,9 +79,7 @@ def _resource_candidates(value: str, attribute: str) -> list[str]:
 
 
 def _inspect_css(css: str, errors: list[str]) -> None:
-    source = re.sub(r"/\*[\s\S]*?\*/", "", css)
-    for match in _CSS_URLS.finditer(source):
-        value = next((part for part in match.groups() if part is not None), "")
+    for value in css_resources(css):
         if _external_resource(value):
             errors.append(f"外部CSSリソース: {value.strip()}")
         compact = _compact_url(value).lower()
