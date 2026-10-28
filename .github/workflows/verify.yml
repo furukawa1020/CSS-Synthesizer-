@@ -21,6 +21,8 @@ jobs:
           git checkout --detach FETCH_HEAD
       - name: 検証環境を記録する
         run: python3 --version
+      - name: 開発ソースのJSゼロを検査する
+        run: python3 -m tools.source_audit
       - name: HTMLとCSSを生成する
         run: python3 -m tools.build
       - name: 監査・配布・JSゼロをテストする
