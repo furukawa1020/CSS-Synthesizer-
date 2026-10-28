@@ -1,10 +1,12 @@
 """Generate repeated HTML. All live input and coordinate calculations stay in CSS."""
 from pathlib import Path
+import argparse
 from html import escape
 import re
 import shutil
 import tempfile
 import uuid
+import sys
 from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
@@ -104,6 +106,56 @@ def build(root=ROOT):
     return destination
 
 
-if __name__ == '__main__':
-    build()
+def check_build(root=ROOT):
+    """Generate and audit a candidate, compare bytes, and leave build untouched."""
+    from .audit import audit_directory
+    root = Path(root)
+    destination = root / 'build'
+    errors = []
+    try:
+        if destination.is_symlink() or not destination.is_dir():
+            raise ValueError('比較するbuildディレクトリがありません')
+        with tempfile.TemporaryDirectory(prefix='.build-check-', dir=root) as temporary:
+            candidate = Path(temporary) / 'build'
+            _populate(root, candidate)
+            result = audit_directory(candidate, assets=asset_specs(root / 'src'))
+            if not result['ok']:
+                raise ValueError('生成候補の静的監査に失敗しました: ' + '; '.join(result['errors']))
+            expected = {path.name for path in candidate.iterdir()}
+            actual = {path.name for path in destination.iterdir()}
+            errors.extend(f'buildに不足: {name}' for name in sorted(expected - actual))
+            errors.extend(f'buildに余分な項目: {name}' for name in sorted(actual - expected))
+            for name in sorted(expected & actual):
+                path = destination / name
+                if path.is_symlink() or not path.is_file():
+                    errors.append(f'buildの通常ファイルではありません: {name}')
+                elif path.read_bytes() != (candidate / name).read_bytes():
+                    errors.append(f'buildが現在のソースと一致しません: {name}')
+    except (OSError, ValueError) as error:
+        errors.append(str(error))
+    return {'ok': not errors, 'errors': errors}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description='HTML/CSSを生成または生成結果の鮮度を検査する')
+    parser.add_argument('--check', action='store_true', help='既存buildを変更せず現在のソースと比較する')
+    args = parser.parse_args(argv)
+    if args.check:
+        result = check_build(root=ROOT)
+        if result['ok']:
+            print('buildは現在のソースからの生成結果と一致しています。')
+        else:
+            for error in result['errors']:
+                print(error, file=sys.stderr)
+        return 0 if result['ok'] else 1
+    try:
+        build(root=ROOT)
+    except (OSError, ValueError) as error:
+        print(f'HTML/CSSを生成できませんでした: {error}', file=sys.stderr)
+        return 1
     print('HTML/CSSを生成しました（96 / 192 / 384点）。')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
