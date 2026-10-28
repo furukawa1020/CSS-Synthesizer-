@@ -51,8 +51,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
         return _result(errors + ["snapshotはJSONオブジェクトで指定してください"])
 
     model = snapshot.get("model")
-    if not isinstance(model, str) or model not in {"lissajous", "wave", "rose", "spiral", "orbit"}:
-        errors.append("modelはlissajous・wave・rose・spiral・orbitで指定してください")
+    if not isinstance(model, str) or model not in {"lissajous", "wave", "rose", "spiral", "orbit", "fermat"}:
+        errors.append("modelはlissajous・wave・rose・spiral・orbit・fermatで指定してください")
     values = {}
     for key, lower, upper in (
         ("k", 1, 8),
@@ -133,8 +133,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
             radius = amplitude * math.sin(values["k"] * theta + phase)
             x = radius * math.cos(theta + clock)
             y = radius * math.sin(theta + clock)
-        elif model == "spiral":
-            radius = amplitude * u
+        elif model in {"spiral", "fermat"}:
+            radius = amplitude * (math.sqrt(u) if model == "fermat" else u)
             angle = values["k"] * theta + phase + clock
             x = radius * math.cos(angle)
             y = radius * math.sin(angle)

@@ -1,0 +1,9 @@
+/* M-06: Fermat spiral; radius grows as sqrt(u), not u. */
+@supports (width: calc(sqrt(.25) * 1px)) {
+  .lab:has(#model-fermat:checked) .sample {
+    --radius: calc(var(--amplitude) * sqrt(var(--u)));
+    --angle: calc(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad);
+    --x: calc(var(--radius) * cos(var(--angle)));
+    --y: calc(var(--radius) * sin(var(--angle)));
+  }
+}
