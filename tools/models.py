@@ -1,7 +1,7 @@
 """Generate model descriptions from data; runtime equations stay in CSS."""
 from html import escape
-import json
 from pathlib import Path
+from .json_data import load_json
 import re
 
 TEXT_FIELDS = ('name', 'k_label', 'k_help', 'phase_help', 'amplitude_label', 'amplitude_help', 'note')
@@ -76,7 +76,7 @@ def validate_models(models):
 
 
 def load_models(source):
-    return validate_models(json.loads((Path(source) / 'models.json').read_text(encoding='utf-8')))
+    return validate_models(load_json(Path(source) / 'models.json'))
 
 
 def model_tokens(models, selected='lissajous'):
