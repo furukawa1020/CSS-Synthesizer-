@@ -1,6 +1,58 @@
 [
-  {"file": "preset-circle.html", "name": "円からはじめる", "model": "lissajous", "k": 2, "phase": 90, "amplitude": 70},
-  {"file": "preset-weave.html", "name": "5と2のリサージュ", "model": "lissajous", "k": 5, "phase": 0, "amplitude": 90},
-  {"file": "preset-two-waves.html", "name": "2周期の波", "model": "wave", "k": 2, "phase": 180, "amplitude": 60},
-  {"file": "preset-fine-wave.html", "name": "細かな波", "model": "wave", "k": 7, "phase": 90, "amplitude": 40}
+  {
+    "file": "preset-circle.html",
+    "name": "円からはじめる",
+    "model": "lissajous",
+    "k": 2,
+    "phase": 90,
+    "amplitude": 70
+  },
+  {
+    "file": "preset-weave.html",
+    "name": "5と2のリサージュ",
+    "model": "lissajous",
+    "k": 5,
+    "phase": 0,
+    "amplitude": 90
+  },
+  {
+    "file": "preset-two-waves.html",
+    "name": "2周期の波",
+    "model": "wave",
+    "k": 2,
+    "phase": 180,
+    "amplitude": 60
+  },
+  {
+    "file": "preset-fine-wave.html",
+    "name": "細かな波",
+    "model": "wave",
+    "k": 7,
+    "phase": 90,
+    "amplitude": 40
+  },
+  {
+    "file": "preset-rose.html",
+    "name": "5反復の花弁",
+    "model": "rose",
+    "k": 5,
+    "phase": 0,
+    "amplitude": 85
+  },
+  {
+    "file": "preset-spiral.html",
+    "name": "4巻きの渦巻き",
+    "model": "spiral",
+    "k": 4,
+    "phase": 90,
+    "amplitude": 90
+  },
+  {
+    "file": "preset-orbit.html",
+    "name": "副円3反復の合成軌道",
+    "model": "orbit",
+    "k": 3,
+    "phase": 180,
+    "amplitude": 85
+  }
 ]
