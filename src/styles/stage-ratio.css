@@ -1,0 +1,5 @@
+/* Only the viewport changes; short-side coordinate units stay in the engine. */
+@media screen {
+  .lab:has(#ratio-square:checked) .stage { aspect-ratio: 1; block-size: auto; }
+  .lab:has(#ratio-wide:checked) .stage { aspect-ratio: 16 / 9; block-size: auto; }
+}
