@@ -1,0 +1,10 @@
+.view-option-note { margin: 4px 0 0; font-size: .8125rem; color: var(--muted); }
+.order-legend { display: none; align-items: center; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; font: .75rem/1.5 ui-monospace, monospace; color: var(--muted); }
+.order-legend-spectrum { inline-size: 96px; block-size: 6px; background: linear-gradient(90deg, hsl(30 85% 40%), hsl(90 85% 40%), hsl(150 85% 40%), hsl(210 85% 40%)); }
+.lab:has(#color-order:checked) .order-legend { display: flex; }
+@media not (forced-colors: active) {
+  .lab:has(#color-order:checked) .sample { color: hsl(calc(30 + var(--u) * 180) 85% 78%); }
+  .lab:has(#color-order:checked):has(#palette-paper:checked) .sample { color: hsl(calc(30 + var(--u) * 180) 70% 28%); }
+}
+@media (forced-colors: active) { .lab .order-legend { display: none; } }
+@media print { .lab .order-legend { display: none; } }
