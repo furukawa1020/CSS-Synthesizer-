@@ -1,0 +1,11 @@
+/* Only the paint layer rotates: rotating .sample would rotate its position. */
+.lab .sample { background: transparent; }
+.sample::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: currentColor; }
+.lab:has(#shape-square:checked) .sample::after,
+.lab:has(#shape-diamond:checked) .sample::after { border-radius: 0; }
+.lab:has(#shape-diamond:checked) .sample::after { rotate: 45deg; }
+@media (forced-colors: active) { .lab .sample::after { background: CanvasText; } }
+@media print {
+  .lab .sample { background: transparent !important; border: 0; }
+  .lab .sample::after { background: #111 !important; border: 1px solid #111; }
+}
