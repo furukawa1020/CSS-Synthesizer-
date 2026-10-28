@@ -9,6 +9,7 @@ from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
+from .gallery import gallery_html, static_model_selectors
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -61,11 +62,12 @@ def _populate(root, destination):
         if re.search(r'@@[A-Z_]+@@', html):
             raise ValueError('未解決のテンプレートが残っています')
         (destination / filename).write_text(html, encoding='utf-8')
+    (destination / 'gallery.html').write_text(gallery_html(presets, models), encoding='utf-8')
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
             css += '\n' + model_styles(models)
-        (destination / name).write_text(css, encoding='utf-8')
+        (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')
 
 
 def build(root=ROOT):
