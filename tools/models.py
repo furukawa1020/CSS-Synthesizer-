@@ -5,7 +5,8 @@ from pathlib import Path
 import re
 
 TEXT_FIELDS = ('name', 'k_label', 'k_help', 'phase_help', 'amplitude_label', 'amplitude_help', 'note')
-MATH_TOKEN = re.compile(r'sin|cos|\d+(?:\.\d+)?|[A-Za-z\u0370-\u03ff]|[=+−*/()\-]')
+CAPABILITIES = {'sqrt': ('width: calc(sqrt(.25) * 1px)', '平方根sqrt()'), 'exp': ('width: calc(exp(0) * 1px)', '指数関数exp()')}
+MATH_TOKEN = re.compile(r'sqrt|exp|sin|cos|\d+(?:\.\d+)?|[A-Za-z\u0370-\u03ff]|[=+−*/()\-]')
 
 
 def mathml_expression(expression):
@@ -18,14 +19,28 @@ def mathml_expression(expression):
         raise ValueError('数式に未対応の記号が含まれています')
     nesting = 0
     output = []
-    for token in tokens:
+    sqrt_levels = []
+    for position, token in enumerate(tokens):
+        if token == 'sqrt':
+            if position + 1 >= len(tokens) or tokens[position + 1] != '(':
+                raise ValueError('sqrtには括弧が必要です')
+            output.append('<msqrt><mrow>')
+            sqrt_levels.append(nesting + 1)
+            continue
+        if token == '(' and position and tokens[position - 1] == 'sqrt':
+            nesting += 1
+            continue
         if token == '(':
             nesting += 1
         elif token == ')':
             nesting -= 1
             if nesting < 0:
                 raise ValueError('数式の括弧が対応していません')
-        if token in {'sin', 'cos'}:
+            if sqrt_levels and sqrt_levels[-1] == nesting + 1:
+                output.append('</mrow></msqrt>')
+                sqrt_levels.pop()
+                continue
+        if token in {'sin', 'cos', 'exp'}:
             output.append(f'<mi mathvariant="normal">{token}</mi><mo>⁡</mo>')
         elif token[0].isdigit():
             output.append(f'<mn>{token}</mn>')
@@ -50,6 +65,8 @@ def validate_models(models):
         if not isinstance(identifier, str) or not re.fullmatch(r'[a-z][a-z0-9-]*', identifier) or identifier in seen:
             raise ValueError('モデルIDが不正または重複しています')
         seen.add(identifier)
+        if 'capability' in model and model['capability'] not in CAPABILITIES:
+            raise ValueError('未定義のCSS機能です')
         if any(not isinstance(model.get(key), str) or not model[key].strip() for key in TEXT_FIELDS):
             raise ValueError(f'{identifier}の表示説明が不足しています')
         equations = model.get('equations')
@@ -86,14 +103,22 @@ def model_tokens(models, selected='lissajous'):
             + ''.join(mathml_expression(part.strip()) for value in m['equations'] for part in value.split(';'))
             + '</div>' for m in models),
     }
+    result['@@MODEL_CHOICES@@'] += ''.join(
+        f'<p class="model-unavailable model-unavailable-{m["id"]}">{escape(m["name"])}は、このブラウザで{CAPABILITIES[m["capability"]][1]}を利用できないため選べません。</p>'
+        for m in models if m.get('capability')
+    )
     return result
 
 
 def model_styles(models):
     validate_models(models)
+    capability_styles = '.model-unavailable { display: none; }\n' + '\n'.join(
+        f'@supports not ({CAPABILITIES[m["capability"]][0]}) {{ .choices label:has(#model-{m["id"]}) {{ display:none; }} .model-unavailable-{m["id"]} {{ display:block; flex-basis:100%; font-size:.875rem; }} .lab:has(#model-{m["id"]}:checked) .plot {{ visibility:hidden; }} }}'
+        for m in models if m.get('capability')
+    )
     return ('[data-model-copy] { display: none; }\n'
         '[data-model-copy][data-model-initial] { display: var(--model-copy-display, inline); }\n'
         '@supports selector(:has(*)) {\n'
         '.lab [data-model-copy] { display: none; }\n' + '\n'.join(
         f'.lab:has(#model-{m["id"]}:checked) [data-model-copy="{m["id"]}"] '
-        '{ display: var(--model-copy-display, inline); }' for m in models) + '\n}')
+        '{ display: var(--model-copy-display, inline); }' for m in models) + '\n}') + '\n' + capability_styles
