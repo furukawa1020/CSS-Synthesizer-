@@ -17,3 +17,8 @@
   .view-settings-open, .view-settings-close { display: inline-flex; align-items: center; justify-content: center; }
   .view-panel:popover-open { position: fixed; inset: 0; margin: auto; inline-size: 32rem; max-inline-size: calc(100vw - 32px); max-block-size: calc(100dvh - 32px); overflow: auto; overscroll-behavior: contain; }
 }
+
+@supports selector(:popover-open) {
+  .view-panel:popover-open .view-panel-header { position: sticky; inset-block-start: -20px; z-index: 3; margin-block-start: -20px; padding-block: 12px; background: var(--paper); border-block-end: 1px solid var(--rule); }
+}
+@media (forced-colors: active) { .lab .view-panel-header { background: Canvas; border-color: CanvasText; } }
