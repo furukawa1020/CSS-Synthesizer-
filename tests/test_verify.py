@@ -132,6 +132,39 @@ class ArchiveVerificationTests(unittest.TestCase):
                     archive.write_bytes(b'not a zip')
                 self.assertFalse(verify_archive(archive, manifest if kind == 'manifest' else None)['ok'])
 
+    def test_manifest_all_descriptors_and_header_fields_are_checked(self):
+        for kind in ('version', 'archive', 'revision', 'missing-field', 'extra-field',
+                     'missing-file', 'duplicate-file', 'unknown-file', 'size',
+                     'boolean-size', 'member-hash', 'readme-hash', 'sums-hash'):
+            with self.subTest(kind=kind):
+                archive, manifest = self.fixture()
+                reference = json.loads(manifest.read_text())
+                if kind == 'version': reference['version'] = '9.9'
+                elif kind == 'archive': reference['archive'] = 'other.zip'
+                elif kind == 'revision': reference['sourceRevision'] = 'short'
+                elif kind == 'missing-field': del reference['files']
+                elif kind == 'extra-field': reference['unexpected'] = True
+                elif kind == 'missing-file': reference['files'].pop()
+                elif kind == 'duplicate-file': reference['files'][-1] = reference['files'][0]
+                elif kind == 'unknown-file': reference['files'][0]['name'] = '../index.html'
+                elif kind == 'size': reference['files'][0]['bytes'] += 1
+                elif kind == 'boolean-size': reference['files'][0]['bytes'] = True
+                elif kind == 'member-hash': reference['files'][0]['sha256'] = '0' * 64
+                else:
+                    name = 'README.txt' if kind == 'readme-hash' else 'SHA256SUMS'
+                    next(entry for entry in reference['files'] if entry['name'] == name)['sha256'] = '0' * 64
+                manifest.write_text(json.dumps(reference))
+                result = verify_archive(archive, manifest)
+                self.assertFalse(result['ok'])
+                self.assertFalse(result['manifest_verified'])
+
+    def test_manifest_rejects_duplicate_keys_and_non_finite_json(self):
+        archive, manifest = self.fixture()
+        for text in ('null', '[]', '{"sha256":"a","sha256":"b"}', '{"files":NaN}'):
+            with self.subTest(text=text):
+                manifest.write_text(text)
+                self.assertFalse(verify_archive(archive, manifest)['ok'])
+
     def test_cli_returns_success_and_failure(self):
         archive, manifest = self.fixture()
         command = [sys.executable, '-m', 'tools.verify', str(archive), '--manifest', str(manifest)]
