@@ -7,6 +7,7 @@ import unittest
 
 from tools.assets import asset_specs
 from tools.build import ROOT, build
+from tools.models import load_models
 
 
 class ComparisonParser(HTMLParser):
@@ -25,9 +26,11 @@ class ComparisonTests(unittest.TestCase):
             root = Path(folder); shutil.copytree(ROOT / 'src', root / 'src')
             output = build(root)
             parser = ComparisonParser(); parser.feed((output / 'compare.html').read_text())
-            self.assertEqual([f['data-static-model'] for f in parser.scopes], ['lissajous', 'wave'])
-            self.assertEqual(parser.samples, 192)
+            self.assertEqual([f['data-static-model'] for f in parser.scopes], [model['id'] for model in load_models(root / 'src')])
+            self.assertEqual(parser.samples, 96 * len(load_models(root / 'src')))
             self.assertFalse(any(i.get('name') == 'model' for i in parser.inputs))
+            self.assertEqual([i['id'] for i in parser.inputs if i.get('type') == 'checkbox' and 'checked' in i], ['compare-lissajous', 'compare-wave'])
+            self.assertIn('model-unavailable-fermat', (output / 'compare.html').read_text())
             self.assertEqual([i['id'] for i in parser.inputs if i.get('name') == 'time'], ['time-auto', 'time-play', 'time-stop'])
             self.assertIn('.comparison-example.lab', (output / 'style.css').read_text())
             self.assertIn('--clock: inherit;', (output / 'style.css').read_text())

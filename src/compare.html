@@ -8,8 +8,10 @@
 <main class="lab comparison-lab" style="--k-raw:3;--phase-raw:90;--amplitude-raw:.8">
   <h1>曲線を比較する</h1><p class="comparison-intro">同じk・位相φ・振幅A・時計tを使います。数値が同じでも、各モデルで入力の意味や見える形は異なります。各図の説明を参照してください。</p>
   <p class="unsupported">このブラウザでは共有の調整帯に必要なCSS機能が不足しています。利用可能な描画機能では基準値を表示します。</p><p class="render-unsupported">このブラウザではCSS座標描画を利用できません。モデル名と説明は下に残します。</p>
+  <fieldset class="comparison-selection"><legend>比較するモデル</legend><div class="comparison-options">@@COMPARISON_OPTIONS@@</div><p>複数選べます。非表示にしても点のHTMLは残ります。一般端末での性能は未評価です。</p></fieldset>
   <div class="comparison-workspace">
     <section class="comparison-results" aria-label="同じ入力で描く曲線">
+      <p class="comparison-empty">比較するモデルを1つ以上選んでください。</p>
       <div class="comparison-plots">@@COMPARISON_PLOTS@@</div>
       <p class="comparison-clock">@@FRAGMENT:clock-readout@@</p>
       <p class="comparison-note">描画は各96点。各図は短辺を基準に縦横等倍率です。単独画面への移動では、入力と時計の保持は保証しません。</p>

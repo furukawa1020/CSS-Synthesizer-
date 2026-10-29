@@ -22,3 +22,10 @@
   .comparison-plots { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .comparison-example .stage { block-size: max(280px, 85vw); }
 }
+
+.comparison-selection { display: none; border-block: 1px solid var(--rule); margin-block: 0 24px; padding-block: 12px; }
+.comparison-selection legend { color: var(--ink); padding-inline-end: 12px; }
+.comparison-options { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.comparison-options label { display: inline-flex; align-items: center; min-block-size: 44px; gap: 8px; font-size: .875rem; cursor: pointer; }
+.comparison-selection > p { color: var(--muted); font-size: .8125rem; margin: 8px 0 0; }
+.comparison-empty { display: none; }
