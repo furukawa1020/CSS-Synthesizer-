@@ -12,6 +12,7 @@ from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors
+from .comparison import comparison_html
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -65,6 +66,16 @@ def _populate(root, destination):
             raise ValueError('未解決のテンプレートが残っています')
         (destination / filename).write_text(html, encoding='utf-8')
     (destination / 'gallery.html').write_text(gallery_html(presets, models), encoding='utf-8')
+    comparison = expand_fragments((root / 'src/compare.html').read_text(encoding='utf-8'), root / 'src')
+    parameters = expand_fragments((root / 'src/fragments/parameters.html').read_text(encoding='utf-8'), root / 'src')
+    comparison_stops = {
+        '@@K_STOPS@@': stops(range(1, 9), 3, lambda value: f'{value:.2f}'),
+        '@@PHASE_STOPS@@': stops(range(0, 361, 90), 90, lambda value: f'{value}°'),
+        '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), 80, lambda value: f'{value}%'),
+    }
+    for token, value in comparison_stops.items():
+        parameters = parameters.replace(token, value)
+    (destination / 'compare.html').write_text(comparison_html(comparison, parameters, models), encoding='utf-8')
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':

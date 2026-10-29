@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="同じ入力と時計で数式の形を見比べる、HTML/CSSだけの比較画面。">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
+<title>曲線を比較する — CSS 視覚シンセサイザー</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="engine.css"></head>
+<body class="comparison-page"><a class="skip-link" href="#controls">共有入力へ進む</a>
+<header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">単独の描画へ戻る ↗</a></header>
+<main class="lab comparison-lab" style="--k-raw:3;--phase-raw:90;--amplitude-raw:.8">
+  <h1>曲線を比較する</h1><p class="comparison-intro">同じk・位相φ・振幅A・時計tを使います。数値が同じでも、各モデルで入力の意味や見える形は異なります。各図の説明を参照してください。</p>
+  <p class="unsupported">このブラウザでは共有の調整帯に必要なCSS機能が不足しています。利用可能な描画機能では基準値を表示します。</p><p class="render-unsupported">このブラウザではCSS座標描画を利用できません。モデル名と説明は下に残します。</p>
+  <div class="comparison-workspace">
+    <section class="comparison-results" aria-label="同じ入力で描く曲線">
+      <div class="comparison-plots">@@COMPARISON_PLOTS@@</div>
+      <p class="comparison-clock">@@FRAGMENT:clock-readout@@</p>
+      <p class="comparison-note">描画は各96点。各図は短辺を基準に縦横等倍率です。単独画面への移動では、入力と時計の保持は保証しません。</p>
+    </section>
+    <aside class="controls comparison-controls" id="controls" aria-label="比較図すべての共有入力">
+      <fieldset class="time-controls"><legend>共有する時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto" checked><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"><span>停止</span></label></div></fieldset>
+      @@COMPARISON_PARAMETERS@@
+      <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
+    </aside>
+  </div>
+  <footer><span>HTML + CSS · 同じ入力で比べる</span><a href="index.html">単独の描画へ戻る ↗</a></footer>
+</main></body></html>

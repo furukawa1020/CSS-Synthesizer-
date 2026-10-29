@@ -14,6 +14,7 @@
   <header class="page-header">
     <h1><span class="title-mark" aria-hidden="true">∿</span> CSS <span>視覚シンセサイザー</span></h1>
     @@FRAGMENT:guide-actions@@
+    <a href="compare.html" class="guide-link">曲線を比較する</a>
     <a href="#guide" class="guide-link">使い方と仕組み <span aria-hidden="true">↘</span></a>
   </header>
   <main class="lab" style="@@INITIAL_VALUES@@">
@@ -36,28 +37,7 @@
       <aside class="controls" id="controls" aria-label="形と時間の調整">
         <fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset>
         <fieldset class="time-controls"><legend>時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto"@@TIME_AUTO@@><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"@@TIME_PLAY@@><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"@@TIME_STOP@@><span>停止</span></label></div></fieldset>
-        <div class="parameters continuous-controls">
-          <p class="input-intro">帯を横に動かすと、形が変わります。<br>帯を選んで、左右キーでも調整できます。</p>
-          <section class="parameter">
-            <h2 id="k-label"><span><small aria-hidden="true">01</small> @@MODEL_K_LABELS@@</span><output class="readout readout-k" aria-label="反復の有効値"></output></h2>
-            <p id="k-help">1.00–8.00 @@MODEL_K_HELP@@</p>
-            @@FRAGMENT:help-k@@
-            <div class="band-wrap"><div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help input-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
-          </section>
-          <section class="parameter">
-            <h2 id="phase-label"><span><small aria-hidden="true">02</small> 位相</span><output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
-            <p id="phase-help">0–360° @@MODEL_PHASE_HELP@@</p>
-            @@FRAGMENT:help-phase@@
-            <div class="band-wrap"><div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help input-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
-          </section>
-          <section class="parameter">
-            <h2 id="amplitude-label"><span><small aria-hidden="true">03</small> @@MODEL_AMPLITUDE_LABELS@@</span><output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
-            <p id="amplitude-help">25–100% @@MODEL_AMPLITUDE_HELP@@</p>
-            @@FRAGMENT:help-amplitude@@
-            <div class="band-wrap"><div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help input-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
-          </section>
-          <p class="input-help" id="input-help">帯を横に動かすか、左右キーで調整。矢印は大きく送ります（一定刻みではありません）。</p>
-        </div>
+        @@FRAGMENT:parameters@@
         @@FRAGMENT:view-settings@@
         @@FRAGMENT:presets@@
         <p class="baseline-only">@@BASELINE_LABEL@@</p>
