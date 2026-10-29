@@ -29,3 +29,7 @@
 .comparison-options label { display: inline-flex; align-items: center; min-block-size: 44px; gap: 8px; font-size: .875rem; cursor: pointer; }
 .comparison-selection > p { color: var(--muted); font-size: .8125rem; margin: 8px 0 0; }
 .comparison-empty { display: none; }
+
+.comparison-density { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 18px; font-size: .875rem; margin-block-end: 20px; }
+.comparison-density :is(a, strong) { display: inline-flex; align-items: center; min-block-size: 44px; padding-inline: 6px; }
+.comparison-density strong { font-weight: 650; text-decoration: underline; text-underline-offset: .25em; }

@@ -8,6 +8,7 @@ import unittest
 from tools.assets import asset_specs
 from tools.build import ROOT, build
 from tools.models import load_models
+from tools.comparison import comparison_filename, comparison_html, COMPARISON_COUNTS
 
 
 class ComparisonParser(HTMLParser):
@@ -39,3 +40,19 @@ class ComparisonTests(unittest.TestCase):
             for name in ('k', 'phase', 'amplitude'):
                 self.assertEqual(html.count(f'class="input-band input-{name}"'), 1)
             self.assertNotIn('@@', html)
+
+    def test_density_pages_share_definition_and_show_current_page(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); shutil.copytree(ROOT / 'src', root / 'src')
+            output = build(root)
+            for count in COMPARISON_COUNTS:
+                html = (output / comparison_filename(count)).read_text()
+                parser = ComparisonParser(); parser.feed(html)
+                self.assertEqual(parser.samples, count * len(load_models(root / 'src')))
+                self.assertIn(f'<strong aria-current="page">{count}点</strong>', html)
+                self.assertEqual(html.count('aria-current="page"'), 1)
+                self.assertEqual(dict(asset_specs(root / 'src'))[comparison_filename(count)], parser.samples)
+                self.assertNotIn('@@', html)
+        for value in (0, 384, True, 96.0, '96'):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                comparison_html('', '', [], value)

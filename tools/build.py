@@ -12,7 +12,7 @@ from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors
-from .comparison import comparison_html, comparison_styles
+from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -75,7 +75,8 @@ def _populate(root, destination):
     }
     for token, value in comparison_stops.items():
         parameters = parameters.replace(token, value)
-    (destination / 'compare.html').write_text(comparison_html(comparison, parameters, models), encoding='utf-8')
+    for count in COMPARISON_COUNTS:
+        (destination / comparison_filename(count)).write_text(comparison_html(comparison, parameters, models, count), encoding='utf-8')
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
