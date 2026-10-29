@@ -1,0 +1,4 @@
+.lab { --plot-scale: 1; }
+.lab:has(#scale-75:checked) { --plot-scale: .75; }
+.lab:has(#scale-50:checked) { --plot-scale: .5; }
+.plot { scale: calc(var(--view-x) * var(--plot-scale)) calc(var(--view-y) * var(--plot-scale)); }
