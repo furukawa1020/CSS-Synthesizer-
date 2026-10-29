@@ -15,6 +15,7 @@ from .assets import asset_specs
 
 
 ROOT = Path(__file__).resolve().parents[1]
+VERSION = "0.1"
 ARCHIVE_NAME = "css-synthesizer-v0.1.zip"
 MANIFEST_NAME = "css-synthesizer-v0.1.manifest.json"
 INSTRUCTIONS = """CSS視覚シンセサイザー v0.1
@@ -86,7 +87,7 @@ def package_release(build_directory, output_directory, source_revision, *, asset
             archive.writestr(info, data)
     archive_bytes = buffer.getvalue()
     manifest = {
-        "version": "0.1",
+        "version": VERSION,
         "archive": ARCHIVE_NAME,
         "sha256": sha256(archive_bytes),
         "sourceRevision": source_revision,

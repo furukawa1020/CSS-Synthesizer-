@@ -12,6 +12,7 @@ import sys
 import zipfile
 
 from .audit import audit_css, audit_html, audit_document_links
+from .json_data import load_json
 
 MAX_ARCHIVE_BYTES = 16 * 1024 * 1024
 MAX_MEMBER_BYTES = 2 * 1024 * 1024
@@ -20,6 +21,41 @@ MAX_TOTAL_BYTES = 8 * 1024 * 1024
 
 def _digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def _validate_manifest(reference, archive_hash, contents):
+    """Validate the current manifest format against every actual ZIP member."""
+    from .package import ARCHIVE_NAME, VERSION
+    required = {'version', 'archive', 'sha256', 'sourceRevision', 'files'}
+    if not isinstance(reference, dict) or set(reference) != required:
+        raise ValueError('manifestの項目が配布形式と一致しません')
+    if reference['version'] != VERSION or reference['archive'] != ARCHIVE_NAME:
+        raise ValueError('manifestのversion・archiveが配布形式と一致しません')
+    revision = reference['sourceRevision']
+    if not isinstance(revision, str) or not re.fullmatch(r'[a-f0-9]{40}', revision):
+        raise ValueError('manifestのsourceRevisionには完全なcommit SHAが必要です')
+    digest = reference['sha256']
+    if not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest) or digest != archive_hash:
+        raise ValueError('外部manifestとZIP全体のSHA-256が一致しません')
+    descriptions = reference['files']
+    if not isinstance(descriptions, list) or len(descriptions) != len(contents):
+        raise ValueError('manifestのfilesがZIP全ファイルを記述していません')
+    seen = set()
+    for entry in descriptions:
+        if not isinstance(entry, dict) or set(entry) != {'name', 'bytes', 'sha256'}:
+            raise ValueError('manifestのファイル記述の形式が不正です')
+        name = entry['name']
+        if not isinstance(name, str) or name in seen or name not in contents:
+            raise ValueError('manifestのファイル名が不正または重複しています')
+        seen.add(name)
+        size = entry['bytes']
+        digest = entry['sha256']
+        if type(size) is not int or size < 0 or size != len(contents[name]):
+            raise ValueError(f'manifestのファイルサイズが一致しません: {name}')
+        if not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest) or digest != _digest(contents[name]):
+            raise ValueError(f'manifestのファイルSHA-256が一致しません: {name}')
+    if seen != set(contents):
+        raise ValueError('manifestに不足したファイル記述があります')
 
 
 def _inspect(path, manifest):
@@ -36,15 +72,11 @@ def _inspect(path, manifest):
         raise ValueError('ZIPのサイズ上限を超えています')
     archive_hash = _digest(raw)
     manifest_verified = False
+    reference = None
     if manifest is not None:
         if manifest.is_symlink() or not manifest.is_file() or manifest.stat().st_size > MAX_MEMBER_BYTES:
             raise ValueError('manifestはサイズ上限内の通常ファイルで指定してください')
-        reference = json.loads(manifest.read_text(encoding='utf-8'))
-        if not isinstance(reference, dict) or not isinstance(reference.get('sha256'), str):
-            raise ValueError('manifestにZIP全体のsha256がありません')
-        if not re.fullmatch(r'[a-f0-9]{64}', reference['sha256']) or reference['sha256'] != archive_hash:
-            raise ValueError('外部manifestとZIP全体のSHA-256が一致しません')
-        manifest_verified = True
+        reference = load_json(manifest)
     with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         entries = archive.infolist()
         names = [entry.filename for entry in entries]
@@ -67,6 +99,9 @@ def _inspect(path, manifest):
             if entry.file_size > MAX_MEMBER_BYTES:
                 raise ValueError(f'ZIP内ファイルのサイズ上限を超えています: {entry.filename}')
         contents = {entry.filename: archive.read(entry) for entry in entries}
+    if manifest is not None:
+        _validate_manifest(reference, archive_hash, contents)
+        manifest_verified = True
     checksums = {}
     for line in contents['SHA256SUMS'].decode('utf-8').splitlines():
         match = re.fullmatch(r'([a-f0-9]{64})  ([^/\\]+)', line)
