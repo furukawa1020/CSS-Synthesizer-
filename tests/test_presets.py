@@ -108,6 +108,13 @@ class PresetTests(unittest.TestCase):
                 self.assertEqual({item.name for item in output.iterdir()}, expected)
                 self.assertEqual(sum(name.startswith('preset-') for name in expected), count)
 
+    def test_presets_cover_the_registered_models_and_validate_without_stale_ids(self):
+        from tools.models import load_models
+        presets = load_presets(ROOT / 'src')
+        identifiers = {model['id'] for model in load_models(ROOT / 'src')}
+        self.assertEqual({preset['model'] for preset in presets}, identifiers)
+        self.assertEqual(validate_presets(presets), presets)
+
     def test_names_are_text_and_selected_link_has_page_semantics(self):
         presets = copy.deepcopy(load_presets(ROOT / 'src'))
         presets[0]['name'] = '<script>name</script>'
