@@ -1,0 +1,234 @@
+{
+  "jumps": [
+    {
+      "input": "k",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "input": "k",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "input": "k",
+      "expected": 3,
+      "observed": 3
+    },
+    {
+      "input": "k",
+      "expected": 4,
+      "observed": 4
+    },
+    {
+      "input": "k",
+      "expected": 5,
+      "observed": 5
+    },
+    {
+      "input": "k",
+      "expected": 6,
+      "observed": 6
+    },
+    {
+      "input": "k",
+      "expected": 7,
+      "observed": 7
+    },
+    {
+      "input": "k",
+      "expected": 8,
+      "observed": 8
+    },
+    {
+      "input": "phase",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "input": "phase",
+      "expected": 90,
+      "observed": 90
+    },
+    {
+      "input": "phase",
+      "expected": 180,
+      "observed": 180
+    },
+    {
+      "input": "phase",
+      "expected": 270,
+      "observed": 270
+    },
+    {
+      "input": "phase",
+      "expected": 360,
+      "observed": 360
+    },
+    {
+      "input": "A",
+      "expected": 25,
+      "observed": 25
+    },
+    {
+      "input": "A",
+      "expected": 50,
+      "observed": 50
+    },
+    {
+      "input": "A",
+      "expected": 75,
+      "observed": 75
+    },
+    {
+      "input": "A",
+      "expected": 100,
+      "observed": 100
+    }
+  ],
+  "rad": [
+    {
+      "phase": 0,
+      "counter": "phase-rad-whole 0 phase-rad-fraction 0",
+      "ax": [
+        "160 text 0 . 000  rad"
+      ]
+    },
+    {
+      "phase": 90,
+      "counter": "phase-rad-whole 1 phase-rad-fraction 571",
+      "ax": [
+        "160 text 1 . 571  rad"
+      ]
+    },
+    {
+      "phase": 180,
+      "counter": "phase-rad-whole 3 phase-rad-fraction 142",
+      "ax": [
+        "164 text 3 . 142  rad"
+      ]
+    },
+    {
+      "phase": 270,
+      "counter": "phase-rad-whole 4 phase-rad-fraction 712",
+      "ax": [
+        "168 text 4 . 712  rad"
+      ]
+    },
+    {
+      "phase": 360,
+      "counter": "phase-rad-whole 6 phase-rad-fraction 283",
+      "ax": [
+        "172 text 6 . 283  rad"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feature-has",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-scroll-timeline",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-animation-timeline",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-timeline-scope",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-initial-target",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-scroll-button",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-scroll-snap",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-container",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-sin",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-sqrt",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-exp",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-atan2",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-siblings",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-round",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-popover",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-modal",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-anchor",
+      "no": false,
+      "yes": true
+    },
+    {
+      "id": "feature-discrete",
+      "no": false,
+      "yes": true
+    }
+  ],
+  "polarNarrow": {
+    "angles": [
+      "0° 右",
+      "45° 右上",
+      "90° 上",
+      "135° 左上",
+      "180° 左",
+      "225° 左下",
+      "270° 下",
+      "315° 右下"
+    ],
+    "legend": "block",
+    "pairs": [],
+    "radialVisible": 0
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+}

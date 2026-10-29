@@ -1,0 +1,285 @@
+{
+  "coordinate_cases": 30,
+  "coordinate_points": 4513,
+  "max_error_css_px": 0.011094049176121215,
+  "tangent_cases": 9,
+  "tangent_points": 1633,
+  "max_error_degrees": 0.0004999425863729812,
+  "coordinates": [
+    {
+      "case": "coord-compare-lissajous.json",
+      "ok": true,
+      "max_error": 0.0078504330217986,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-wave.json",
+      "ok": true,
+      "max_error": 0.007851507644261593,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-rose.json",
+      "ok": true,
+      "max_error": 0.00788688826566369,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-spiral.json",
+      "ok": true,
+      "max_error": 0.007877063241188377,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-orbit.json",
+      "ok": true,
+      "max_error": 0.007887322635201142,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-fermat.json",
+      "ok": true,
+      "max_error": 0.00788647137258839,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-damped-wave.json",
+      "ok": true,
+      "max_error": 0.007925680673876868,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-standing-wave.json",
+      "ok": true,
+      "max_error": 0.00793764535515178,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-endpoints-lissajous.json",
+      "ok": true,
+      "max_error": 0.007832710818430368,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-endpoints-wave.json",
+      "ok": true,
+      "max_error": 0.007832750500381347,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-single-base-lissajous.json",
+      "ok": true,
+      "max_error": 4.7799436129334586e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-fermat-rotate45-mirrorx-scale50-fermat.json",
+      "ok": true,
+      "max_error": 4.6431137301843116e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-fermat-rotate90-mirrorxy-scale75-fermat.json",
+      "ok": true,
+      "max_error": 5.644186496962728e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-fermat-rotate180-fermat.json",
+      "ok": true,
+      "max_error": 4.818106765793655e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-lissajous-lissajous.json",
+      "ok": true,
+      "max_error": 4.7121339580827486e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-wave-wave.json",
+      "ok": true,
+      "max_error": 5.6836749098066423e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-rose-rose.json",
+      "ok": true,
+      "max_error": 5.8905450223596326e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-spiral-spiral.json",
+      "ok": true,
+      "max_error": 6.358487779337101e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-orbit-orbit.json",
+      "ok": true,
+      "max_error": 5.107389719261242e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-fermat-fermat.json",
+      "ok": true,
+      "max_error": 4.633610356718702e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-damped-wave-damped-wave.json",
+      "ok": true,
+      "max_error": 5.098053331699239e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-arrows-standing-wave-standing-wave.json",
+      "ok": true,
+      "max_error": 5.50304303621402e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-stationary-97-lissajous.json",
+      "ok": true,
+      "max_error": 3.809820000735766e-05,
+      "checked_points": 97,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-192-lissajous.json",
+      "ok": true,
+      "max_error": 0.00785180305892281,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-compare-192-wave.json",
+      "ok": true,
+      "max_error": 0.007850503864543517,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-preset-fermat-fermat.json",
+      "ok": true,
+      "max_error": 5.060820617365446e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-preset-damped-wave-damped-wave.json",
+      "ok": true,
+      "max_error": 4.9465866793076925e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-preset-standing-wave-standing-wave.json",
+      "ok": true,
+      "max_error": 4.945204805989598e-05,
+      "checked_points": 192,
+      "errors": []
+    },
+    {
+      "case": "coord-comparison-print-rose.json",
+      "ok": true,
+      "max_error": 0.01107693991069905,
+      "checked_points": 96,
+      "errors": []
+    },
+    {
+      "case": "coord-comparison-print-fermat.json",
+      "ok": true,
+      "max_error": 0.011094049176121215,
+      "checked_points": 96,
+      "errors": []
+    }
+  ],
+  "tangents": [
+    {
+      "case": "tangent-fermat.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 0.0004999425863729812
+    },
+    {
+      "case": "tangent-lissajous.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 0.00048798265410709973
+    },
+    {
+      "case": "tangent-wave.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 4.993986749468604e-05
+    },
+    {
+      "case": "tangent-rose.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 0.0004943162009851676
+    },
+    {
+      "case": "tangent-spiral.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 0.0004984992860954662
+    },
+    {
+      "case": "tangent-orbit.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 0.0004958712100915363
+    },
+    {
+      "case": "tangent-damped-wave.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 4.998311530357569e-05
+    },
+    {
+      "case": "tangent-standing-wave.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 192,
+      "max_error_degrees": 4.9704223840763007e-05
+    },
+    {
+      "case": "tangent-stationary-97.json",
+      "ok": true,
+      "errors": [],
+      "checked_points": 97,
+      "max_error_degrees": 0.0
+    }
+  ]
+}

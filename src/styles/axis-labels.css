@@ -16,4 +16,17 @@
 .polar-label { display: none; --polar-radius: 36cqmin; inset-inline-start: calc(50% + cos(var(--polar-angle)) * var(--polar-radius)); inset-block-start: calc(50% - sin(var(--polar-angle)) * var(--polar-radius)); translate: -50% -50%; }
 .lab:has(#grid-polar:checked) .axis-label:not(.polar-label) { display: none; }
 .lab:has(#grid-polar:checked) .polar-label { display: block; }
-@container (max-height: 300px) { .polar-label { --polar-radius: 22cqmin; } }
+/* Font-relative height also protects the labels when text is enlarged. */
+@container (max-height: 20em) { .polar-label { --polar-radius: 22cqmin; } }
+
+/* Narrow and enlarged-text views use an outside legend instead of crowded spokes. */
+.scene { container-type: inline-size; container-name: scene-view; }
+.polar-legend { display: none; flex-basis: 100%; font-size: .8125rem; }
+.polar-legend p { margin: 0; }
+.polar-legend ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; list-style: none; margin: 6px 0 0; padding: 0; }
+@container scene-view (max-width: 26em) {
+  .lab:has(#grid-polar:checked) .polar-label { display: none; }
+  .lab:has(#grid-polar:checked):has(#view-labels:checked) .polar-legend { display: block; }
+}
+.lab:has(#grid-off:checked) .polar-legend { display: none; }
+@media (forced-colors: active) { .polar-legend { color: CanvasText; } }

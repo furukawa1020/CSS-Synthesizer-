@@ -35,3 +35,12 @@ jobs:
         run: python3 -m tools.build --check
       - name: 配布ZIPと外部manifestを照合する
         run: python3 -m tools.verify dist/css-synthesizer-v0.1.zip --manifest dist/css-synthesizer-v0.1.manifest.json
+      - name: 前回の保存座標を独立数式で再照合する
+        run: python3 -m tools.coordinates --batch qa/evidence/batch40/index.json
+      - name: 今回の保存座標を独立数式で再照合する
+        run: python3 -m tools.coordinates --batch qa/evidence/batch60/index.json
+      - name: 保存した接線の方向を独立微分で再照合する
+        run: |
+          for snapshot_path in qa/evidence/batch60/tangent-*.json; do
+            python3 -m tools.tangents "$snapshot_path" || exit 1
+          done

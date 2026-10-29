@@ -53,3 +53,7 @@
   .comparison-example h2 { font-size: 11pt; }
   .comparison-example figcaption p { font-size: 9pt; }
 }
+
+@media screen and (min-width: 1101px) {
+  .comparison-controls.controls { position: sticky; inset-block-start: 20px; align-self: start; max-block-size: calc(100svh - 40px); overflow: auto; padding-inline-end: 8px; scrollbar-gutter: stable; }
+}
