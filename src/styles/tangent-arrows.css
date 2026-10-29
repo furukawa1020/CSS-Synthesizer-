@@ -1,0 +1,14 @@
+.tangent-unavailable { display: none; }
+@supports (rotate: atan2(1, 1)) and (opacity: hypot(1, 1)) {
+  .lab:has(#shape-arrow:checked) .sample::after {
+    inset: auto; left: 50%; top: 50%; inline-size: 300%; block-size: 200%;
+    translate: -50% -50%; rotate: atan2(calc(-1 * var(--tangent-dy)), var(--tangent-dx));
+    border: 0; border-radius: 0; clip-path: polygon(100% 50%, 0 0, 30% 50%, 0 100%);
+    opacity: round(down, clamp(0, calc(hypot(var(--tangent-dx), var(--tangent-dy)) / .000001), 1), 1);
+  }
+}
+@supports not ((rotate: atan2(1, 1)) and (opacity: hypot(1, 1))) {
+  .tangent-choice { display: none !important; }
+  .tangent-unavailable { display: block; }
+  .lab:has(#shape-arrow:checked) .sample::after { visibility: hidden; }
+}
