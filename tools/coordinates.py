@@ -12,6 +12,7 @@ import sys
 # 2π may be serialized as 6.28319 by a browser's computed-style API.
 # Keep this radian allowance separate from the coordinate tolerance in CSS px.
 _CLOCK_SERIALIZATION_MARGIN = 5e-6
+SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave"})
 
 
 def _result(errors: list[str], checked: int = 0, maximum: float = 0.0) -> dict:
@@ -53,7 +54,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
         return _result(errors + ["snapshotはJSONオブジェクトで指定してください"])
 
     model = snapshot.get("model")
-    if not isinstance(model, str) or model not in {"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave"}:
+    if not isinstance(model, str) or model not in SUPPORTED_MODELS:
         errors.append("modelはlissajous・wave・rose・spiral・orbit・fermat・damped-wave・standing-waveで指定してください")
     values = {}
     for key, lower, upper in (
