@@ -106,7 +106,7 @@ class PresetTests(unittest.TestCase):
                 output = build(root)
                 expected = {name for name, _ in asset_specs(root / 'src')}
                 self.assertEqual({item.name for item in output.iterdir()}, expected)
-                self.assertEqual(len(expected), 7 + count)
+                self.assertEqual(sum(name.startswith('preset-') for name in expected), count)
 
     def test_names_are_text_and_selected_link_has_page_semantics(self):
         presets = copy.deepcopy(load_presets(ROOT / 'src'))

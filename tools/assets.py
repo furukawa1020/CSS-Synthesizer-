@@ -2,6 +2,7 @@
 from pathlib import Path
 from .models import load_models
 from .presets import load_presets
+from .comparison import COMPARISON_COUNTS, comparison_filename
 
 SOURCE = Path(__file__).resolve().parents[1] / 'src'
 
@@ -15,5 +16,5 @@ def asset_specs(source=SOURCE):
         ('style.css', None), ('engine.css', None),
         *((preset['file'], 192) for preset in presets),
         ('gallery.html', 96 * len(presets)),
-        ('compare.html', 96 * len(models)),
+        *((comparison_filename(count), count * len(models)) for count in COMPARISON_COUNTS),
     )

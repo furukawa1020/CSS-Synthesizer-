@@ -2,6 +2,13 @@
 from html import escape
 
 DEFAULT_COMPARISON_MODELS = ('lissajous', 'wave')
+COMPARISON_COUNTS = (96, 192)
+
+
+def comparison_filename(count):
+    if type(count) is not int or count not in COMPARISON_COUNTS:
+        raise ValueError('比較図の点数は96または192で指定してください')
+    return 'compare.html' if count == 96 else f'compare-{count}.html'
 
 
 def comparison_models(models):
@@ -10,6 +17,7 @@ def comparison_models(models):
 
 def comparison_html(template, parameters, models, count=96):
     """Reuse model-selection CSS through nested static-model scopes, not formulas."""
+    filename = comparison_filename(count)
     selected = comparison_models(models)
     plots = []
     options = []
@@ -37,7 +45,8 @@ def comparison_html(template, parameters, models, count=96):
     }
     for token, value in generic.items():
         parameters = parameters.replace(token, value)
-    return template.replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
+    densities = ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{comparison_filename(n)}">{n}点</a>' for n in COMPARISON_COUNTS)
+    return template.replace('@@COMPARISON_COUNT@@', str(count)).replace('@@COMPARISON_DENSITIES@@', densities).replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
 
 
 def comparison_styles(models):
