@@ -54,7 +54,7 @@ def _populate(root, destination):
                 for index in range(count)
             ),
             '@@K_STOPS@@': stops(range(1, 9), state['k'], lambda value: f'{value:.2f}', target_prefix='tick-k'),
-            '@@PHASE_STOPS@@': stops(range(0, 361, 90), state['phase'], lambda value: f'{value}°'),
+            '@@PHASE_STOPS@@': stops(range(0, 361, 90), state['phase'], lambda value: f'{value}°', target_prefix='tick-phase'),
             '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), state['amplitude'], lambda value: f'{value}%'),
             '@@DENSITIES@@': ' / '.join(
                 f'<strong aria-current="page">{value}点</strong>' if value == count
@@ -73,7 +73,7 @@ def _populate(root, destination):
     parameters = expand_fragments((root / 'src/fragments/parameters.html').read_text(encoding='utf-8'), root / 'src')
     comparison_stops = {
         '@@K_STOPS@@': stops(range(1, 9), 3, lambda value: f'{value:.2f}', target_prefix='tick-k'),
-        '@@PHASE_STOPS@@': stops(range(0, 361, 90), 90, lambda value: f'{value}°'),
+        '@@PHASE_STOPS@@': stops(range(0, 361, 90), 90, lambda value: f'{value}°', target_prefix='tick-phase'),
         '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), 80, lambda value: f'{value}%'),
     }
     for token, value in comparison_stops.items():

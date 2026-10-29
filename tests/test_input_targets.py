@@ -55,6 +55,9 @@ class InputTargetTests(unittest.TestCase):
     def test_k_links_have_existing_targets_with_matching_integer_values(self):
         self.check_group('tick-k-', [f'{value:.2f}' for value in range(1, 9)])
 
+    def test_phase_links_have_existing_targets_with_matching_degree_values(self):
+        self.check_group('tick-phase-', [f'{value}°' for value in range(0, 361, 90)])
+
     def test_target_prefix_is_optional_and_cannot_inject_attributes(self):
         self.assertNotIn('id=', stops([1, 2], 1, str))
         self.assertIn('id="tick-k-0" tabindex="-1"', stops([1, 2], 1, str, 'tick-k'))
