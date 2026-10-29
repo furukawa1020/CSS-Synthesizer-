@@ -18,9 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
 
 
-def stops(values, initial, formatter):
+def stops(values, initial, formatter, target_prefix=None):
+    if target_prefix is not None and not re.fullmatch(r'[a-z][a-z0-9-]*', target_prefix):
+        raise ValueError('目盛りのID接頭辞が不正です')
     return '\n'.join(
-        f'<span class="tick{" initial" if value == initial else ""}" '
+        f'<span class="tick{" initial" if value == initial else ""}" ' +
+        (f'id="{target_prefix}-{index}" tabindex="-1" ' if target_prefix else '') +
         f'style="--tick-index:{index}">{formatter(value)}</span>'
         for index, value in enumerate(values)
     )
@@ -50,7 +53,7 @@ def _populate(root, destination):
                 f'style="--index-fallback:{index};--count-fallback:{count}" ></i>'
                 for index in range(count)
             ),
-            '@@K_STOPS@@': stops(range(1, 9), state['k'], lambda value: f'{value:.2f}'),
+            '@@K_STOPS@@': stops(range(1, 9), state['k'], lambda value: f'{value:.2f}', target_prefix='tick-k'),
             '@@PHASE_STOPS@@': stops(range(0, 361, 90), state['phase'], lambda value: f'{value}°'),
             '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), state['amplitude'], lambda value: f'{value}%'),
             '@@DENSITIES@@': ' / '.join(
@@ -69,7 +72,7 @@ def _populate(root, destination):
     comparison = expand_fragments((root / 'src/compare.html').read_text(encoding='utf-8'), root / 'src')
     parameters = expand_fragments((root / 'src/fragments/parameters.html').read_text(encoding='utf-8'), root / 'src')
     comparison_stops = {
-        '@@K_STOPS@@': stops(range(1, 9), 3, lambda value: f'{value:.2f}'),
+        '@@K_STOPS@@': stops(range(1, 9), 3, lambda value: f'{value:.2f}', target_prefix='tick-k'),
         '@@PHASE_STOPS@@': stops(range(0, 361, 90), 90, lambda value: f'{value}°'),
         '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), 80, lambda value: f'{value}%'),
     }
