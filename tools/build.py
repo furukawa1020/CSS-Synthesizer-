@@ -12,7 +12,7 @@ from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors
-from .comparison import comparison_html
+from .comparison import comparison_html, comparison_styles
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -79,7 +79,7 @@ def _populate(root, destination):
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
-            css += '\n' + model_styles(models)
+            css += '\n' + model_styles(models) + '\n' + comparison_styles(models)
         (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')
 
 
