@@ -182,15 +182,23 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="DOM観測JSONと独立した数式の座標照合")
-    parser.add_argument("snapshot", type=Path)
+    parser.add_argument("snapshot", nargs="?", type=Path)
+    parser.add_argument("--batch", type=Path, help="同じディレクトリの観測JSONを列挙するmanifest")
     parser.add_argument("--tolerance", type=float, default=.1, help="許容差（CSS px、既定0.1）")
     args = parser.parse_args(argv)
-    try:
-        data = json.loads(args.snapshot.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, json.JSONDecodeError) as error:
-        result = _result([f"観測JSONを読み取れません: {error}"])
+    if (args.snapshot is None) == (args.batch is None):
+        parser.error("単一snapshotか--batchの一方だけを指定してください")
+    if args.batch is not None:
+        from .coordinate_batch import inspect_batch
+        result = inspect_batch(args.batch, args.tolerance)
     else:
-        result = inspect_snapshot(data, args.tolerance)
+        from .json_data import load_json
+        try:
+            data = load_json(args.snapshot)
+        except (OSError, UnicodeError, ValueError) as error:
+            result = _result([f"観測JSONを読み取れません: {error}"])
+        else:
+            result = inspect_snapshot(data, args.tolerance)
     print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))
     return 0 if result["ok"] else 1
 
