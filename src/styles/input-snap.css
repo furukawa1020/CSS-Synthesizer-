@@ -1,0 +1,2 @@
+.lab:has(#input-snap:checked) .input-band { scroll-snap-type: inline mandatory; }
+.lab:has(#input-snap:checked) .tick { scroll-snap-align: start; }

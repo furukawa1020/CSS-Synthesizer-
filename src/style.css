@@ -85,12 +85,12 @@ details[open] .disclosure { transform: rotate(45deg); }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding-block: 14px; color: var(--muted); font-size: 0.875rem; }
 footer a { display: inline-flex; align-items: center; min-block-size: 44px; }
 .unsupported, .render-unsupported { max-inline-size: 76ch; font-size: 0.9375rem; margin: 0 0 24px; }
-.continuous-controls, .render-unsupported { display: none; }
+.continuous-controls, .render-unsupported, .view-snap { display: none; }
 .explicit-moving, .explicit-still, .auto-still { display: none; }
 .lab:has(#time-play:checked) .auto-moving, .lab:has(#time-stop:checked) .auto-moving { display: none; }
 .lab:has(#time-play:checked) .explicit-moving, .lab:has(#time-stop:checked) .explicit-still { display: inline; }
 @supports (scroll-timeline: --k-input inline) and (animation-timeline: --k-input) and (timeline-scope: --k-input, --phase-input, --amplitude-input) and (scroll-initial-target: nearest) and (container-type: size) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) and (width: calc(sin(1rad) * 1px)) and selector(:has(*)) and selector(::scroll-button(inline-start)) {
-  .continuous-controls { display: block; }
+  .continuous-controls, .view-snap { display: block; }
   .unsupported, .baseline-only { display: none; }
 }
 @supports not ((container-type: size) and (width: 1cqmin) and (width: calc(sin(1rad) * 1px)) and selector(:has(*))) {
