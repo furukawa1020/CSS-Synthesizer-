@@ -63,6 +63,21 @@ class ViewCoordinateTests(unittest.TestCase):
                 self.assertFalse(result["ok"])
                 self.assertGreater(result["max_error"], 40)
 
+    def test_rotation_90_follows_reflection_in_math_coordinates(self):
+        snapshot = self.wave()
+        snapshot.update(rotation_degrees=90, mirror_x=True)
+        # Reflected math points (1,.5),(0,-.5),(-1,.5) rotate to
+        # (-.5,1),(.5,0),(-.5,-1), then screen y is inverted.
+        snapshot['points'] = [{'index': i, 'x': x, 'y': y} for i, (x, y) in enumerate(((88,26),(132,70),(88,114))) ]
+        self.assertTrue(inspect_snapshot(snapshot, tolerance=1e-10)['ok'])
+        snapshot['rotation_degrees'] = -90
+        self.assertFalse(inspect_snapshot(snapshot)['ok'])
+
+    def test_rotation_rejects_nonfinite_and_non_numeric_values(self):
+        for invalid in (True, None, '90', float('nan'), float('inf'), 10**1000):
+            snapshot = self.wave(); snapshot['rotation_degrees'] = invalid
+            self.assertFalse(inspect_snapshot(snapshot)['ok'])
+
     def test_reflection_flags_accept_only_booleans(self):
         for flag in ("mirror_x", "mirror_y"):
             for invalid in (None, 0, 1, "false", "true", [], {}):
