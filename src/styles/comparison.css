@@ -33,3 +33,23 @@
 .comparison-density { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 18px; font-size: .875rem; margin-block-end: 20px; }
 .comparison-density :is(a, strong) { display: inline-flex; align-items: center; min-block-size: 44px; padding-inline: 6px; }
 .comparison-density strong { font-weight: 650; text-decoration: underline; text-underline-offset: .25em; }
+
+.comparison-print-summary, .comparison-empty-print { display: none; }
+@media print {
+  .comparison-intro, .comparison-selection, .comparison-density,
+  .comparison-clock, .comparison-note, .comparison-empty-screen { display: none !important; }
+  .comparison-lab { --clock-state: paused !important; }
+  .comparison-workspace { display: block; }
+  .comparison-print-summary { display: block; font-size: 10pt; margin-block: 0 6mm; }
+  .comparison-print-summary h2 { font-size: 12pt; font-weight: 600; margin: 0 0 2mm; }
+  .comparison-print-summary p { margin: 2mm 0; }
+  .comparison-empty-print { display: inline; }
+  .comparison-plots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6mm 8mm; }
+  .comparison-example.lab { break-inside: avoid; }
+  .comparison-page .comparison-example.lab .stage { inline-size: 75mm !important; max-inline-size: 100%; block-size: 75mm !important; }
+  .comparison-example .stage-heading { font-size: 8pt; inset: 3mm 3mm auto; }
+  .comparison-example .stage-footnote { font-size: 8pt; inset: auto 3mm 2mm; }
+  .comparison-example figcaption { border: 0; padding-block: 3mm; }
+  .comparison-example h2 { font-size: 11pt; }
+  .comparison-example figcaption p { font-size: 9pt; }
+}
