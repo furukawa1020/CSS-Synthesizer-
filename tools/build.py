@@ -13,6 +13,7 @@ from .presets import load_presets, preset_links
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
+from .features import features_html
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -80,6 +81,7 @@ def _populate(root, destination):
         parameters = parameters.replace(token, value)
     for count in COMPARISON_COUNTS:
         (destination / comparison_filename(count)).write_text(comparison_html(comparison, parameters, models, count), encoding='utf-8')
+    (destination / 'features.html').write_text(features_html(), encoding='utf-8')
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
