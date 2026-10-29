@@ -5,10 +5,13 @@ from pathlib import Path
 from .json_data import load_json
 
 MAX_PRESETS = 24
-DEFAULT_MODEL_IDS = ('lissajous', 'wave', 'rose', 'spiral', 'orbit')
 
 
-def validate_presets(presets, model_ids=DEFAULT_MODEL_IDS):
+def validate_presets(presets, model_ids=None):
+    if model_ids is None:
+        from .models import load_models
+        source = Path(__file__).resolve().parents[1] / 'src'
+        model_ids = {model['id'] for model in load_models(source)}
     if not isinstance(presets, list) or not 1 <= len(presets) <= MAX_PRESETS:
         raise ValueError('プリセットは1〜24ページの配列にしてください')
     seen = set()

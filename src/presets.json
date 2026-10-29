@@ -54,5 +54,29 @@
     "k": 3,
     "phase": 180,
     "amplitude": 85
+  },
+  {
+    "file": "preset-fermat.html",
+    "name": "平方根で広がる4巻き",
+    "model": "fermat",
+    "k": 4,
+    "phase": 0,
+    "amplitude": 90
+  },
+  {
+    "file": "preset-damped-wave.html",
+    "name": "右へ減衰する4周期",
+    "model": "damped-wave",
+    "k": 4,
+    "phase": 90,
+    "amplitude": 90
+  },
+  {
+    "file": "preset-standing-wave.html",
+    "name": "節を保つ2周期",
+    "model": "standing-wave",
+    "k": 2,
+    "phase": 0,
+    "amplitude": 85
   }
 ]
