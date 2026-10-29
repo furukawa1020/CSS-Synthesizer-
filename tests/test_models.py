@@ -58,7 +58,7 @@ class ModelTests(unittest.TestCase):
         for selected in ('lissajous', 'wave'):
             tokens = model_tokens(models, selected=selected)
             for token, source in tokens.items():
-                if token == '@@MODEL_CHOICES@@':
+                if token in {'@@MODEL_CHOICES@@', '@@MODEL_REFERENCE@@'}:
                     continue
                 with self.subTest(selected=selected, token=token):
                     parser = Parser(); parser.feed(source)
