@@ -11,3 +11,9 @@
 }
 @media (forced-colors: active) { .lab .axis-label { color: CanvasText; } }
 @media print { .axis-label { color: #444 !important; } }
+
+/* Angle labels sit on the spokes, inside the unit circle. */
+.polar-label { display: none; --polar-radius: 36cqmin; inset-inline-start: calc(50% + cos(var(--polar-angle)) * var(--polar-radius)); inset-block-start: calc(50% - sin(var(--polar-angle)) * var(--polar-radius)); translate: -50% -50%; }
+.lab:has(#grid-polar:checked) .axis-label:not(.polar-label) { display: none; }
+.lab:has(#grid-polar:checked) .polar-label { display: block; }
+@container (max-height: 300px) { .polar-label { --polar-radius: 22cqmin; } }
