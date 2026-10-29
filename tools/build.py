@@ -14,6 +14,7 @@ from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
 from .features import features_html
+from .model_engines import validate_engine_models
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -86,6 +87,8 @@ def _populate(root, destination):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
             css += '\n' + model_styles(models) + '\n' + comparison_styles(models)
+        else:
+            validate_engine_models(models, css)
         (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')
 
 
