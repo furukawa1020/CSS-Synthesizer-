@@ -1,6 +1,9 @@
 /* The effective phase remains integer degrees; only the readout is converted. */
 @counter-style phase-milli-digits { system: extends decimal; pad: 3 '0'; }
 .lab .phase-rad-note { display: none; }
+.phase-unit-option { display: none; }
+@supports (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) {
+  .phase-unit-option { display: block; }
 .lab:has(#phase-unit-rad:checked) .readout-phase {
   --phase-milliradians: round(nearest, calc(var(--phase-q) * 17.453292519943295), 1);
   counter-reset: phase-rad-whole round(down, calc(var(--phase-milliradians) / 1000), 1) phase-rad-fraction mod(var(--phase-milliradians), 1000);
@@ -9,3 +12,5 @@
 .lab:has(#phase-unit-rad:checked) .readout-phase::after { content: counter(phase-rad-whole) '.' counter(phase-rad-fraction, phase-milli-digits) ' rad'; }
 .lab:has(#phase-unit-rad:checked) .phase-rad-note { display: block; grid-column: 1 / -1; }
 @media print { .lab:has(#phase-unit-rad:checked) .readout-phase { font-size: inherit; } }
+
+}

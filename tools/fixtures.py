@@ -1,9 +1,16 @@
 """Generate HTML/CSS QA fixtures, never included in the distribution."""
 from pathlib import Path
 import math
+import re
 from .build import ROOT
 
 RENDER_GATE = '(container-type: size) and (width: 1cqmin) and (width: calc(sin(1rad) * 1px)) and selector(:has(*))'
+
+
+def _lab_style(html, declarations):
+    """Append to the existing main style instead of creating duplicate attributes."""
+    return re.sub(r'(<main class="lab" style=")([^"]*)(")',
+                  lambda match: match[1] + match[2] + ';' + declarations + match[3], html, count=1)
 
 
 def create_fixtures(directory=ROOT / 'build'):
@@ -25,11 +32,45 @@ def create_fixtures(directory=ROOT / 'build'):
     for name, source in [('mobile','index.html'),('large-text','qa-text-200.html'),('fallback','qa-no-render.html')]:
         write(f'qa-{name}-frames.html', f'<!doctype html><html lang="ja"><meta charset="utf-8"><title>{name}の表示検証</title><style>body{{margin:0}}iframe{{border:0;display:block}}</style><iframe title="{name}-360" src="{source}" width="360" height="900"></iframe><iframe title="{name}-1280" src="{source}" width="1280" height="900"></iframe></html>')
     for name,k,phase,amplitude in [('fraction',3.09,89.6,.795),('carry',3.999,359.9,.999),('upper',8,360,1)]:
-        write(f'qa-values-{name}.html', html.replace('class="lab"', f'class="lab" style="animation:none;--k-raw:{k};--phase-raw:{phase};--amplitude-raw:{amplitude}"'))
+        write(f'qa-values-{name}.html', _lab_style(html, f'animation:none;--k-raw:{k};--phase-raw:{phase};--amplitude-raw:{amplitude}'))
     for name,clock in [('start',0),('end',math.tau)]:
-        write(f'qa-loop-{name}.html', html.replace('class="lab"', f'class="lab" style="animation:none;--clock:{clock}"'))
+        write(f'qa-loop-{name}.html', _lab_style(html, f'animation:none;--clock:{clock}'))
+
+
+def create_comparison_fixtures(directory=ROOT / 'build'):
+    """Bounded fixtures for the comparison, transformed points and native UI."""
+    directory = Path(directory)
+    html = (directory / 'index.html').read_text(encoding='utf-8')
+    style = (directory / 'style.css').read_text(encoding='utf-8')
+    def write(name, value):
+        (directory / name).write_text(value, encoding='utf-8')
+    # 97 samples include u=1/8,3/8,5/8,7/8 exactly. For k=2, phi=t=0,
+    # both Lissajous derivatives vanish there; no lossy pi/2 clock is needed.
+    samples = ''.join(f'<i class="sample" data-index="{i}" style="--index-fallback:{i};--count-fallback:97"></i>' for i in range(97))
+    zero = re.sub(r'(<div class="plot" aria-hidden="true">).*?(</div>)',
+                  lambda match: match[1] + samples + match[2], html, flags=re.S)
+    zero = _lab_style(zero, 'animation:none;--clock:0;--k-raw:2;--phase-raw:0')
+    write('qa-tangent-zero.html', zero.replace('192 点', '97 点（検証用）'))
+    write('qa-print-style.css', style.replace('@media print', '@media all').replace('@media screen', '@media not all'))
+    comparison = (directory / 'compare.html').read_text(encoding='utf-8').replace('href="style.css"', 'href="qa-print-style.css"')
+    def print_choice(match):
+        tag = re.sub(r'\schecked(?=[\s>])', '', match[0])
+        identifier = re.search(r'id="([^"]+)"', tag)[1]
+        return tag[:-1] + ' checked>' if identifier in {'compare-rose', 'compare-fermat'} else tag
+    comparison = re.sub(r'<input[^>]*id="compare-[^"]+"[^>]*>', print_choice, comparison)
+    write('qa-comparison-print.html', comparison)
+    write('qa-rad-fallback-style.css', style.replace('@supports (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2))', '@supports not (display: block)'))
+    fallback = html.replace('href="style.css"', 'href="qa-rad-fallback-style.css"')
+    def rad_choice(match):
+        tag = re.sub(r'\schecked(?=[\s>])', '', match[0])
+        return tag[:-1] + ' checked>' if 'id="phase-unit-rad"' in tag else tag
+    fallback = re.sub(r'<input[^>]*name="phase-unit"[^>]*>', rad_choice, fallback)
+    write('qa-rad-fallback.html', fallback)
+    for name, source in [('compare', 'compare.html'), ('text200', 'qa-text-200.html'), ('features', 'features.html')]:
+        write(f'qa-{name}-frames.html', f'<!doctype html><html lang="ja"><meta charset="utf-8"><title>幅の確認</title><style>body{{margin:0}}iframe{{border:0;display:block}}</style><iframe title="test-360" src="{source}" width="360" height="900"></iframe><iframe title="test-1280" src="{source}" width="1280" height="900"></iframe></html>')
 
 
 if __name__ == '__main__':
     create_fixtures()
+    create_comparison_fixtures()
     print('QA専用HTML/CSSを生成しました。CSS分岐のfixtureは実OSや他ブラウザの模擬ではありません。')

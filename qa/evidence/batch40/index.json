@@ -1,0 +1,32 @@
+{
+  "snapshots": [
+    "focus-after.json",
+    "focus-before.json",
+    "focus-on.json",
+    "fraction-damped-wave.json",
+    "fraction-fermat.json",
+    "fraction-standing-wave.json",
+    "gallery-1.json",
+    "gallery-2.json",
+    "gallery-3.json",
+    "gallery-4.json",
+    "gallery-5.json",
+    "gallery-6.json",
+    "gallery-7.json",
+    "model-damped-wave.json",
+    "model-fermat.json",
+    "model-lissajous.json",
+    "model-orbit.json",
+    "model-rose.json",
+    "model-spiral.json",
+    "model-standing-wave.json",
+    "model-wave.json",
+    "preset-orbit.json",
+    "preset-rose.json",
+    "preset-spiral.json",
+    "print.json",
+    "square-points.json",
+    "square.json",
+    "wide.json"
+  ]
+}
