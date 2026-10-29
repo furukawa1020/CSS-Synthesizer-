@@ -12,7 +12,12 @@
   <fieldset class="comparison-selection"><legend>比較するモデル</legend><div class="comparison-options">@@COMPARISON_OPTIONS@@</div><p>複数選べます。非表示にしても点のHTMLは残ります。一般端末での性能は未評価です。</p></fieldset>
   <div class="comparison-workspace">
     <section class="comparison-results" aria-label="同じ入力で描く曲線">
-      <p class="comparison-empty">比較するモデルを1つ以上選んでください。</p>
+      <p class="comparison-empty"><span class="comparison-empty-screen">比較するモデルを1つ以上選んでください。</span><span class="comparison-empty-print">比較図は選択されていません。</span></p>
+      <section class="comparison-print-summary" aria-label="比較図の印刷値">
+        <h2>共有入力 — 時計を停止した比較</h2>
+        <p>反復k：<output class="readout-k" aria-label="印刷する反復"></output> ／ 位相φ：<output class="readout-phase" aria-label="印刷する位相"></output> ／ 振幅A：<output class="readout-amplitude" aria-label="印刷する振幅"></output></p>
+        <p>自動時計t（約）：<output class="print-clock" aria-label="印刷する共有時計（ミリラジアン）"></output>。入力の位相φとは別です。選択したモデルを同じ有効値・時計で描画します。</p>
+      </section>
       <div class="comparison-plots">@@COMPARISON_PLOTS@@</div>
       <p class="comparison-clock">@@FRAGMENT:clock-readout@@</p>
       <p class="comparison-note">描画は各@@COMPARISON_COUNT@@点。各図は短辺を基準に縦横等倍率です。点数の変更や単独画面への移動は別ページで、入力と時計の保持は保証しません。</p>
