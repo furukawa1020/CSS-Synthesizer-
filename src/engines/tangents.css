@@ -1,0 +1,42 @@
+/* Derivatives with respect to theta. A positive scaling of a vector preserves its direction. */
+.sample {
+  --tangent-dx: calc(var(--amplitude) * var(--k) * cos(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad));
+  --tangent-dy: calc(var(--amplitude) * 2 * cos(var(--theta) * 2 + var(--clock) * 1rad));
+}
+.lab:has(#model-wave:checked) .sample {
+  --tangent-dx: calc(1 / pi);
+  --tangent-dy: calc(var(--amplitude) * var(--k) * cos(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad));
+}
+.lab:has(#model-damped-wave:checked) .sample {
+  --tangent-dx: calc(1 / pi);
+  --td-wave: calc(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad);
+  --tangent-dy: calc(var(--amplitude) * exp(-3 * var(--u)) * (var(--k) * cos(var(--td-wave)) - 3 / (2 * pi) * sin(var(--td-wave))));
+}
+.lab:has(#model-standing-wave:checked) .sample {
+  --tangent-dx: calc(1 / pi);
+  --tangent-dy: calc(var(--amplitude) * var(--k) * cos(var(--theta) * var(--k) + var(--phase)) * cos(var(--clock) * 1rad));
+}
+.lab:has(#model-rose:checked) .sample {
+  --td-radius: calc(var(--amplitude) * sin(var(--theta) * var(--k) + var(--phase)));
+  --td-dr: calc(var(--amplitude) * var(--k) * cos(var(--theta) * var(--k) + var(--phase)));
+  --td-angle: calc(var(--theta) + var(--clock) * 1rad);
+  --tangent-dx: calc(var(--td-dr) * cos(var(--td-angle)) - var(--td-radius) * sin(var(--td-angle)));
+  --tangent-dy: calc(var(--td-dr) * sin(var(--td-angle)) + var(--td-radius) * cos(var(--td-angle)));
+}
+.lab:has(#model-spiral:checked) .sample {
+  --td-angle: calc(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad);
+  --tangent-dx: calc(var(--amplitude) / (2 * pi) * cos(var(--td-angle)) - var(--amplitude) * var(--u) * var(--k) * sin(var(--td-angle)));
+  --tangent-dy: calc(var(--amplitude) / (2 * pi) * sin(var(--td-angle)) + var(--amplitude) * var(--u) * var(--k) * cos(var(--td-angle)));
+}
+.lab:has(#model-fermat:checked) .sample {
+  /* 2*sqrt(u) times the derivative, with its finite u=0 limit. */
+  --td-angle: calc(var(--theta) * var(--k) + var(--phase) + var(--clock) * 1rad);
+  --tangent-dx: calc(var(--amplitude) / (2 * pi) * cos(var(--td-angle)) - 2 * var(--amplitude) * var(--u) * var(--k) * sin(var(--td-angle)));
+  --tangent-dy: calc(var(--amplitude) / (2 * pi) * sin(var(--td-angle)) + 2 * var(--amplitude) * var(--u) * var(--k) * cos(var(--td-angle)));
+}
+.lab:has(#model-orbit:checked) .sample {
+  --td-main: calc(var(--theta) + var(--clock) * 1rad);
+  --td-secondary: calc(var(--theta) * var(--k) + var(--phase) - var(--clock) * 1rad);
+  --tangent-dx: calc(var(--amplitude) * (-.65 * sin(var(--td-main)) - .35 * var(--k) * sin(var(--td-secondary))));
+  --tangent-dy: calc(var(--amplitude) * (.65 * cos(var(--td-main)) - .35 * var(--k) * cos(var(--td-secondary))));
+}
