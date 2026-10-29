@@ -234,8 +234,8 @@ def audit_html(html: str, samples: int | None = None) -> dict:
     """HTMLを検査し、ok/errors/sample_countを返す。HTMLを書き換えない。"""
     if not isinstance(html, str):
         raise TypeError("html must be a string")
-    if samples is not None and (type(samples) is not int or samples < 1):
-        raise TypeError("samples must be a positive integer")
+    if samples is not None and (type(samples) is not int or samples < 0):
+        raise TypeError("samples must be a nonnegative integer")
     parser = _HTMLAuditParser()
     if _TEMPLATE_TOKEN.search(html):
         parser.errors.append("未解決のテンプレートトークン")

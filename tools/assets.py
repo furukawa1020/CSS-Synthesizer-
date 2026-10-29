@@ -17,4 +17,5 @@ def asset_specs(source=SOURCE):
         *((preset['file'], 192) for preset in presets),
         ('gallery.html', 96 * len(presets)),
         *((comparison_filename(count), count * len(models)) for count in COMPARISON_COUNTS),
+        ('features.html', 0),
     )

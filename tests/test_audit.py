@@ -123,14 +123,14 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertIn("meta refresh", "\n".join(result["errors"]))
 
-    def test_wrong_types_and_nonpositive_sample_counts_are_errors(self):
+    def test_wrong_types_and_negative_sample_counts_are_errors(self):
         for value in (None, 1, b"text"):
             with self.subTest(value=value):
                 with self.assertRaises(TypeError):
                     audit_html(value)
                 with self.assertRaises(TypeError):
                     audit_css(value)
-        for samples in (0, -1, 1.5, True):
+        for samples in (-1, 1.5, True):
             with self.subTest(samples=samples):
                 with self.assertRaises(TypeError):
                     audit_html("", samples)
