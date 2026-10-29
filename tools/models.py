@@ -79,6 +79,28 @@ def load_models(source):
     return validate_models(load_json(Path(source) / 'models.json'))
 
 
+def model_reference_html(models):
+    """Static native details: every model remains readable regardless of selection."""
+    validate_models(models)
+    rows = []
+    for model in models:
+        equations = ''.join(mathml_expression(part.strip())
+                            for value in model['equations'] for part in value.split(';'))
+        capability = (f'<p class="model-reference-capability">描画には{escape(CAPABILITIES[model["capability"]][1])}への対応が必要です。説明と式は対応の有無にかかわらず読めます。</p>'
+                      if model.get('capability') else '')
+        rows.append(
+            f'<details class="model-reference-item" id="model-reference-{model["id"]}">'
+            f'<summary>{escape(model["name"])}</summary>'
+            '<div class="model-reference-content"><dl>'
+            f'<div><dt>反復 k — {escape(model["k_label"])}</dt><dd>{escape(model["k_help"])}</dd></div>'
+            f'<div><dt>位相 φ</dt><dd>{escape(model["phase_help"])}</dd></div>'
+            f'<div><dt>振幅 A — {escape(model["amplitude_label"])}</dt><dd>{escape(model["amplitude_help"])}</dd></div>'
+            f'</dl><div class="equations">{equations}</div>'
+            f'<p>{escape(model["note"])}</p>{capability}</div></details>'
+        )
+    return '\n'.join(rows)
+
+
 def model_tokens(models, selected='lissajous'):
     validate_models(models)
     if selected not in {model['id'] for model in models}:
@@ -91,6 +113,7 @@ def model_tokens(models, selected='lissajous'):
         '@@MODEL_CHOICES@@': ''.join(
             f'<label><input id="model-{m["id"]}" type="radio" name="model" value="{m["id"]}"'
             f'{" checked" if m["id"] == selected else ""}><span>{escape(m["name"])}</span></label>' for m in models),
+        '@@MODEL_REFERENCE@@': model_reference_html(models),
         '@@MODEL_NAMES@@': copies('name'),
         '@@MODEL_K_LABELS@@': copies('k_label'),
         '@@MODEL_K_HELP@@': copies('k_help'),

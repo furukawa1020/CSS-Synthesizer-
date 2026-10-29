@@ -1,0 +1,13 @@
+/* Native disclosures keep model references readable without selecting a plot. */
+.model-reference { grid-column: 1 / -1; }
+.model-reference-item { border-block-start: 1px solid var(--rule); }
+.model-reference-item:last-child { border-block-end: 1px solid var(--rule); }
+.model-reference-item > summary { min-block-size: 48px; padding-block: 8px; gap: 16px; font-size: 1rem; }
+.model-reference-item > summary::after { content: '+'; margin-inline-start: auto; font: 1.25rem ui-monospace, monospace; }
+.model-reference-item[open] > summary::after { content: '−'; }
+.model-reference-content { padding-block: 4px 20px; }
+.model-reference-content dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 24px; margin: 0 0 16px; }
+.model-reference-content dt { font-size: .875rem; font-weight: 600; }
+.model-reference-content dd { margin: 4px 0 0; font-size: .875rem; }
+.model-reference-capability { color: var(--muted); }
+@media (max-width: 700px) { .model-reference-content dl { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
