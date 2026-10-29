@@ -42,6 +42,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
     照合にはクランプせず観測値を使う。座標の許容差は緩めない。
     mirror_x・mirror_yは任意の真偽値で、省略時はfalse。表示反転だけを検査する。
     rotation_degreesは数理座標で反時計回りを正とし、反転後に適用する。省略時0。
+    plot_scaleは表示倍率0.5・0.75・1。省略時1。数式Aとは別に適用する。
     不正な入力はok:falseと日本語errorsを返す。
     """
     errors: list[str] = []
@@ -79,6 +80,10 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
     if rotation is None:
         errors.append("rotation_degreesは有限数で指定してください")
 
+    plot_scale = _finite_number(snapshot.get("plot_scale", 1))
+    if plot_scale not in (.5, .75, 1):
+        errors.append("plot_scaleは0.5・0.75・1で指定してください")
+
     stage = snapshot.get("stage")
     dimensions = {}
     if not isinstance(stage, dict):
@@ -99,7 +104,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
     if errors:
         return _result(errors)
 
-    scale = .44 * min(dimensions["width"], dimensions["height"])
+    scale = .44 * min(dimensions["width"], dimensions["height"]) * plot_scale
     origin_x = dimensions["x"] + dimensions["width"] / 2
     origin_y = dimensions["y"] + dimensions["height"] / 2
     phase = math.radians(values["phase_degrees"])

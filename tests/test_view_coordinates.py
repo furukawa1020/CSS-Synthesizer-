@@ -78,6 +78,19 @@ class ViewCoordinateTests(unittest.TestCase):
             snapshot = self.wave(); snapshot['rotation_degrees'] = invalid
             self.assertFalse(inspect_snapshot(snapshot)['ok'])
 
+    def test_plot_scale_keeps_origin_and_combines_with_rotation(self):
+        snapshot = self.wave(); snapshot['plot_scale'] = .5
+        snapshot['points'] = [{'index': i, 'x': x, 'y': y} for i, (x, y) in enumerate(((88,59),(110,81),(132,59))) ]
+        self.assertTrue(inspect_snapshot(snapshot, tolerance=1e-10)['ok'])
+        snapshot.update(rotation_degrees=90, mirror_x=True)
+        snapshot['points'] = [{'index': i, 'x': x, 'y': y} for i, (x, y) in enumerate(((99,48),(121,70),(99,92))) ]
+        self.assertTrue(inspect_snapshot(snapshot, tolerance=1e-10)['ok'])
+
+    def test_plot_scale_rejects_unrepresented_values(self):
+        for invalid in (True, None, '0.5', 0, -.5, .6, 2, float('nan'), float('inf')):
+            snapshot = self.wave(); snapshot['plot_scale'] = invalid
+            self.assertFalse(inspect_snapshot(snapshot)['ok'])
+
     def test_reflection_flags_accept_only_booleans(self):
         for flag in ("mirror_x", "mirror_y"):
             for invalid in (None, 0, 1, "false", "true", [], {}):
