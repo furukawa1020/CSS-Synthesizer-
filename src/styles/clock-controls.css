@@ -8,3 +8,9 @@
 .lab:has(#period-12:checked) .period-24, .lab:has(#period-48:checked) .period-24 { display:none; }
 .lab:has(#period-12:checked) .period-12, .lab:has(#period-48:checked) .period-48 { display:inline; }
 @media print { .clock-settings { display:none !important; } }
+
+.lab:has(#direction-reverse:checked) { --clock-direction:reverse; }
+.clock-direction-status { color:var(--muted); }
+.clock-reverse-label { display:none; }
+.lab:has(#direction-reverse:checked) .clock-forward-label { display:none; }
+.lab:has(#direction-reverse:checked) .clock-reverse-label { display:inline; }
