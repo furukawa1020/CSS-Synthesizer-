@@ -1,0 +1,7 @@
+.view-grid-contrast { display:none; }
+@supports (color:color-mix(in srgb, currentColor 30%, transparent)) {
+ .view-grid-contrast { display:block; }
+ @media not (forced-colors: active) {
+  .lab:has(#contrast-strong:checked) .stage { --grid-color:color-mix(in srgb, currentColor 28%, transparent); --axis-color:color-mix(in srgb, currentColor 55%, transparent); --circle-color:color-mix(in srgb, currentColor 40%, transparent); }
+ }
+}
