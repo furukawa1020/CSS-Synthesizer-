@@ -22,15 +22,14 @@ def _read_bytes(path, limit):
     return raw
 
 
-def inspect_batch(manifest, tolerance=.1, *, require_all=False):
+def inspect_manifest(manifest, inspector, tolerance=.1, *, error_key="max_error"):
     """Read only flat sibling names; inspect every listed file after validation.
 
     The explicit list avoids guessing which QA metadata JSON contains points.
     No file or directory is changed, and snapshots are never recursively listed.
     """
-    from .coordinates import inspect_snapshot
     result = {'ok': False, 'checked_files': 0, 'checked_points': 0,
-              'max_error': 0.0, 'errors': [], 'files': []}
+              error_key: 0.0, 'errors': [], 'files': []}
     try:
         if (isinstance(tolerance, bool) or not isinstance(tolerance, (int, float))
                 or not math.isfinite(tolerance) or tolerance < 0):
@@ -61,15 +60,21 @@ def inspect_batch(manifest, tolerance=.1, *, require_all=False):
             if total_bytes > MAX_BATCH_BYTES:
                 raise ValueError('snapshotの合計サイズ上限を超えています')
             data = loads_json(raw.decode('utf-8'))
-            inspection = inspect_snapshot(data, tolerance, require_all=require_all)
+            inspection = inspector(data, tolerance)
         except (OSError, ValueError, UnicodeError, OverflowError) as error:
-            inspection = {'ok': False, 'checked_points': 0, 'max_error': 0.0,
+            inspection = {'ok': False, 'checked_points': 0, error_key: 0.0,
                           'errors': [str(error)]}
         result['files'].append({'path': name, **inspection})
         result['checked_files'] += 1
         result['checked_points'] += inspection['checked_points']
-        result['max_error'] = max(result['max_error'], inspection['max_error'])
+        result[error_key] = max(result[error_key], inspection[error_key])
         if not inspection['ok']:
             result['errors'].append(f'{name}の照合に失敗しました')
     result['ok'] = not result['errors']
     return result
+
+
+def inspect_batch(manifest, tolerance=.1, *, require_all=False):
+    """Coordinate adapter; the bounded reader is shared with tangent evidence."""
+    from .coordinates import inspect_snapshot
+    return inspect_manifest(manifest, lambda data, limit: inspect_snapshot(data, limit, require_all=require_all), tolerance)

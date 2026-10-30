@@ -1,0 +1,13 @@
+{
+  "snapshots": [
+    "tangent-damped-wave.json",
+    "tangent-fermat.json",
+    "tangent-lissajous.json",
+    "tangent-orbit.json",
+    "tangent-rose.json",
+    "tangent-spiral.json",
+    "tangent-standing-wave.json",
+    "tangent-stationary-97.json",
+    "tangent-wave.json"
+  ]
+}
