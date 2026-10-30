@@ -24,7 +24,8 @@
     </section>
     <aside class="controls comparison-controls" id="controls" aria-label="比較図すべての共有入力">
       <fieldset class="time-controls"><legend>共有する時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto" checked><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"><span>再生</span></label><label><input id="time-stop" type="radio" name="time" value="stop"><span>停止</span></label></div></fieldset>
-      @@COMPARISON_PARAMETERS@@
+      @@FRAGMENT:clock-options@@
+        @@COMPARISON_PARAMETERS@@
       @@FRAGMENT:view-comparison@@
       <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
     </aside>

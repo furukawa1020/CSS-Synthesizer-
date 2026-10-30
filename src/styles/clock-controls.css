@@ -1,0 +1,10 @@
+.clock-settings { margin-block-start:16px; grid-column:1 / -1; }
+.clock-settings summary { min-block-size:44px; font-size:.875rem; border-block-end:1px solid var(--rule); }
+.clock-settings summary::after { content:'＋'; margin-inline-start:auto; }
+.clock-settings[open] summary::after { content:'−'; }
+.lab:has(#period-12:checked) { --clock-duration:12s; }
+.lab:has(#period-48:checked) { --clock-duration:48s; }
+.period-12, .period-48 { display:none; }
+.lab:has(#period-12:checked) .period-24, .lab:has(#period-48:checked) .period-24 { display:none; }
+.lab:has(#period-12:checked) .period-12, .lab:has(#period-48:checked) .period-48 { display:inline; }
+@media print { .clock-settings { display:none !important; } }

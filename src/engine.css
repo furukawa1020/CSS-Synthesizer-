@@ -15,7 +15,7 @@
   --k: calc(var(--k-q) / 100);
   --phase: calc(var(--phase-q) * 1deg);
   --amplitude: calc(var(--amplitude-q) / 100);
-  animation: clock 24s linear infinite;
+  animation: clock var(--clock-duration, 24s) linear infinite;
   animation-play-state: var(--clock-state);
   timeline-scope: --k-input, --phase-input, --amplitude-input;
 }
@@ -28,7 +28,7 @@
 .input-amplitude { scroll-timeline: --amplitude-input inline; }
 @supports (scroll-timeline: --k-input inline) and (animation-timeline: --k-input) and (timeline-scope: --k-input, --phase-input, --amplitude-input) and (scroll-initial-target: nearest) and (container-type: size) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) and (width: calc(sin(1rad) * 1px)) and selector(:has(*)) and selector(::scroll-button(inline-start)) {
   .lab {
-    animation: k-input 1s linear both, phase-input 1s linear both, amplitude-input 1s linear both, clock 24s linear infinite;
+    animation: k-input 1s linear both, phase-input 1s linear both, amplitude-input 1s linear both, clock var(--clock-duration, 24s) linear infinite;
     animation-timeline: --k-input, --phase-input, --amplitude-input, auto;
     animation-play-state: running, running, running, var(--clock-state);
   }
