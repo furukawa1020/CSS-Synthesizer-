@@ -29,3 +29,19 @@
   .gallery-example.lab .stage { inline-size: 65mm !important; block-size: 50mm !important; }
   .gallery-page .gallery-open, .gallery-page footer { display: none; }
 }
+
+.gallery-filter { display:none; margin-block:24px; border-block:1px solid var(--rule); padding-block:12px; }
+.gallery-filter .view-choices { display:flex; flex-wrap:wrap; gap:4px 20px; }
+.gallery-filter label { display:flex; align-items:center; gap:8px; min-block-size:44px; font-size:.875rem; cursor:pointer; }
+@supports selector(:has(*)) {
+ .gallery-filter { display:block; }
+ .gallery-main:has(#gallery-lissajous:checked) .gallery-list > li:not([data-gallery-model="lissajous"]) { display:none; }
+ .gallery-main:has(#gallery-wave:checked) .gallery-list > li:not([data-gallery-model="wave"]) { display:none; }
+ .gallery-main:has(#gallery-rose:checked) .gallery-list > li:not([data-gallery-model="rose"]) { display:none; }
+ .gallery-main:has(#gallery-spiral:checked) .gallery-list > li:not([data-gallery-model="spiral"]) { display:none; }
+ .gallery-main:has(#gallery-orbit:checked) .gallery-list > li:not([data-gallery-model="orbit"]) { display:none; }
+ .gallery-main:has(#gallery-fermat:checked) .gallery-list > li:not([data-gallery-model="fermat"]) { display:none; }
+ .gallery-main:has(#gallery-damped-wave:checked) .gallery-list > li:not([data-gallery-model="damped-wave"]) { display:none; }
+ .gallery-main:has(#gallery-standing-wave:checked) .gallery-list > li:not([data-gallery-model="standing-wave"]) { display:none; }
+}
+@media print { .gallery-filter { display:none; } }

@@ -20,7 +20,7 @@ def gallery_html(presets, models):
         samples = ''.join(f'<i class="sample" data-index="{index}" style="--index-fallback:{index};--count-fallback:96"></i>' for index in range(96))
         unavailable = (f'<p class="model-unavailable model-unavailable-{preset["model"]}">このブラウザでは、このモデルに必要なCSS数式の機能が不足しているため描画しません。</p>'
                        if definitions[preset['model']].get('capability') else '')
-        rows.append(f'''<li>
+        rows.append(f'''<li data-gallery-model="{preset['model']}">
   <figure class="lab gallery-example" data-static-model="{preset['model']}" style="--k-raw:{preset['k']};--phase-raw:{preset['phase']};--amplitude-raw:{preset['amplitude']/100:g}">
     <div class="stage" role="img" aria-label="{escape(label, quote=True)}"><div class="axes" aria-hidden="true"></div><div class="plot" aria-hidden="true">{samples}</div></div>
     {unavailable}
@@ -32,6 +32,7 @@ def gallery_html(presets, models):
     <p>96点・時計 t = 0・停止</p><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a>
   </section>
 </li>''')
+    filters = '<fieldset class="gallery-filter"><legend>モデルで絞る</legend><div class="view-choices"><label><input id="gallery-all" type="radio" name="gallery-model" checked><span>全件</span></label>' + ''.join(f'<label><input id="gallery-{m["id"]}" type="radio" name="gallery-model"><span>{escape(m["name"])}</span></label>' for m in models) + '</div></fieldset>'
     return '''<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
@@ -39,5 +40,5 @@ def gallery_html(presets, models):
 <body class="gallery-page"><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">標準の画面へ ↗</a></header>
 <main class="gallery-main"><h1>形の一覧</h1><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p>
-<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
+''' + filters + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''
