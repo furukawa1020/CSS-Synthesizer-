@@ -1,0 +1,26 @@
+{
+  "snapshots": [
+    "coord-01-lissajous.json",
+    "coord-02-wave.json",
+    "coord-03-rose.json",
+    "coord-04-spiral.json",
+    "coord-05-orbit.json",
+    "coord-06-fermat.json",
+    "coord-07-damped-wave.json",
+    "coord-08-standing-wave.json",
+    "coord-09-lissajous.json",
+    "coord-10-wave.json",
+    "coord-11-rose.json",
+    "coord-12-spiral.json",
+    "coord-13-orbit.json",
+    "coord-14-fermat.json",
+    "coord-15-damped-wave.json",
+    "coord-16-standing-wave.json",
+    "coord-17-lissajous.json",
+    "coord-18-wave.json",
+    "coord-19-lissajous.json",
+    "coord-20-wave.json",
+    "coord-21-rose.json",
+    "coord-22-fermat.json"
+  ]
+}

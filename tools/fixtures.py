@@ -70,7 +70,36 @@ def create_comparison_fixtures(directory=ROOT / 'build'):
         write(f'qa-{name}-frames.html', f'<!doctype html><html lang="ja"><meta charset="utf-8"><title>幅の確認</title><style>body{{margin:0}}iframe{{border:0;display:block}}</style><iframe title="test-360" src="{source}" width="360" height="900"></iframe><iframe title="test-1280" src="{source}" width="1280" height="900"></iframe></html>')
 
 
+def create_batch80_fixtures(directory=ROOT / 'build'):
+    """Comparison width, text, and CSS-media branches; not real OS settings."""
+    directory = Path(directory)
+    html = (directory / 'compare.html').read_text(encoding='utf-8')
+    style = (directory / 'style.css').read_text(encoding='utf-8')
+    def write(name, value):
+        (directory / name).write_text(value, encoding='utf-8')
+    def choices(value):
+        groups = {'opacity', 'sample-range', 'point-shape', 'clock-period', 'clock-direction'}
+        selected = {'opacity-quarter', 'range-half', 'shape-arrow', 'period-48', 'direction-reverse'}
+        def replace(match):
+            tag = match[0]
+            group = re.search(r'name="([^"]+)"', tag)
+            if not group or group[1] not in groups:
+                return tag
+            tag = re.sub(r'\schecked(?=[\s>])', '', tag)
+            identifier = re.search(r'id="([^"]+)"', tag)[1]
+            return tag[:-1] + ' checked>' if identifier in selected else tag
+        return re.sub(r'<input[^>]*>', replace, value)
+    write('qa-compare-text200.html', html.replace('</head>', '<style>html{font-size:200%}</style></head>'))
+    write('qa-batch80-layouts.html', '<!doctype html><html lang="ja"><meta charset="utf-8"><title>比較の幅と文字拡大</title><style>body{margin:0}iframe{display:block;border:0}</style>' + ''.join(f'<iframe title="{name}-{width}" src="{name}.html" width="{width}" height="1000"></iframe>' for name,width in [('compare',360),('compare',1280),('qa-compare-text200',360),('gallery',360)]) + '</html>')
+    printed = (directory / 'qa-comparison-print.html').read_text(encoding='utf-8')
+    write('qa-batch80-print.html', choices(printed))
+    forced = style.replace('@media not (forced-colors: active)', '@media not all').replace('@media (forced-colors: active)', '@media all')
+    write('qa-batch80-forced.css', forced)
+    write('qa-batch80-forced.html', choices(html).replace('href="style.css"', 'href="qa-batch80-forced.css"'))
+
+
 if __name__ == '__main__':
     create_fixtures()
     create_comparison_fixtures()
+    create_batch80_fixtures()
     print('QA専用HTML/CSSを生成しました。CSS分岐のfixtureは実OSや他ブラウザの模擬ではありません。')

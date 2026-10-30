@@ -1,0 +1,12 @@
+{
+  "coordinates": {
+    "cases": 22,
+    "points": 2304,
+    "max_error": 0.011103909526206409
+  },
+  "tangents": {
+    "cases": 22,
+    "points": 2304,
+    "max_error": 0.0004994489627279108
+  }
+}

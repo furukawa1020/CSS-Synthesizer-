@@ -1,0 +1,26 @@
+{
+  "snapshots": [
+    "tangent-01-lissajous.json",
+    "tangent-02-wave.json",
+    "tangent-03-rose.json",
+    "tangent-04-spiral.json",
+    "tangent-05-orbit.json",
+    "tangent-06-fermat.json",
+    "tangent-07-damped-wave.json",
+    "tangent-08-standing-wave.json",
+    "tangent-09-lissajous.json",
+    "tangent-10-wave.json",
+    "tangent-11-rose.json",
+    "tangent-12-spiral.json",
+    "tangent-13-orbit.json",
+    "tangent-14-fermat.json",
+    "tangent-15-damped-wave.json",
+    "tangent-16-standing-wave.json",
+    "tangent-17-lissajous.json",
+    "tangent-18-wave.json",
+    "tangent-19-lissajous.json",
+    "tangent-20-wave.json",
+    "tangent-21-rose.json",
+    "tangent-22-fermat.json"
+  ]
+}

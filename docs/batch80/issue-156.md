@@ -1,0 +1,3 @@
+# Issue #156 — 20件の統合
+
+[要件と一覧](README.md)、[観測と制限](validation.md)、[座標・接線の証跡](../../qa/evidence/batch80/README.md)を追加。全点を要求した保存座標と境界付き接線batchをCIで再照合する。幅/文字拡大/印刷/強制カラーのfixtureを再現可能にし、配布ZIPとmanifestの生成・照合を行う。実機等#3とHTML-in-Canvas本体#12は閉じない。
