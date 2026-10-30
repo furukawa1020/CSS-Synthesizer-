@@ -81,7 +81,7 @@ def _populate(root, destination):
     for token, value in comparison_stops.items():
         parameters = parameters.replace(token, value)
     for count in COMPARISON_COUNTS:
-        (destination / comparison_filename(count)).write_text(comparison_html(comparison, parameters, models, count), encoding='utf-8')
+        (destination / comparison_filename(count)).write_text(expand_fragments(comparison_html(comparison, parameters, models, count), root / 'src'), encoding='utf-8')
     (destination / 'features.html').write_text(features_html(), encoding='utf-8')
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
