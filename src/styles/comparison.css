@@ -57,3 +57,5 @@
 @media screen and (min-width: 1101px) {
   .comparison-controls.controls { position: sticky; inset-block-start: 20px; align-self: start; max-block-size: calc(100svh - 40px); overflow: auto; padding-inline-end: 8px; scrollbar-gutter: stable; }
 }
+
+.comparison-example { container-type: inline-size; container-name: scene-view; }
