@@ -63,3 +63,5 @@
 .comparison-example.lab { --sample-range: inherit; }
 
 .comparison-example.lab { --view-x: inherit; --view-y: inherit; }
+
+.comparison-example.lab { --plot-rotation: inherit; }
