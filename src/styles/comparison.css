@@ -73,3 +73,5 @@
 .comparison-selection-count output::after { content: counter(selected-models); }
 .comparison-reset { min-block-size:44px; padding:8px 12px; border:1px solid var(--rule); border-radius:0; background:var(--paper); color:var(--ink); font:inherit; font-size:.875rem; cursor:pointer; }
 @media print { .comparison-selection-form { display:none; } }
+
+@media screen { .comparison-lab:has(#layout-rows:checked) .comparison-plots { grid-template-columns:minmax(0,1fr); } .comparison-lab:has(#layout-rows:checked) .comparison-example .stage { block-size:clamp(280px, 50vw, 600px); } }
