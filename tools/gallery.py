@@ -40,5 +40,5 @@ def gallery_html(presets, models):
 <body class="gallery-page"><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">標準の画面へ ↗</a></header>
 <main class="gallery-main"><h1>形の一覧</h1><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p>
-''' + filters + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
+''' + filters + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div><p>図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''

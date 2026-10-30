@@ -45,3 +45,14 @@
  .gallery-main:has(#gallery-standing-wave:checked) .gallery-list > li:not([data-gallery-model="standing-wave"]) { display:none; }
 }
 @media print { .gallery-filter { display:none; } }
+
+.gallery-layout { display:none; margin-block:20px; }
+.gallery-layout .view-choices { display:flex; flex-wrap:wrap; gap:4px 24px; }
+.gallery-layout label { display:flex; align-items:center; gap:8px; min-block-size:44px; font-size:.875rem; }
+.gallery-layout p { font-size:.8125rem; color:var(--muted); }
+@supports selector(:has(*)) {
+ .gallery-layout { display:block; }
+ .gallery-main:has(#gallery-values:checked) .gallery-example { display:none; }
+ .gallery-main:has(#gallery-values:checked) .gallery-list > li { grid-template-columns:minmax(0,1fr); }
+}
+@media print { .gallery-layout { display:none; } }
