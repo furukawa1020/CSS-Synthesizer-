@@ -59,3 +59,5 @@
 }
 
 .comparison-example { container-type: inline-size; container-name: scene-view; }
+
+.comparison-example.lab { --sample-range: inherit; }
