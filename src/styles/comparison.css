@@ -67,3 +67,9 @@
 .comparison-example.lab { --plot-rotation: inherit; }
 
 .comparison-example.lab { --plot-scale: inherit; }
+
+.comparison-selection { counter-reset: selected-models; }
+.comparison-options label:has(input:checked) { counter-increment: selected-models; }
+.comparison-selection-count output::after { content: counter(selected-models); }
+.comparison-reset { min-block-size:44px; padding:8px 12px; border:1px solid var(--rule); border-radius:0; background:var(--paper); color:var(--ink); font:inherit; font-size:.875rem; cursor:pointer; }
+@media print { .comparison-selection-form { display:none; } }

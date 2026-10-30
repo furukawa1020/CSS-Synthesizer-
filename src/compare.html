@@ -9,7 +9,7 @@
   <h1>曲線を比較する</h1><p class="comparison-intro">同じk・位相φ・振幅A・時計tを使います。数値が同じでも、各モデルで入力の意味や見える形は異なります。各図の説明を参照してください。</p>
   <p class="unsupported">このブラウザでは共有の調整帯に必要なCSS機能が不足しています。利用可能な描画機能では基準値を表示します。</p><p class="render-unsupported">このブラウザではCSS座標描画を利用できません。モデル名と説明は下に残します。</p>
   <nav class="comparison-density" aria-label="比較図ごとの点数"><span>各図の点数</span>@@COMPARISON_DENSITIES@@</nav>
-  <fieldset class="comparison-selection"><legend>比較するモデル</legend><div class="comparison-options">@@COMPARISON_OPTIONS@@</div><p>複数選べます。非表示にしても点のHTMLは残ります。一般端末での性能は未評価です。</p></fieldset>
+  <form class="comparison-selection-form"><fieldset class="comparison-selection"><legend>比較するモデル</legend><div class="comparison-options">@@COMPARISON_OPTIONS@@</div><p class="comparison-selection-count">選択数 <output aria-label="選択したモデル数"></output> / 8</p><button type="reset" class="comparison-reset">既定の2モデルへ戻す</button><p>複数選べます。非表示にしても点のHTMLは残ります。一般端末での性能は未評価です。</p></fieldset></form>
   <div class="comparison-workspace">
     <section class="comparison-results" aria-label="同じ入力で描く曲線">
       <p class="comparison-empty"><span class="comparison-empty-screen">比較するモデルを1つ以上選んでください。</span><span class="comparison-empty-print">比較図は選択されていません。</span></p>
