@@ -44,7 +44,7 @@ class GalleryTests(unittest.TestCase):
             parser.feed(text)
             self.assertEqual(len(parser.examples), len(presets))
             self.assertEqual(parser.samples, 96 * len(presets))
-            self.assertEqual(parser.inputs, [])
+            self.assertEqual(len([i for i in parser.inputs if i.get('name') == 'gallery-model']), 9)
             for figure, preset in zip(parser.examples, presets):
                 self.assertEqual(figure['data-static-model'], preset['model'])
                 raw = dict(item.split(':', 1) for item in figure['style'].split(';'))
