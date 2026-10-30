@@ -34,7 +34,7 @@ def _finite_number(value: object) -> float | None:
     return number if math.isfinite(number) else None
 
 
-def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
+def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: bool = False) -> dict:
     """観測snapshotを検査する。CSSの--x/--yを期待値には使用しない。
 
     pointsのx/yはビューポートにおけるDOM点の中心、stageのx/yは
@@ -47,6 +47,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
     不正な入力はok:falseと日本語errorsを返す。
     """
     errors: list[str] = []
+    if type(require_all) is not bool:
+        errors.append("require_allは真偽値で指定してください")
     limit = _finite_number(tolerance)
     if limit is None or limit < 0:
         errors.append("許容差は0以上の有限数で指定してください")
@@ -178,6 +180,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1) -> dict:
                 f"{prefix}（index={index}）の誤差{distance:.9g} CSS pxが"
                 f"許容差{limit:.9g} CSS pxを超えています"
             )
+    if require_all and checked != count:
+        errors.append(f"全{count}点の有効な観測が必要です（照合{checked}点）")
     return _result(errors, checked, maximum)
 
 
@@ -186,12 +190,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("snapshot", nargs="?", type=Path)
     parser.add_argument("--batch", type=Path, help="同じディレクトリの観測JSONを列挙するmanifest")
     parser.add_argument("--tolerance", type=float, default=.1, help="許容差（CSS px、既定0.1）")
+    parser.add_argument("--require-all", action="store_true", help="0〜count-1の全点を要求する")
     args = parser.parse_args(argv)
     if (args.snapshot is None) == (args.batch is None):
         parser.error("単一snapshotか--batchの一方だけを指定してください")
     if args.batch is not None:
         from .coordinate_batch import inspect_batch
-        result = inspect_batch(args.batch, args.tolerance)
+        result = inspect_batch(args.batch, args.tolerance, require_all=args.require_all)
     else:
         from .json_data import load_json
         try:
@@ -199,7 +204,7 @@ def main(argv: list[str] | None = None) -> int:
         except (OSError, UnicodeError, ValueError) as error:
             result = _result([f"観測JSONを読み取れません: {error}"])
         else:
-            result = inspect_snapshot(data, args.tolerance)
+            result = inspect_snapshot(data, args.tolerance, require_all=args.require_all)
     print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))
     return 0 if result["ok"] else 1
 

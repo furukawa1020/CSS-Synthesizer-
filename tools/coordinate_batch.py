@@ -22,7 +22,7 @@ def _read_bytes(path, limit):
     return raw
 
 
-def inspect_batch(manifest, tolerance=.1):
+def inspect_batch(manifest, tolerance=.1, *, require_all=False):
     """Read only flat sibling names; inspect every listed file after validation.
 
     The explicit list avoids guessing which QA metadata JSON contains points.
@@ -61,7 +61,7 @@ def inspect_batch(manifest, tolerance=.1):
             if total_bytes > MAX_BATCH_BYTES:
                 raise ValueError('snapshotの合計サイズ上限を超えています')
             data = loads_json(raw.decode('utf-8'))
-            inspection = inspect_snapshot(data, tolerance)
+            inspection = inspect_snapshot(data, tolerance, require_all=require_all)
         except (OSError, ValueError, UnicodeError, OverflowError) as error:
             inspection = {'ok': False, 'checked_points': 0, 'max_error': 0.0,
                           'errors': [str(error)]}
