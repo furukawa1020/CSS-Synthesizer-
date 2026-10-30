@@ -17,6 +17,7 @@
   --amplitude: calc(var(--amplitude-q) / 100);
   animation: clock var(--clock-duration, 24s) linear infinite;
   animation-play-state: var(--clock-state);
+  animation-direction: var(--clock-direction, normal);
   timeline-scope: --k-input, --phase-input, --amplitude-input;
 }
 @keyframes clock { from { --clock: 0; } to { --clock: 6.283185307179586; } }
@@ -31,6 +32,7 @@
     animation: k-input 1s linear both, phase-input 1s linear both, amplitude-input 1s linear both, clock var(--clock-duration, 24s) linear infinite;
     animation-timeline: --k-input, --phase-input, --amplitude-input, auto;
     animation-play-state: running, running, running, var(--clock-state);
+    animation-direction: normal, normal, normal, var(--clock-direction, normal);
   }
 }
 .lab:has(#time-stop:checked) { --clock-state: paused; }
