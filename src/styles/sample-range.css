@@ -3,4 +3,4 @@
 .lab:has(#range-quarter:checked) { --sample-range: .25; }
 /* floor(clamp(1 + limit - u)) is 1 exactly when u <= limit, otherwise 0.
    Opacity preserves every sample box, index, coordinate and endpoint pseudo. */
-.sample { opacity: round(down, clamp(0, calc(1 + var(--sample-range, 1) - var(--u)), 1), 1); }
+.sample { opacity: calc(round(down, clamp(0, calc(1 + var(--sample-range, 1) - var(--u)), 1), 1) * var(--point-opacity, 1)); }

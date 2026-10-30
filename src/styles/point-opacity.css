@@ -1,0 +1,4 @@
+.lab:has(#opacity-half:checked) .sample { --point-opacity:.5; }
+.lab:has(#opacity-quarter:checked) .sample { --point-opacity:.25; }
+@media (forced-colors: active) { .lab .sample { --point-opacity:1 !important; } }
+@media print { .lab .sample { --point-opacity:1 !important; } }
