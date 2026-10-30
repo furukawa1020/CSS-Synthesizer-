@@ -97,13 +97,21 @@ def inspect_tangent_snapshot(snapshot, tolerance_degrees=.1):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description='接線矢印のローカル角度を独立微分で照合する')
-    parser.add_argument('snapshot', type=Path)
+    parser.add_argument('snapshot', nargs='?', type=Path)
+    parser.add_argument('--batch', type=Path, help='同じディレクトリの接線観測を列挙したmanifest')
     parser.add_argument('--tolerance-degrees', type=float, default=.1)
     args = parser.parse_args(argv)
-    try:
-        result = inspect_tangent_snapshot(json.loads(args.snapshot.read_text(encoding='utf-8')), args.tolerance_degrees)
-    except (OSError, UnicodeError, ValueError) as error:
-        result = {'ok': False, 'errors': [str(error)], 'checked_points': 0, 'max_error_degrees': 0}
+    if (args.snapshot is None) == (args.batch is None):
+        parser.error('単一snapshotか--batchの一方だけを指定してください')
+    if args.batch is not None:
+        from .coordinate_batch import inspect_manifest
+        result = inspect_manifest(args.batch, inspect_tangent_snapshot, args.tolerance_degrees, error_key='max_error_degrees')
+    else:
+        from .json_data import load_json
+        try:
+            result = inspect_tangent_snapshot(load_json(args.snapshot), args.tolerance_degrees)
+        except (OSError, UnicodeError, ValueError) as error:
+            result = {'ok': False, 'errors': [str(error)], 'checked_points': 0, 'max_error_degrees': 0}
     print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))
     return 0 if result['ok'] else 1
 
