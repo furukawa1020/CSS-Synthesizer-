@@ -36,7 +36,7 @@ def comparison_html(template, parameters, models, count=96):
     <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
   </div>
   {unavailable}
-  <figcaption>@@FRAGMENT:polar-legend@@<h2>{escape(model['name'])}</h2><p>k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><p>{escape(model['note'])}</p></figcaption>
+  <figcaption>@@FRAGMENT:polar-legend@@@@FRAGMENT:order-legend@@<h2>{escape(model['name'])}</h2><p>k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><p>{escape(model['note'])}</p></figcaption>
 </figure>''')
     generic = {
         '@@MODEL_K_LABELS@@': '反復 k', '@@MODEL_K_HELP@@': '各モデルの反復・巻き数を同時に変える',
