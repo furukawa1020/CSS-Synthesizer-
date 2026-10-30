@@ -80,3 +80,7 @@ python3 -m tools.coordinates --batch qa/evidence/batch60/index.json
 manifestが列挙した、同じディレクトリの観測JSONを順に検査する。各結果・合計点数・最大誤差を返し、1件でも失敗すると終了コードは非ゼロ。欠落や不正な参照も成功として省略しない。これは過去の有限ケースの回帰検査であり、ブラウザを起動し直す検査、実機性能、全入力の証明ではない。接線の観測はtools.tangentsで別に検査する。
 
 モデル定義とCSS選択子・独立checkerの対応も生成候補で検査する。基底のリサージュは明示した例外とし、未実装の名前だけが選択肢に追加されることを防ぐ。この対応検査自体はCSSの数式の正しさを証明しない。
+
+## 比較表示と時計の検査
+
+今回の配布構成も17 HTML・2 CSS、使い方とハッシュ一覧込み21エントリー。`--require-all`を座標の単一/一括CLIに指定すると全count点を要求する。接線は`python3 -m tools.tangents --batch qa/evidence/batch80/tangents-index.json`で一括照合できる。座標と接線の最大誤差はCSS px/度を分ける。観測資料とQA fixtureはZIPに入れない。
