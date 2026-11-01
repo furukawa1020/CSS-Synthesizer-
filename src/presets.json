@@ -102,5 +102,13 @@
     "k": 3,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-exp-spiral.html",
+    "name": "中心へ収束する4巻き",
+    "model": "exp-spiral",
+    "k": 4,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
