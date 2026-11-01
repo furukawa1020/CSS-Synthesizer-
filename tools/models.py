@@ -145,3 +145,8 @@ def model_styles(models):
         '.lab [data-model-copy] { display: none; }\n' + '\n'.join(
         f'.lab:has(#model-{m["id"]}:checked) [data-model-copy="{m["id"]}"] '
         '{ display: var(--model-copy-display, inline); }' for m in models) + '\n}') + '\n' + capability_styles
+
+
+def model_equations_html(model):
+    """Render equations from a validated model without a second formula copy."""
+    return ''.join(mathml_expression(part.strip()) for value in model['equations'] for part in value.split(';'))

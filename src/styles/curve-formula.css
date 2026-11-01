@@ -1,0 +1,6 @@
+.curve-formula { margin-block-start:12px; border-block-start:1px solid var(--rule); }
+.curve-formula summary { min-block-size:44px; font-size:.875rem; }
+.curve-formula summary::after { content:'＋'; margin-inline-start:auto; }
+.curve-formula[open] summary::after { content:'−'; }
+.curve-formula .equations { min-inline-size:0; overflow:auto; padding-block:8px; }
+.curve-formula math { min-inline-size:max-content; font-size:1rem; margin-block:8px; }
