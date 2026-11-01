@@ -86,5 +86,13 @@
     "k": 1,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-trochoid.html",
+    "name": "尖点を持つ3回転",
+    "model": "trochoid",
+    "k": 3,
+    "phase": 0,
+    "amplitude": 100
   }
 ]
