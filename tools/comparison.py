@@ -46,7 +46,7 @@ def comparison_html(template, parameters, models, count=96):
     for token, value in generic.items():
         parameters = parameters.replace(token, value)
     densities = ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{comparison_filename(n)}">{n}点</a>' for n in COMPARISON_COUNTS)
-    return template.replace('@@COMPARISON_COUNT@@', str(count)).replace('@@COMPARISON_DENSITIES@@', densities).replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
+    return template.replace('@@COMPARISON_MODEL_COUNT@@', str(len(models))).replace('@@COMPARISON_COUNT@@', str(count)).replace('@@COMPARISON_DENSITIES@@', densities).replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
 
 
 def comparison_styles(models):
