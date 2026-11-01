@@ -24,6 +24,9 @@ def position(model, u, k, phi, a, t):
     if model == 'lemniscate':
         q=k*theta; d=1+math.sin(q)**2; x=a*math.cos(q)/d; y=a*math.sin(q)*math.cos(q)/d
         return x*math.cos(phi+t)-y*math.sin(phi+t), x*math.sin(phi+t)+y*math.cos(phi+t)
+    if model == 'trochoid':
+        q=k*theta+phi+t; b=a/(math.pi*k)
+        return (2*u-1-b*math.sin(q))/(1+b), a*math.cos(q)
     return a * (.65 * math.cos(theta+t) + .35 * math.cos(k*theta+phi-t)), a * (.65 * math.sin(theta+t) - .35 * math.sin(k*theta+phi-t))
 
 

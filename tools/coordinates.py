@@ -12,7 +12,7 @@ import sys
 # 2π may be serialized as 6.28319 by a browser's computed-style API.
 # Keep this radian allowance separate from the coordinate tolerance in CSS px.
 _CLOCK_SERIALIZATION_MARGIN = 5e-6
-SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave", "lemniscate"})
+SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave", "lemniscate", "trochoid"})
 
 
 def _result(errors: list[str], checked: int = 0, maximum: float = 0.0) -> dict:
@@ -162,6 +162,11 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
             base_y = base_x * math.sin(q)
             angle = phase + clock
             x, y = base_x * math.cos(angle) - base_y * math.sin(angle), base_x * math.sin(angle) + base_y * math.cos(angle)
+        elif model == "trochoid":
+            q = values["k"] * theta + phase + clock
+            b = amplitude / (math.pi * values["k"])
+            x = (2 * u - 1 - b * math.sin(q)) / (1 + b)
+            y = amplitude * math.cos(q)
         else:
             main = theta + clock
             secondary = values["k"] * theta + phase - clock
