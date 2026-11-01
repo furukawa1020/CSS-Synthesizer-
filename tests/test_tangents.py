@@ -31,6 +31,9 @@ def position(model, u, k, phi, a, t):
         c=k/(k+1); q=k*theta+phi
         x=a*(c*math.cos(theta)+.35*math.cos(q))/(c+.35); y=a*(c*math.sin(theta)-.35*math.sin(q))/(c+.35)
         return x*math.cos(t)-y*math.sin(t), x*math.sin(t)+y*math.cos(t)
+    if model == 'exp-spiral':
+        r=a*math.exp(-3*u); q=k*theta+phi+t
+        return r*math.cos(q),r*math.sin(q)
     return a * (.65 * math.cos(theta+t) + .35 * math.cos(k*theta+phi-t)), a * (.65 * math.sin(theta+t) - .35 * math.sin(k*theta+phi-t))
 
 

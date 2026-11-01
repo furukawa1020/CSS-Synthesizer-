@@ -60,3 +60,8 @@
 --tangent-dx: calc(var(--hd-x) * cos(var(--hy-a)) - var(--hd-y) * sin(var(--hy-a)));
 --tangent-dy: calc(var(--hd-x) * sin(var(--hy-a)) + var(--hd-y) * cos(var(--hy-a)));
 }
+
+.lab:has(#model-exp-spiral:checked) .sample {
+--tangent-dx: calc(var(--es-r) * (-3 * cos(var(--es-q)) - 2 * pi * var(--k) * sin(var(--es-q))));
+--tangent-dy: calc(var(--es-r) * (-3 * sin(var(--es-q)) + 2 * pi * var(--k) * cos(var(--es-q))));
+}

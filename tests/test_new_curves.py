@@ -22,3 +22,6 @@ class NewCurveTests(unittest.TestCase):
 
     def test_hypotrochoid_normalized_three_ratio_extrema(self):
         self.assert_points('hypotrochoid',[(0,.5,0),(1,0,.5),(2,-.5,0),(3,0,-.5),(4,.5,0)],k=3)
+
+    def test_exp_spiral_decays_but_has_nonzero_endpoint(self):
+        self.assert_points('exp-spiral',[(0,.5,0),(1,0,.5*math.exp(-.75)),(2,-.5*math.exp(-1.5),0),(3,0,-.5*math.exp(-2.25)),(4,.5*math.exp(-3),0)])
