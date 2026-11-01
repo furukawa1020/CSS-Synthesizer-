@@ -10,6 +10,7 @@ from tools.audit import audit_html
 from tools.build import ROOT, build
 from tools.gallery import static_model_selectors
 from tools.presets import load_presets
+from tools.models import load_models
 
 
 class GalleryParser(HTMLParser):
@@ -44,7 +45,7 @@ class GalleryTests(unittest.TestCase):
             parser.feed(text)
             self.assertEqual(len(parser.examples), len(presets))
             self.assertEqual(parser.samples, 96 * len(presets))
-            self.assertEqual(len([i for i in parser.inputs if i.get('name') == 'gallery-model']), 9)
+            self.assertEqual(len([i for i in parser.inputs if i.get('name') == 'gallery-model']), len(load_models(root / 'src')) + 1)
             for figure, preset in zip(parser.examples, presets):
                 self.assertEqual(figure['data-static-model'], preset['model'])
                 raw = dict(item.split(':', 1) for item in figure['style'].split(';'))

@@ -11,7 +11,7 @@ from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
-from .gallery import gallery_html, static_model_selectors
+from .gallery import gallery_html, static_model_selectors, gallery_styles
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
 from .features import features_html
 from .model_engines import validate_engine_models
@@ -86,7 +86,7 @@ def _populate(root, destination):
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
-            css += '\n' + model_styles(models) + '\n' + comparison_styles(models)
+            css += '\n' + gallery_styles(models) + '\n' + model_styles(models) + '\n' + comparison_styles(models)
         else:
             validate_engine_models(models, css)
         (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')
