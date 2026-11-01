@@ -78,5 +78,13 @@
     "k": 2,
     "phase": 0,
     "amplitude": 85
+  },
+  {
+    "file": "preset-lemniscate.html",
+    "name": "交差する8の字",
+    "model": "lemniscate",
+    "k": 1,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
