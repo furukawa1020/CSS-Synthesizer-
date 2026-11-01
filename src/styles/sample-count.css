@@ -1,0 +1,8 @@
+.sample-count { display:none; position:absolute; inset-block-start:4.5em; inset-inline-end:24px; color:inherit; font:.75rem/1.5 ui-monospace,monospace; pointer-events:none; }
+@supports (counter-increment: plotted round(nearest,.5,1)) and (opacity:mod(3,2)) {
+ .stage { counter-reset:plotted; }
+ .sample { counter-increment:plotted var(--sample-on); }
+ .sample-count { display:block; }
+ .sample-count::after { content:'対象 ' counter(plotted) ' / ' attr(data-total) ' 点'; }
+}
+.lab:has(#view-labels:not(:checked)) .sample-count { visibility:hidden; }
