@@ -1,0 +1,17 @@
+{
+  "coordinates": {
+    "cases": 45,
+    "points": 5857,
+    "maximum": 0.007954994211649306
+  },
+  "tangents": {
+    "cases": 45,
+    "points": 5857,
+    "maximum": 0.0004997755069382492
+  },
+  "shared": {
+    "groups": 3,
+    "models_per_group": 12
+  },
+  "counter_combinations": 27
+}

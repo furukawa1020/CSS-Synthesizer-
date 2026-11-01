@@ -1,0 +1,491 @@
+{
+  "label": "all12-96-live-paused",
+  "model": "spiral",
+  "k": 3,
+  "phase_degrees": 90,
+  "amplitude": 0.8,
+  "clock_radians": 0.954063,
+  "count": 96,
+  "tangents": [
+    {
+      "angle_degrees": -144.664,
+      "index": 0,
+      "visible": true
+    },
+    {
+      "angle_degrees": -167.255,
+      "index": 1,
+      "visible": true
+    },
+    {
+      "angle_degrees": 170.955,
+      "index": 2,
+      "visible": true
+    },
+    {
+      "angle_degrees": 150.468,
+      "index": 3,
+      "visible": true
+    },
+    {
+      "angle_degrees": 131.425,
+      "index": 4,
+      "visible": true
+    },
+    {
+      "angle_degrees": 113.722,
+      "index": 5,
+      "visible": true
+    },
+    {
+      "angle_degrees": 97.1554,
+      "index": 6,
+      "visible": true
+    },
+    {
+      "angle_degrees": 81.5107,
+      "index": 7,
+      "visible": true
+    },
+    {
+      "angle_degrees": 66.5993,
+      "index": 8,
+      "visible": true
+    },
+    {
+      "angle_degrees": 52.2688,
+      "index": 9,
+      "visible": true
+    },
+    {
+      "angle_degrees": 38.3997,
+      "index": 10,
+      "visible": true
+    },
+    {
+      "angle_degrees": 24.8996,
+      "index": 11,
+      "visible": true
+    },
+    {
+      "angle_degrees": 11.6972,
+      "index": 12,
+      "visible": true
+    },
+    {
+      "angle_degrees": -1.26269,
+      "index": 13,
+      "visible": true
+    },
+    {
+      "angle_degrees": -14.0231,
+      "index": 14,
+      "visible": true
+    },
+    {
+      "angle_degrees": -26.6181,
+      "index": 15,
+      "visible": true
+    },
+    {
+      "angle_degrees": -39.0744,
+      "index": 16,
+      "visible": true
+    },
+    {
+      "angle_degrees": -51.4137,
+      "index": 17,
+      "visible": true
+    },
+    {
+      "angle_degrees": -63.6534,
+      "index": 18,
+      "visible": true
+    },
+    {
+      "angle_degrees": -75.8077,
+      "index": 19,
+      "visible": true
+    },
+    {
+      "angle_degrees": -87.8884,
+      "index": 20,
+      "visible": true
+    },
+    {
+      "angle_degrees": -99.9051,
+      "index": 21,
+      "visible": true
+    },
+    {
+      "angle_degrees": -111.866,
+      "index": 22,
+      "visible": true
+    },
+    {
+      "angle_degrees": -123.778,
+      "index": 23,
+      "visible": true
+    },
+    {
+      "angle_degrees": -135.646,
+      "index": 24,
+      "visible": true
+    },
+    {
+      "angle_degrees": -147.476,
+      "index": 25,
+      "visible": true
+    },
+    {
+      "angle_degrees": -159.272,
+      "index": 26,
+      "visible": true
+    },
+    {
+      "angle_degrees": -171.038,
+      "index": 27,
+      "visible": true
+    },
+    {
+      "angle_degrees": 177.224,
+      "index": 28,
+      "visible": true
+    },
+    {
+      "angle_degrees": 165.511,
+      "index": 29,
+      "visible": true
+    },
+    {
+      "angle_degrees": 153.82,
+      "index": 30,
+      "visible": true
+    },
+    {
+      "angle_degrees": 142.149,
+      "index": 31,
+      "visible": true
+    },
+    {
+      "angle_degrees": 130.497,
+      "index": 32,
+      "visible": true
+    },
+    {
+      "angle_degrees": 118.862,
+      "index": 33,
+      "visible": true
+    },
+    {
+      "angle_degrees": 107.242,
+      "index": 34,
+      "visible": true
+    },
+    {
+      "angle_degrees": 95.6356,
+      "index": 35,
+      "visible": true
+    },
+    {
+      "angle_degrees": 84.0425,
+      "index": 36,
+      "visible": true
+    },
+    {
+      "angle_degrees": 72.4614,
+      "index": 37,
+      "visible": true
+    },
+    {
+      "angle_degrees": 60.8912,
+      "index": 38,
+      "visible": true
+    },
+    {
+      "angle_degrees": 49.3312,
+      "index": 39,
+      "visible": true
+    },
+    {
+      "angle_degrees": 37.7807,
+      "index": 40,
+      "visible": true
+    },
+    {
+      "angle_degrees": 26.2389,
+      "index": 41,
+      "visible": true
+    },
+    {
+      "angle_degrees": 14.7052,
+      "index": 42,
+      "visible": true
+    },
+    {
+      "angle_degrees": 3.17908,
+      "index": 43,
+      "visible": true
+    },
+    {
+      "angle_degrees": -8.33994,
+      "index": 44,
+      "visible": true
+    },
+    {
+      "angle_degrees": -19.8524,
+      "index": 45,
+      "visible": true
+    },
+    {
+      "angle_degrees": -31.3586,
+      "index": 46,
+      "visible": true
+    },
+    {
+      "angle_degrees": -42.859,
+      "index": 47,
+      "visible": true
+    },
+    {
+      "angle_degrees": -54.354,
+      "index": 48,
+      "visible": true
+    },
+    {
+      "angle_degrees": -65.8439,
+      "index": 49,
+      "visible": true
+    },
+    {
+      "angle_degrees": -77.329,
+      "index": 50,
+      "visible": true
+    },
+    {
+      "angle_degrees": -88.8095,
+      "index": 51,
+      "visible": true
+    },
+    {
+      "angle_degrees": -100.286,
+      "index": 52,
+      "visible": true
+    },
+    {
+      "angle_degrees": -111.758,
+      "index": 53,
+      "visible": true
+    },
+    {
+      "angle_degrees": -123.226,
+      "index": 54,
+      "visible": true
+    },
+    {
+      "angle_degrees": -134.691,
+      "index": 55,
+      "visible": true
+    },
+    {
+      "angle_degrees": -146.153,
+      "index": 56,
+      "visible": true
+    },
+    {
+      "angle_degrees": -157.611,
+      "index": 57,
+      "visible": true
+    },
+    {
+      "angle_degrees": -169.066,
+      "index": 58,
+      "visible": true
+    },
+    {
+      "angle_degrees": 179.482,
+      "index": 59,
+      "visible": true
+    },
+    {
+      "angle_degrees": 168.032,
+      "index": 60,
+      "visible": true
+    },
+    {
+      "angle_degrees": 156.586,
+      "index": 61,
+      "visible": true
+    },
+    {
+      "angle_degrees": 145.141,
+      "index": 62,
+      "visible": true
+    },
+    {
+      "angle_degrees": 133.7,
+      "index": 63,
+      "visible": true
+    },
+    {
+      "angle_degrees": 122.26,
+      "index": 64,
+      "visible": true
+    },
+    {
+      "angle_degrees": 110.823,
+      "index": 65,
+      "visible": true
+    },
+    {
+      "angle_degrees": 99.3872,
+      "index": 66,
+      "visible": true
+    },
+    {
+      "angle_degrees": 87.9538,
+      "index": 67,
+      "visible": true
+    },
+    {
+      "angle_degrees": 76.5224,
+      "index": 68,
+      "visible": true
+    },
+    {
+      "angle_degrees": 65.0928,
+      "index": 69,
+      "visible": true
+    },
+    {
+      "angle_degrees": 53.6649,
+      "index": 70,
+      "visible": true
+    },
+    {
+      "angle_degrees": 42.2386,
+      "index": 71,
+      "visible": true
+    },
+    {
+      "angle_degrees": 30.814,
+      "index": 72,
+      "visible": true
+    },
+    {
+      "angle_degrees": 19.3909,
+      "index": 73,
+      "visible": true
+    },
+    {
+      "angle_degrees": 7.96928,
+      "index": 74,
+      "visible": true
+    },
+    {
+      "angle_degrees": -3.45094,
+      "index": 75,
+      "visible": true
+    },
+    {
+      "angle_degrees": -14.8698,
+      "index": 76,
+      "visible": true
+    },
+    {
+      "angle_degrees": -26.2873,
+      "index": 77,
+      "visible": true
+    },
+    {
+      "angle_degrees": -37.7036,
+      "index": 78,
+      "visible": true
+    },
+    {
+      "angle_degrees": -49.1187,
+      "index": 79,
+      "visible": true
+    },
+    {
+      "angle_degrees": -60.5327,
+      "index": 80,
+      "visible": true
+    },
+    {
+      "angle_degrees": -71.9455,
+      "index": 81,
+      "visible": true
+    },
+    {
+      "angle_degrees": -83.3572,
+      "index": 82,
+      "visible": true
+    },
+    {
+      "angle_degrees": -94.7679,
+      "index": 83,
+      "visible": true
+    },
+    {
+      "angle_degrees": -106.178,
+      "index": 84,
+      "visible": true
+    },
+    {
+      "angle_degrees": -117.586,
+      "index": 85,
+      "visible": true
+    },
+    {
+      "angle_degrees": -128.994,
+      "index": 86,
+      "visible": true
+    },
+    {
+      "angle_degrees": -140.401,
+      "index": 87,
+      "visible": true
+    },
+    {
+      "angle_degrees": -151.807,
+      "index": 88,
+      "visible": true
+    },
+    {
+      "angle_degrees": -163.212,
+      "index": 89,
+      "visible": true
+    },
+    {
+      "angle_degrees": -174.617,
+      "index": 90,
+      "visible": true
+    },
+    {
+      "angle_degrees": 173.98,
+      "index": 91,
+      "visible": true
+    },
+    {
+      "angle_degrees": 162.577,
+      "index": 92,
+      "visible": true
+    },
+    {
+      "angle_degrees": 151.175,
+      "index": 93,
+      "visible": true
+    },
+    {
+      "angle_degrees": 139.774,
+      "index": 94,
+      "visible": true
+    },
+    {
+      "angle_degrees": 128.373,
+      "index": 95,
+      "visible": true
+    }
+  ]
+}
