@@ -12,13 +12,23 @@ def static_model_selectors(css, models):
     return css
 
 
-def gallery_html(presets, models):
+GALLERY_COUNTS = (96, 192)
+
+
+def gallery_filename(count):
+    if type(count) is not int or count not in GALLERY_COUNTS:
+        raise ValueError('一覧の点数は96または192で指定してください')
+    return 'gallery.html' if count == 96 else f'gallery-{count}.html'
+
+
+def gallery_html(presets, models, count=96):
+    gallery_filename(count)
     names = {model['id']: model['name'] for model in models}
     definitions = {model['id']: model for model in models}
     rows = []
     for preset in presets:
         label = f"{names[preset['model']]}、反復{preset['k']}、位相{preset['phase']}度、振幅{preset['amplitude']}パーセント。時計0で停止。"
-        samples = ''.join(f'<i class="sample" data-index="{index}" style="--index-fallback:{index};--count-fallback:96"></i>' for index in range(96))
+        samples = ''.join(f'<i class="sample" data-index="{index}" style="--index-fallback:{index};--count-fallback:{count}"></i>' for index in range(count))
         unavailable = (f'<p class="model-unavailable model-unavailable-{preset["model"]}">このブラウザでは、このモデルに必要なCSS数式の機能が不足しているため描画しません。</p>'
                        if definitions[preset['model']].get('capability') else '')
         rows.append(f'''<li data-gallery-model="{preset['model']}">
@@ -34,7 +44,7 @@ def gallery_html(presets, models):
   </section>
 </li>''')
     filters = '<fieldset class="gallery-filter"><legend>モデルで絞る</legend><div class="view-choices"><label><input id="gallery-all" type="radio" name="gallery-model" checked><span>全件</span></label>' + ''.join(f'<label><input id="gallery-{m["id"]}" type="radio" name="gallery-model"><span>{escape(m["name"])}</span></label>' for m in models) + '</div></fieldset>'
-    return '''<!doctype html>
+    result = '''<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
 <title>形の一覧 — CSS 視覚シンセサイザー</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="engine.css"></head>
@@ -43,6 +53,9 @@ def gallery_html(presets, models):
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p>
 ''' + filters + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div><p>図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''
+    result = result.replace('図は96点', f'図は{count}点').replace('<p>96点・', f'<p>{count}点・')
+    navigation = '<nav class="gallery-density" aria-label="一覧の図ごとの点数">各図の点数 ' + ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{gallery_filename(n)}">{n}点</a>' for n in GALLERY_COUNTS) + '</nav>'
+    return result.replace('<ol class="gallery-list">', navigation + '<ol class="gallery-list">')
 
 
 def gallery_styles(models):

@@ -68,3 +68,17 @@ class GalleryTests(unittest.TestCase):
         result = static_model_selectors(source, [{'id': 'test'}])
         self.assertEqual(result, '.lab:is(:has(#model-test:checked), [data-static-model="test"]) .sample { --x: calc(sqrt(var(--u))); }')
         self.assertEqual(static_model_selectors(result, [{'id': 'test'}]), result)
+
+
+class GalleryDensityTests(unittest.TestCase):
+    def test_both_densities_have_real_samples_and_current_navigation(self):
+        from tools.gallery import gallery_html, gallery_filename, GALLERY_COUNTS
+        models=load_models(ROOT/'src'); presets=load_presets(ROOT/'src')
+        for count in GALLERY_COUNTS:
+            text=gallery_html(presets,models,count); parser=GalleryParser();parser.feed(text)
+            self.assertEqual(parser.samples,count*len(presets))
+            self.assertEqual(dict(asset_specs())[gallery_filename(count)],parser.samples)
+            self.assertIn(f'<strong aria-current="page">{count}点</strong>',text)
+            self.assertTrue(audit_html(text,samples=parser.samples)['ok'])
+        for count in (True,96.0,0,384):
+            with self.assertRaises(ValueError): gallery_html(presets,models,count)
