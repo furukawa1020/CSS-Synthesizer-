@@ -42,3 +42,10 @@ def gallery_html(presets, models):
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p>
 ''' + filters + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div><p>図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''
+
+
+def gallery_styles(models):
+    """Generate filter bindings from the same IDs that produce radio choices."""
+    return '@supports selector(:has(*)) {\n' + '\n'.join(
+        f'.gallery-main:has(#gallery-{m["id"]}:checked) .gallery-list > li:not([data-gallery-model="{m["id"]}"]) {{ display:none; }}'
+        for m in models) + '\n}'
