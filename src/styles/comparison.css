@@ -78,3 +78,5 @@
 
 .comparison-selection-tools { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; margin-block-start:8px; }
 .comparison-selection-tools p { margin:0; font-size:.8125rem; }
+
+@media screen { .comparison-lab:has(#copy-short:checked) .comparison-model-help { display:none; } }
