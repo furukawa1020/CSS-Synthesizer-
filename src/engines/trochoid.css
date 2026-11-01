@@ -1,0 +1,6 @@
+.lab:has(#model-trochoid:checked) .sample {
+--tr-q: calc(var(--k) * var(--theta) + var(--phase) + var(--clock) * 1rad);
+--tr-b: calc(var(--amplitude) / (pi * var(--k)));
+--x: calc((2 * var(--u) - 1 - var(--tr-b) * sin(var(--tr-q))) / (1 + var(--tr-b)));
+--y: calc(var(--amplitude) * cos(var(--tr-q)));
+}

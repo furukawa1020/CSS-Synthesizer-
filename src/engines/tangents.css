@@ -48,3 +48,8 @@
 --tangent-dx: calc(var(--ld-x) * cos(var(--ls-a)) - var(--ld-y) * sin(var(--ls-a)));
 --tangent-dy: calc(var(--ld-x) * sin(var(--ls-a)) + var(--ld-y) * cos(var(--ls-a)));
 }
+
+.lab:has(#model-trochoid:checked) .sample {
+--tangent-dx: calc((1 - var(--amplitude) * cos(var(--tr-q))) / (pi * (1 + var(--tr-b))));
+--tangent-dy: calc(-1 * var(--amplitude) * var(--k) * sin(var(--tr-q)));
+}
