@@ -1,0 +1,6 @@
+.lab:has(#model-exp-spiral:checked) .sample {
+--es-r: calc(var(--amplitude) * exp(-3 * var(--u)));
+--es-q: calc(var(--k) * var(--theta) + var(--phase) + var(--clock) * 1rad);
+--x: calc(var(--es-r) * cos(var(--es-q)));
+--y: calc(var(--es-r) * sin(var(--es-q)));
+}

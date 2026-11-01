@@ -48,4 +48,4 @@ class ModelReferenceTests(unittest.TestCase):
         parser = ReferenceParser(); parser.feed(source)
         self.assertNotIn('script', parser.tags)
         self.assertIn('&lt;script&gt;not markup&lt;/script&gt;', source)
-        self.assertEqual(source.count('説明と式は対応の有無にかかわらず読めます'), 2)
+        self.assertEqual(source.count('説明と式は対応の有無にかかわらず読めます'), sum(bool(m.get('capability')) for m in models))
