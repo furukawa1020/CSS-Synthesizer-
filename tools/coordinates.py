@@ -12,7 +12,7 @@ import sys
 # 2π may be serialized as 6.28319 by a browser's computed-style API.
 # Keep this radian allowance separate from the coordinate tolerance in CSS px.
 _CLOCK_SERIALIZATION_MARGIN = 5e-6
-SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave"})
+SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave", "lemniscate"})
 
 
 def _result(errors: list[str], checked: int = 0, maximum: float = 0.0) -> dict:
@@ -57,7 +57,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
 
     model = snapshot.get("model")
     if not isinstance(model, str) or model not in SUPPORTED_MODELS:
-        errors.append("modelはlissajous・wave・rose・spiral・orbit・fermat・damped-wave・standing-waveで指定してください")
+        errors.append("modelは対応するモデルIDで指定してください")
     values = {}
     for key, lower, upper in (
         ("k", 1, 8),
@@ -155,6 +155,13 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
             angle = values["k"] * theta + phase + clock
             x = radius * math.cos(angle)
             y = radius * math.sin(angle)
+        elif model == "lemniscate":
+            q = values["k"] * theta
+            denominator = 1 + math.sin(q) ** 2
+            base_x = amplitude * math.cos(q) / denominator
+            base_y = base_x * math.sin(q)
+            angle = phase + clock
+            x, y = base_x * math.cos(angle) - base_y * math.sin(angle), base_x * math.sin(angle) + base_y * math.cos(angle)
         else:
             main = theta + clock
             secondary = values["k"] * theta + phase - clock

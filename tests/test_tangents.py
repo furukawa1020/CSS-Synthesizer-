@@ -21,6 +21,9 @@ def position(model, u, k, phi, a, t):
         if model == 'rose':
             radius, angle = a * math.sin(k * theta + phi), theta + t
         return radius * math.cos(angle), radius * math.sin(angle)
+    if model == 'lemniscate':
+        q=k*theta; d=1+math.sin(q)**2; x=a*math.cos(q)/d; y=a*math.sin(q)*math.cos(q)/d
+        return x*math.cos(phi+t)-y*math.sin(phi+t), x*math.sin(phi+t)+y*math.cos(phi+t)
     return a * (.65 * math.cos(theta+t) + .35 * math.cos(k*theta+phi-t)), a * (.65 * math.sin(theta+t) - .35 * math.sin(k*theta+phi-t))
 
 

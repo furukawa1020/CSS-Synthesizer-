@@ -1,0 +1,10 @@
+.lab:has(#model-lemniscate:checked) .sample {
+--ls-q: calc(var(--k) * var(--theta));
+--ls-s: sin(var(--ls-q)); --ls-c: cos(var(--ls-q));
+--ls-d: calc(1 + var(--ls-s) * var(--ls-s));
+--ls-x: calc(var(--amplitude) * var(--ls-c) / var(--ls-d));
+--ls-y: calc(var(--ls-x) * var(--ls-s));
+--ls-a: calc(var(--phase) + var(--clock) * 1rad);
+--x: calc(var(--ls-x) * cos(var(--ls-a)) - var(--ls-y) * sin(var(--ls-a)));
+--y: calc(var(--ls-x) * sin(var(--ls-a)) + var(--ls-y) * cos(var(--ls-a)));
+}

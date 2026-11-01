@@ -40,3 +40,11 @@
   --tangent-dx: calc(var(--amplitude) * (-.65 * sin(var(--td-main)) - .35 * var(--k) * sin(var(--td-secondary))));
   --tangent-dy: calc(var(--amplitude) * (.65 * cos(var(--td-main)) - .35 * var(--k) * cos(var(--td-secondary))));
 }
+
+.lab:has(#model-lemniscate:checked) .sample {
+--ld-f: calc(var(--amplitude) * var(--k) / (var(--ls-d) * var(--ls-d)));
+--ld-x: calc(-1 * var(--ls-s) * (3 - var(--ls-s) * var(--ls-s)) * var(--ld-f));
+--ld-y: calc((1 - 3 * var(--ls-s) * var(--ls-s)) * var(--ld-f));
+--tangent-dx: calc(var(--ld-x) * cos(var(--ls-a)) - var(--ld-y) * sin(var(--ls-a)));
+--tangent-dy: calc(var(--ld-x) * sin(var(--ls-a)) + var(--ld-y) * cos(var(--ls-a)));
+}
