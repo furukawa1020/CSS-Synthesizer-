@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 from .coordinates import _finite_number
 
-MODELS = {'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
+MODELS = {'lemniscate', 'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
 EPSILON = 1e-6
 
 
@@ -35,6 +35,13 @@ def tangent_vector(model, u, k, phase_degrees, amplitude, clock):
         angle = k * theta + phase + clock
         radius_factor = amplitude * u * k * (2 if model == 'fermat' else 1)
         return amplitude / math.tau * math.cos(angle) - radius_factor * math.sin(angle), amplitude / math.tau * math.sin(angle) + radius_factor * math.cos(angle)
+    if model == 'lemniscate':
+        sine = math.sin(k * theta)
+        denominator = (1 + sine*sine) ** 2
+        dx = -amplitude*k*sine*(3-sine*sine)/denominator
+        dy = amplitude*k*(1-3*sine*sine)/denominator
+        angle = phase+clock
+        return dx*math.cos(angle)-dy*math.sin(angle), dx*math.sin(angle)+dy*math.cos(angle)
     if model == 'orbit':
         main, secondary = theta + clock, k * theta + phase - clock
         return amplitude * (-.65 * math.sin(main) - .35 * k * math.sin(secondary)), amplitude * (.65 * math.cos(main) - .35 * k * math.cos(secondary))
