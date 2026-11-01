@@ -1,5 +1,6 @@
 """Static comparison page; reuse CSS model equations with source-defined values."""
 from html import escape
+from .models import model_equations_html
 
 
 def static_model_selectors(css, models):
@@ -29,7 +30,7 @@ def gallery_html(presets, models):
   <section><h2><a href="{preset['file']}">{escape(preset['name'])}<span aria-hidden="true"> ↗</span></a></h2>
     <p>{escape(names[preset['model']])}</p>
     <dl><div><dt>反復 k</dt><dd>{preset['k']:.2f}</dd></div><div><dt>位相 φ</dt><dd>{preset['phase']}°</dd></div><div><dt>振幅 A</dt><dd>{preset['amplitude']}%</dd></div></dl>
-    <p>96点・時計 t = 0・停止</p><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a>
+    <p>96点・時計 t = 0・停止</p><details class="curve-formula"><summary>この形の式</summary><div class="equations">{model_equations_html(definitions[preset['model']])}</div></details><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a>
   </section>
 </li>''')
     filters = '<fieldset class="gallery-filter"><legend>モデルで絞る</legend><div class="view-choices"><label><input id="gallery-all" type="radio" name="gallery-model" checked><span>全件</span></label>' + ''.join(f'<label><input id="gallery-{m["id"]}" type="radio" name="gallery-model"><span>{escape(m["name"])}</span></label>' for m in models) + '</div></fieldset>'
