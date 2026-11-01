@@ -50,3 +50,8 @@
 .gallery-density { display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center; margin-block:20px; font-size:.875rem; }
 .gallery-density :is(a,strong) { display:inline-flex; align-items:center; min-block-size:44px; }
 @media print { .gallery-density { display:none; } }
+
+@supports selector(:has(*)) {
+ .gallery-main:has(#gallery-values:checked) .gallery-example { display:none; }
+ .gallery-main:has(#gallery-values:checked) .gallery-list > li { grid-template-columns:minmax(0,1fr); }
+}

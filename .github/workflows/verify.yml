@@ -40,8 +40,17 @@ jobs:
       - name: 今回の保存座標を独立数式で再照合する
         run: python3 -m tools.coordinates --batch qa/evidence/batch60/index.json --require-all
       - name: 保存した接線の方向を独立微分で一括照合する
-        run: python3 -m tools.tangents --batch qa/evidence/batch60/tangents-index.json
+        run: python3 -m tools.tangents --batch qa/evidence/batch60/tangents-index.json --require-all
       - name: 比較表示の全点観測を独立数式で照合する
         run: python3 -m tools.coordinates --batch qa/evidence/batch80/index.json --require-all
       - name: 比較表示の接線を独立微分で一括照合する
-        run: python3 -m tools.tangents --batch qa/evidence/batch80/tangents-index.json
+        run: python3 -m tools.tangents --batch qa/evidence/batch80/tangents-index.json --require-all
+      - name: 12モデルの保存座標を全点照合する
+        run: python3 -m tools.coordinates --batch qa/evidence/batch100/index.json --require-all
+      - name: 12モデルの保存接線を全点照合する
+        run: python3 -m tools.tangents --batch qa/evidence/batch100/tangents-index.json --require-all
+      - name: 比較表示の共有条件を照合する
+        run: |
+          for shared_manifest in qa/evidence/batch100/shared-*.json; do
+            python3 -m tools.shared_conditions "$shared_manifest" || exit 1
+          done

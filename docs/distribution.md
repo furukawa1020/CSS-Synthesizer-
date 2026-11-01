@@ -84,3 +84,7 @@ manifestが列挙した、同じディレクトリの観測JSONを順に検査�
 ## 比較表示と時計の検査
 
 今回の配布構成も17 HTML・2 CSS、使い方とハッシュ一覧込み21エントリー。`--require-all`を座標の単一/一括CLIに指定すると全count点を要求する。接線は`python3 -m tools.tangents --batch qa/evidence/batch80/tangents-index.json`で一括照合できる。座標と接線の最大誤差はCSS px/度を分ける。観測資料とQA fixtureはZIPに入れない。
+
+## 12モデルと192点一覧
+
+今回の構成は22 HTML・2 CSSの24アプリファイル。README.txtとSHA256SUMSを含む26 ZIPエントリー。14プリセットとgallery-192.htmlを同じ資産定義から生成する。接線CLIも--require-allを使え、tools.shared_conditionsは全点座標と共有条件を照合する。QA/観測JSONと画像はZIPへ入れない。

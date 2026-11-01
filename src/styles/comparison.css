@@ -80,3 +80,8 @@
 .comparison-selection-tools p { margin:0; font-size:.8125rem; }
 
 @media screen { .comparison-lab:has(#copy-short:checked) .comparison-model-help { display:none; } }
+
+.comparison-options { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); column-gap:16px; }
+.comparison-options label { min-inline-size:0; }
+@media (max-width:1000px) { .comparison-options { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+@media (max-width:650px) { .comparison-options { grid-template-columns:repeat(2,minmax(0,1fr)); } }

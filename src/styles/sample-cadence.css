@@ -1,7 +1,7 @@
 .view-cadence { display:none; }
 @supports (opacity:mod(3,2)) and (opacity:round(down,.5,1)) {
  .view-cadence { display:block; }
- .lab:has(#cadence-two:checked) .sample { --sample-step:2; }
- .lab:has(#cadence-four:checked) .sample { --sample-step:4; }
+ .lab:has(#cadence-two:checked) :is(.sample,.sample-count) { --sample-step:2; }
+ .lab:has(#cadence-four:checked) :is(.sample,.sample-count) { --sample-step:4; }
  .sample { --cadence-on:clamp(0, calc(1 - mod(var(--index), var(--sample-step, 1))), 1); --last-on:clamp(0, calc(var(--index) - var(--count) + 2), 1); --sample-on:calc(var(--range-on) * max(var(--cadence-on), var(--last-on))); }
 }

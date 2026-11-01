@@ -98,8 +98,48 @@ def create_batch80_fixtures(directory=ROOT / 'build'):
     write('qa-batch80-forced.html', choices(html).replace('href="style.css"', 'href="qa-batch80-forced.css"'))
 
 
+def create_batch100_fixtures(directory=ROOT / 'build'):
+    """Fixed clocks and native-state fixtures for the four new curves."""
+    directory = Path(directory)
+    def write(name, value):
+        (directory / name).write_text(value, encoding='utf-8')
+    def checked_models(value, selected):
+        def replace(match):
+            tag = re.sub(r'\schecked(?=[\s>])', '', match[0])
+            identifier = re.search(r'id="([^"]+)"', tag)[1]
+            return tag[:-1] + ' checked>' if identifier in selected else tag
+        return re.sub(r'<input[^>]*name="model"[^>]*>', replace, value)
+    sample96 = (directory / 'samples-96.html').read_text(encoding='utf-8')
+    for model in ('lemniscate','trochoid','hypotrochoid','exp-spiral'):
+        end = checked_models(sample96, {'model-'+model})
+        end = _lab_style(end, f'animation:none;--clock:{math.tau};--k-raw:3.17;--phase-raw:93;--amplitude-raw:.8')
+        write('qa-end-'+model+'.html', end.replace('id="time-auto" type="radio" name="time" value="auto" checked', 'id="time-auto" type="radio" name="time" value="auto"').replace('id="time-stop" type="radio" name="time" value="stop"', 'id="time-stop" type="radio" name="time" value="stop" checked'))
+    cusp = (directory / 'preset-trochoid.html').read_text(encoding='utf-8')
+    points = ''.join(f'<i class="sample" data-index="{i}" style="--index-fallback:{i};--count-fallback:97"></i>' for i in range(97))
+    cusp = re.sub(r'(<div class="plot" aria-hidden="true">).*?(</div>)', lambda m:m[1]+points+m[2],cusp,flags=re.S)
+    cusp = _lab_style(cusp,'animation:none;--clock:0')
+    write('qa-trochoid-cusps.html', cusp.replace('192 点','97 点（検証用）').replace('data-total="192"','data-total="97"'))
+    comparison = (directory / 'compare.html').read_text(encoding='utf-8')
+    write('qa-compare-text200.html',comparison.replace('</head>','<style>html{font-size:200%}</style></head>'))
+    write('qa-batch100-layouts.html','<!doctype html><html lang="ja"><meta charset="utf-8"><title>12モデルの幅確認</title><style>body{margin:0}iframe{display:block;border:0}</style>'+''.join(f'<iframe title="{name}-{width}" src="{name}.html" width="{width}" height="1000"></iframe>' for name,width in [('compare',360),('compare',1280),('qa-compare-text200',360),('gallery-192',360)])+'</html>')
+    printed = (directory / 'qa-comparison-print.html').read_text(encoding='utf-8')
+    names={'point-cadence','sample-range','plot-rotation','plot-scale','opacity'}
+    selected={'cadence-four','range-half','rotation-45','scale-75','opacity-quarter'}
+    def print_choice(match):
+        tag=match[0]; group=re.search(r'name="([^"]+)"',tag)
+        identifier=re.search(r'id="([^"]+)"',tag)
+        if identifier and identifier[1]=='mirror-x':
+            return tag.replace('>',' checked>')
+        if group and group[1] in names:
+            tag=re.sub(r'\schecked(?=[\s>])','',tag)
+            if identifier[1] in selected:tag=tag[:-1]+' checked>'
+        return tag
+    write('qa-batch100-print.html',re.sub(r'<input[^>]*>',print_choice,printed))
+
+
 if __name__ == '__main__':
     create_fixtures()
     create_comparison_fixtures()
     create_batch80_fixtures()
+    create_batch100_fixtures()
     print('QA専用HTML/CSSを生成しました。CSS分岐のfixtureは実OSや他ブラウザの模擬ではありません。')

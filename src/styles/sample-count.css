@@ -1,8 +1,13 @@
 .sample-count { display:none; position:absolute; inset-block-start:4.5em; inset-inline-end:24px; color:inherit; font:.75rem/1.5 ui-monospace,monospace; pointer-events:none; }
-@supports (counter-increment: plotted round(nearest,.5,1)) and (opacity:mod(3,2)) {
- .stage { counter-reset:plotted; }
- .sample { counter-increment:plotted var(--sample-on); }
- .sample-count { display:block; }
+@supports (counter-reset: plotted round(down,1.5,1)) and (opacity:mod(3,2)) and (z-index:attr(data-total type(<integer>),0)) {
+ .sample-count {
+  display:block;
+  --target-n:attr(data-total type(<number>),0);
+  --target-limit:round(down, calc((var(--target-n) - 1) * var(--sample-range, 1)),1);
+  --target-regular:calc(round(down, calc(var(--target-limit) / var(--sample-step, 1)),1) + 1);
+  --target-extra:calc(clamp(0, calc(var(--target-limit) - var(--target-n) + 2),1) * min(1, mod(calc(var(--target-n) - 1),var(--sample-step, 1))));
+  counter-reset:plotted calc(var(--target-regular) + var(--target-extra));
+ }
  .sample-count::after { content:'対象 ' counter(plotted) ' / ' attr(data-total) ' 点'; }
 }
 .lab:has(#view-labels:not(:checked)) .sample-count { visibility:hidden; }
