@@ -64,8 +64,10 @@ def tangent_angle(model, u, k, phase_degrees, amplitude, clock):
     return None if math.hypot(dx, dy) < EPSILON else math.degrees(math.atan2(-dy, dx))
 
 
-def inspect_tangent_snapshot(snapshot, tolerance_degrees=.1):
+def inspect_tangent_snapshot(snapshot, tolerance_degrees=.1, *, require_all=False):
     errors, checked, maximum = [], 0, 0.0
+    if type(require_all) is not bool:
+        errors.append('require_allは真偽値にしてください')
     tolerance = _finite_number(tolerance_degrees)
     if tolerance is None or tolerance < 0:
         errors.append('方向の許容差は0以上の有限数にしてください')
@@ -110,6 +112,8 @@ def inspect_tangent_snapshot(snapshot, tolerance_degrees=.1):
             maximum = max(maximum, difference)
             if difference > tolerance:
                 errors.append(f'index={index}の方向誤差{difference:.9g}度が許容差を超えています')
+    if require_all and type(count) is int and checked != count:
+        errors.append(f'全{count}点の有効な接線観測が必要です（照合{checked}点）')
     return {'ok': not errors, 'errors': errors, 'checked_points': checked, 'max_error_degrees': maximum}
 
 
@@ -118,16 +122,17 @@ def main(argv=None):
     parser.add_argument('snapshot', nargs='?', type=Path)
     parser.add_argument('--batch', type=Path, help='同じディレクトリの接線観測を列挙したmanifest')
     parser.add_argument('--tolerance-degrees', type=float, default=.1)
+    parser.add_argument('--require-all', action='store_true', help='全count点の接線状態を要求する')
     args = parser.parse_args(argv)
     if (args.snapshot is None) == (args.batch is None):
         parser.error('単一snapshotか--batchの一方だけを指定してください')
     if args.batch is not None:
         from .coordinate_batch import inspect_manifest
-        result = inspect_manifest(args.batch, inspect_tangent_snapshot, args.tolerance_degrees, error_key='max_error_degrees')
+        result = inspect_manifest(args.batch, lambda data, limit: inspect_tangent_snapshot(data, limit, require_all=args.require_all), args.tolerance_degrees, error_key='max_error_degrees')
     else:
         from .json_data import load_json
         try:
-            result = inspect_tangent_snapshot(load_json(args.snapshot), args.tolerance_degrees)
+            result = inspect_tangent_snapshot(load_json(args.snapshot), args.tolerance_degrees, require_all=args.require_all)
         except (OSError, UnicodeError, ValueError) as error:
             result = {'ok': False, 'errors': [str(error)], 'checked_points': 0, 'max_error_degrees': 0}
     print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))
