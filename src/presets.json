@@ -94,5 +94,13 @@
     "k": 3,
     "phase": 0,
     "amplitude": 100
+  },
+  {
+    "file": "preset-hypotrochoid.html",
+    "name": "内側を転がる3比の軌跡",
+    "model": "hypotrochoid",
+    "k": 3,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
