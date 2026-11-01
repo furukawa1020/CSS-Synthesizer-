@@ -19,3 +19,6 @@ class NewCurveTests(unittest.TestCase):
         from tools.tangents import tangent_angle
         self.assertIsNone(tangent_angle('trochoid',0,3,0,1,0))
         self.assertIsNone(tangent_angle('trochoid',1,3,0,1,0))
+
+    def test_hypotrochoid_normalized_three_ratio_extrema(self):
+        self.assert_points('hypotrochoid',[(0,.5,0),(1,0,.5),(2,-.5,0),(3,0,-.5),(4,.5,0)],k=3)
