@@ -11,7 +11,7 @@ from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .assets import asset_specs
-from .gallery import gallery_html, static_model_selectors, gallery_styles
+from .gallery import gallery_html, static_model_selectors, gallery_styles, GALLERY_COUNTS, gallery_filename
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
 from .features import features_html
 from .model_engines import validate_engine_models
@@ -70,7 +70,8 @@ def _populate(root, destination):
         if re.search(r'@@[A-Z_]+@@', html):
             raise ValueError('未解決のテンプレートが残っています')
         (destination / filename).write_text(html, encoding='utf-8')
-    (destination / 'gallery.html').write_text(gallery_html(presets, models), encoding='utf-8')
+    for count in GALLERY_COUNTS:
+        (destination / gallery_filename(count)).write_text(gallery_html(presets, models, count), encoding='utf-8')
     comparison = expand_fragments((root / 'src/compare.html').read_text(encoding='utf-8'), root / 'src')
     parameters = expand_fragments((root / 'src/fragments/parameters.html').read_text(encoding='utf-8'), root / 'src')
     comparison_stops = {
