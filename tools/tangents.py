@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 from .coordinates import _finite_number
 
-MODELS = {'trochoid', 'lemniscate', 'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
+MODELS = {'hypotrochoid', 'trochoid', 'lemniscate', 'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
 EPSILON = 1e-6
 
 
@@ -45,6 +45,11 @@ def tangent_vector(model, u, k, phase_degrees, amplitude, clock):
     if model == 'trochoid':
         b=amplitude/(math.pi*k)
         return (1-amplitude*math.cos(wave))/(math.pi*(1+b)), -amplitude*k*math.sin(wave)
+    if model == 'hypotrochoid':
+        c=k/(k+1); q=k*theta+phase
+        dx=amplitude*(-c*math.sin(theta)-.35*k*math.sin(q))/(c+.35)
+        dy=amplitude*(c*math.cos(theta)-.35*k*math.cos(q))/(c+.35)
+        return dx*math.cos(clock)-dy*math.sin(clock), dx*math.sin(clock)+dy*math.cos(clock)
     if model == 'orbit':
         main, secondary = theta + clock, k * theta + phase - clock
         return amplitude * (-.65 * math.sin(main) - .35 * k * math.sin(secondary)), amplitude * (.65 * math.cos(main) - .35 * k * math.cos(secondary))

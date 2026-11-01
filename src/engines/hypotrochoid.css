@@ -1,0 +1,9 @@
+.lab:has(#model-hypotrochoid:checked) .sample {
+--hy-c: calc(var(--k) / (var(--k) + 1));
+--hy-q: calc(var(--k) * var(--theta) + var(--phase));
+--hy-a: calc(var(--clock) * 1rad);
+--hy-x: calc(var(--amplitude) * (var(--hy-c) * cos(var(--theta)) + .35 * cos(var(--hy-q))) / (var(--hy-c) + .35));
+--hy-y: calc(var(--amplitude) * (var(--hy-c) * sin(var(--theta)) - .35 * sin(var(--hy-q))) / (var(--hy-c) + .35));
+--x: calc(var(--hy-x) * cos(var(--hy-a)) - var(--hy-y) * sin(var(--hy-a)));
+--y: calc(var(--hy-x) * sin(var(--hy-a)) + var(--hy-y) * cos(var(--hy-a)));
+}
