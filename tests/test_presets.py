@@ -112,8 +112,7 @@ class PresetTests(unittest.TestCase):
         from tools.models import load_models
         presets = load_presets(ROOT / 'src')
         identifiers = {model['id'] for model in load_models(ROOT / 'src')}
-        self.assertLessEqual({preset['model'] for preset in presets}, identifiers)
-        self.assertTrue({'lissajous','wave','rose','spiral','orbit','fermat','damped-wave','standing-wave'} <= {preset['model'] for preset in presets})
+        self.assertEqual({preset['model'] for preset in presets}, identifiers)
         self.assertEqual(validate_presets(presets), presets)
 
     def test_names_are_text_and_selected_link_has_page_semantics(self):
