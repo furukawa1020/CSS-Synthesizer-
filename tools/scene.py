@@ -1,5 +1,7 @@
 """Compile explicit JSON starting states; no browser state is read or saved."""
 from pathlib import Path
+from decimal import Decimal
+import math
 from .build import ROOT
 from .json_data import loads_json
 from .models import load_models
@@ -20,6 +22,12 @@ def validate_scene(data, source=ROOT / 'src'):
                   amplitude=data.get('amplitude', 80), count=data.get('count', 192))
     if type(result['count']) is not int or result['count'] not in (96, 192, 384):
         raise ValueError('countは96/192/384です')
+    for key, low, high, scale in (('k', 1, 8, 100), ('phase', 0, 360, 1), ('amplitude', 25, 100, 1)):
+        value = result[key]
+        if (type(value) not in (int, float) or not math.isfinite(value) or not low <= value <= high
+                or Decimal(str(value)) * scale != (Decimal(str(value)) * scale).to_integral_value()):
+            raise ValueError(f'{key}は範囲内の対応する精度で指定してください')
+        result[key] = float(value) if key == 'k' else int(value)
     return result
 
 
