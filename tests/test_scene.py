@@ -141,3 +141,17 @@ class SceneTests(unittest.TestCase):
             with patch('os.replace',side_effect=fail_after_first), self.assertRaises(OSError):export_scene(self.data(),out)
             self.assertFalse(out.exists())
             self.assertEqual(list(Path(folder).iterdir()),[])
+
+    def test_clock_period_and_direction_are_saved_as_native_controls(self):
+        from tools.scene import render_scene, canonical_scene
+        for period in (6,12,24,48,96):
+            for direction in ('forward','reverse'):
+                data=self.data(clock_period_seconds=period,clock_direction=direction,clock_radians=1.2)
+                html=render_scene(data)
+                self.assertRegex(html,f'id="period-{period}"[^>]* checked>')
+                self.assertRegex(html,f'id="direction-{direction}"[^>]* checked>')
+                saved=json.loads(canonical_scene(data))
+                self.assertEqual(saved['clock_period_seconds'],period)
+                self.assertEqual(saved['clock_direction'],direction)
+        for extra in ({'clock_period_seconds':True},{'clock_period_seconds':24.0},{'clock_period_seconds':0},{'clock_direction':[]},{'clock_direction':'back'}):
+            with self.assertRaises(ValueError):validate_scene(self.data(**extra))

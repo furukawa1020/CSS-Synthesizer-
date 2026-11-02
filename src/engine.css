@@ -1,4 +1,5 @@
 /* M-01/M-02 equations and input mapping. Coordinates use the stage's short side. */
+@property --clock-progress { syntax: '<number>'; inherits: true; initial-value: 0; }
 @property --clock { syntax: '<number>'; inherits: true; initial-value: 0; }
 @property --k-raw { syntax: '<number>'; inherits: true; initial-value: 3; }
 @property --phase-raw { syntax: '<number>'; inherits: true; initial-value: 90; }
@@ -9,6 +10,7 @@
 
 .lab {
   --clock-state: running;
+  --clock: mod(calc(var(--clock-start, 0) + var(--clock-progress)), 6.283185307179586);
   --k-q: round(nearest, calc(var(--k-raw) * 100), 1);
   --phase-q: round(nearest, var(--phase-raw), 1);
   --amplitude-q: round(nearest, calc(var(--amplitude-raw) * 100), 1);
@@ -20,7 +22,7 @@
   animation-direction: var(--clock-direction, normal);
   timeline-scope: --k-input, --phase-input, --amplitude-input;
 }
-@keyframes clock { from { --clock: var(--clock-start, 0); } to { --clock: calc(var(--clock-start, 0) + 6.283185307179586); } }
+@keyframes clock { from { --clock-progress: 0; } to { --clock-progress: 6.283185307179586; } }
 @keyframes k-input { from { --k-raw: 1; } to { --k-raw: 8; } }
 @keyframes phase-input { from { --phase-raw: 0; } to { --phase-raw: 360; } }
 @keyframes amplitude-input { from { --amplitude-raw: .25; } to { --amplitude-raw: 1; } }
