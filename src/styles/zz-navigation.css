@@ -1,0 +1,5 @@
+.comparison-index, .gallery-index { border-block:1px solid var(--rule); padding-block:12px; margin-block:16px; font-size:.875rem; }
+.comparison-index ul, .gallery-index ul { display:flex; flex-wrap:wrap; gap:4px 24px; list-style:none; padding:0; margin:0; }
+.comparison-index a, .gallery-index a, .comparison-back, .gallery-back { display:inline-flex; align-items:center; min-block-size:44px; }
+.comparison-example, .gallery-list > li { scroll-margin-block:20px; }
+@media print { .comparison-index, .gallery-index, .comparison-back, .gallery-back { display:none !important; } }

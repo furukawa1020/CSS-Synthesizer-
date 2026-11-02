@@ -30,7 +30,7 @@ def comparison_html(template, parameters, models, count=96):
             for index in range(count)
         )
         unavailable = (f'<p class="model-unavailable model-unavailable-{model["id"]}">このモデルに必要なCSS数式の機能が不足しているため描画しません。</p>' if model.get('capability') else '')
-        plots.append(f'''<figure class="lab comparison-example" data-static-model="{model['id']}">
+        plots.append(f'''<figure id="curve-{model['id']}" tabindex="-1" class="lab comparison-example" data-static-model="{model['id']}">
   <div class="stage" role="img" aria-label="{escape(model['name'], quote=True)}の点の軌跡。共有入力と時計で描画。">
     <div class="stage-heading" aria-hidden="true"><span>{escape(model['name'])}</span><span>{count} 点</span></div>
     <div class="axes" aria-hidden="true">@@FRAGMENT:axis-labels@@</div><div class="plot" aria-hidden="true">{samples}</div>
@@ -38,8 +38,9 @@ def comparison_html(template, parameters, models, count=96):
     <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
   </div>
   {unavailable}
-  <figcaption>@@FRAGMENT:polar-legend@@@@FRAGMENT:order-legend@@<h2>{escape(model['name'])}</h2><p class="comparison-model-help">k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><details class="curve-formula"><summary>式と条件</summary><div class="equations">{model_equations_html(model)}</div><p>{escape(model['note'])}</p></details></figcaption>
+  <figcaption>@@FRAGMENT:polar-legend@@@@FRAGMENT:order-legend@@<h2>{escape(model['name'])}</h2><p class="comparison-model-help">k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><details class="curve-formula"><summary>式と条件</summary><div class="equations">{model_equations_html(model)}</div><p>{escape(model['note'])}</p></details><a class="comparison-back" href="#comparison-index">図の索引へ戻る</a></figcaption>
 </figure>''')
+    index = '<nav id="comparison-index" class="comparison-index" aria-label="選択した図への移動"><p>選択中の図へ</p><ul>' + ''.join(f'<li data-jump-model="{m["id"]}"><a href="#curve-{m["id"]}">{escape(m["name"])}</a></li>' for m in models) + '</ul><a href="#controls">共有入力へ</a></nav>'
     generic = {
         '@@MODEL_K_LABELS@@': '反復 k', '@@MODEL_K_HELP@@': '各モデルの反復・巻き数を同時に変える',
         '@@MODEL_PHASE_HELP@@': '各モデルの位相 φ を同時に変える',
@@ -48,18 +49,20 @@ def comparison_html(template, parameters, models, count=96):
     for token, value in generic.items():
         parameters = parameters.replace(token, value)
     densities = ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{comparison_filename(n)}">{n}点</a>' for n in COMPARISON_COUNTS)
-    return template.replace('@@COMPARISON_MODEL_COUNT@@', str(len(models))).replace('@@COMPARISON_COUNT@@', str(count)).replace('@@COMPARISON_DENSITIES@@', densities).replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
+    return template.replace('@@COMPARISON_INDEX@@', index).replace('@@COMPARISON_MODEL_COUNT@@', str(len(models))).replace('@@COMPARISON_COUNT@@', str(count)).replace('@@COMPARISON_DENSITIES@@', densities).replace('@@COMPARISON_PLOTS@@', '\n'.join(plots)).replace('@@COMPARISON_PARAMETERS@@', parameters).replace('@@COMPARISON_OPTIONS@@', '\n'.join(options))
 
 
 def comparison_styles(models):
     rules = ['@supports selector(:has(*)) {',
              '.comparison-selection { display: block; }',
              '.comparison-example.lab { display: none; }',
+             '.comparison-index [data-jump-model] { display:none; }',
              '.comparison-empty { display: block; }',
              '.comparison-lab:has(.comparison-selection input:checked) .comparison-empty { display: none; }']
     for model in models:
         identifier = model['id']
         rules.append(f'.comparison-lab:has(#compare-{identifier}:checked) .comparison-example[data-static-model="{identifier}"] {{ display: block; }}')
+        rules.append(f'.comparison-lab:has(#compare-{identifier}:checked) .comparison-index [data-jump-model="{identifier}"] {{ display:list-item; }}')
     rules.append('}')
     from .models import CAPABILITIES
     for model in models:
