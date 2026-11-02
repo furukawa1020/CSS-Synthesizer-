@@ -1,0 +1,5 @@
+.plot { isolation:isolate; }
+.lab:has(#blend-screen:checked) .sample { mix-blend-mode:screen; }
+.lab:has(#blend-multiply:checked) .sample { mix-blend-mode:multiply; }
+.lab:has(#blend-difference:checked) .sample { mix-blend-mode:difference; }
+@media print, (forced-colors:active) { .lab .sample { mix-blend-mode:normal !important; } }
