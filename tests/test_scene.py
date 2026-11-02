@@ -42,3 +42,12 @@ class SceneTests(unittest.TestCase):
             self.assertTrue(audit_html(html,count)['ok'])
             self.assertIn('--tick-index:2.25',html)
             self.assertIn('反復3.25、位相37°、振幅81%',html)
+
+    def test_clock_is_finite_independent_and_stopped(self):
+        from tools.scene import render_scene
+        for bad in (True,-.01,7,float('nan')):
+            with self.assertRaises(ValueError): validate_scene(self.data(clock_radians=bad))
+        html=render_scene(self.data(clock_radians=math.pi))
+        self.assertIn('--clock-start:3.1415926535897931;',html)
+        self.assertIn('value="stop" checked',html)
+        self.assertIn('--phase-raw:90;',html)
