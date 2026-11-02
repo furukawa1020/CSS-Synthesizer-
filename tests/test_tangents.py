@@ -34,6 +34,9 @@ def position(model, u, k, phi, a, t):
     if model == 'exp-spiral':
         r=a*math.exp(-3*u); q=k*theta+phi+t
         return r*math.cos(q),r*math.sin(q)
+    if model == 'ellipse':
+        x,y=a*math.cos(theta),a*math.sin(theta)/k
+        return x*math.cos(phi+t)-y*math.sin(phi+t), x*math.sin(phi+t)+y*math.cos(phi+t)
     return a * (.65 * math.cos(theta+t) + .35 * math.cos(k*theta+phi-t)), a * (.65 * math.sin(theta+t) - .35 * math.sin(k*theta+phi-t))
 
 

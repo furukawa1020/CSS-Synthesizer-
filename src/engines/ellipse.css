@@ -1,0 +1,11 @@
+.lab:has(#model-ellipse:checked) .sample {
+--el-a: calc(var(--phase) + var(--clock) * 1rad);
+--el-x: calc(var(--amplitude) * cos(var(--theta)));
+--el-y: calc(var(--amplitude) * sin(var(--theta)) / var(--k));
+--el-dx: calc(-1 * var(--amplitude) * sin(var(--theta)));
+--el-dy: calc(var(--amplitude) * cos(var(--theta)) / var(--k));
+--x: calc(var(--el-x) * cos(var(--el-a)) - var(--el-y) * sin(var(--el-a)));
+--y: calc(var(--el-x) * sin(var(--el-a)) + var(--el-y) * cos(var(--el-a)));
+--tangent-dx: calc(var(--el-dx) * cos(var(--el-a)) - var(--el-dy) * sin(var(--el-a)));
+--tangent-dy: calc(var(--el-dx) * sin(var(--el-a)) + var(--el-dy) * cos(var(--el-a)));
+}
