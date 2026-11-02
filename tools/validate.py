@@ -1,5 +1,6 @@
 """Read-only development checks. Unit tests and packaging stay separate."""
 import argparse
+import json
 from pathlib import Path
 import sys
 from .build import ROOT, check_build
@@ -57,8 +58,12 @@ def validate(root=ROOT):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description='現在のソースと生成物を変更せず検査する')
+    parser.add_argument('--json', action='store_true', help='検査結果をJSONで出力する')
     args = parser.parse_args(argv)
     result = validate()
+    if args.json:
+        print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+        return 0 if result['ok'] else 1
     for check in result['checks']:
         print(('PASS ' if check['ok'] else 'FAIL ') + check['name'])
         for error in check.get('errors', []):
