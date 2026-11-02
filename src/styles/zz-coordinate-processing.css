@@ -1,0 +1,5 @@
+/* A model derivative is not the derivative of a processed curve. */
+.lab:has(.coordinate-active:checked):has(#shape-arrow:checked) .sample::after {
+ inset: 0; inline-size: auto; block-size: auto; translate: none; rotate: none;
+ border: 0; border-radius: 50%; clip-path: none; opacity: 1; visibility: visible;
+}

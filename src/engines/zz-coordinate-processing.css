@@ -1,0 +1,7 @@
+/* Processing precedes the existing plot reflection, rotation and uniform scale. */
+.sample {
+ --draw-x: var(--bound-x, var(--quant-x, var(--move-x, var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x))))))));
+ --draw-y: var(--bound-y, var(--quant-y, var(--move-y, var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y))))))));
+ transform: translate(calc(var(--draw-x) * 44cqmin), calc(var(--draw-y) * -44cqmin)) translate(-50%, -50%);
+}
+.lab:has(#coord-swap:checked) .sample { --swap-x: var(--y); --swap-y: var(--x); }
