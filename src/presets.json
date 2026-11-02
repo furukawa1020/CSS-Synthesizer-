@@ -166,5 +166,13 @@
     "k": 1,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-epitrochoid.html",
+    "name": "外側を転がる軌跡",
+    "model": "epitrochoid",
+    "k": 3,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
