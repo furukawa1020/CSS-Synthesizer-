@@ -14,6 +14,8 @@ FEATURES = (
     ('sin', '座標と描画', 'sin() / cos()', '(width: calc(sin(1rad) * 1px)) and (width: calc(cos(1rad) * 1px))', '各モデルの三角関数', 'https://www.w3.org/TR/css-values-4/#trig-funcs'),
     ('sqrt', '座標と描画', 'sqrt()', '(width: calc(sqrt(.25) * 1px))', 'フェルマー渦巻きの半径', 'https://www.w3.org/TR/css-values-4/#exponent-funcs'),
     ('exp', '座標と描画', 'exp()', '(width: calc(exp(0) * 1px))', '減衰波の包絡', 'https://www.w3.org/TR/css-values-4/#exponent-funcs'),
+    ('abs-sign', '座標加工', 'abs() / sign()', '(opacity: abs(-1)) and (opacity: sign(1))', '座標の折り返しと符号の色分け', 'https://drafts.csswg.org/css-values-4/#sign-funcs'),
+    ('hypot', '座標加工', 'hypot()', '(opacity: hypot(3,4))', '単位円への半径制限', 'https://drafts.csswg.org/css-values-4/#exponent-funcs'),
     ('atan2', '座標と描画', 'atan2()', '(rotate: atan2(1, 1))', '接線のベクトルから角度を求める', 'https://www.w3.org/TR/css-values-4/#trig-funcs'),
     ('siblings', '座標と描画', 'sibling-index() / sibling-count()', '(z-index: sibling-index()) and (z-index: sibling-count())', '点の順番と点数。未対応時は生成済みの値を使う', 'https://drafts.csswg.org/css-values-5/#tree-counting'),
     ('round', '数値の表示', 'round() / mod() / counter', '(opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2))', '有効値の丸めと整数部・小数部の表示', 'https://www.w3.org/TR/css-values-4/#round-func'),

@@ -5,3 +5,25 @@
 }
 @supports not (opacity: abs(-1)) { .coordinate-controls:has(#fold-none) { display:none; } }
 @supports not (opacity: hypot(3,4)) { .coordinate-controls:has(#coord-bound) { display:none; } }
+.coordinate-summary { margin-block:12px; font-size:.8125rem; overflow-wrap:anywhere; }
+.coordinate-summary > span:not(.coordinate-neutral) { display:none; }
+.lab:has(.coordinate-active:checked) .coordinate-neutral { display:none; }
+.lab:has(.coordinate-active:checked):has(#shape-arrow:checked) .coordinate-arrow-note { display:inline; }
+.lab:has(#coord-swap:checked) .state-coord-swap { display:inline; }
+.lab:has(#fold-x:checked) .state-fold-x { display:inline; }
+.lab:has(#fold-y:checked) .state-fold-y { display:inline; }
+.lab:has(#fold-both:checked) .state-fold-both { display:inline; }
+.lab:has(#project-x:checked) .state-project-x { display:inline; }
+.lab:has(#project-y:checked) .state-project-y { display:inline; }
+.lab:has(#gain-x-half:checked) .state-gain-x-half { display:inline; }
+.lab:has(#gain-x-two:checked) .state-gain-x-two { display:inline; }
+.lab:has(#gain-y-half:checked) .state-gain-y-half { display:inline; }
+.lab:has(#gain-y-two:checked) .state-gain-y-two { display:inline; }
+.lab:has(#offset-x-minus:checked) .state-offset-x-minus { display:inline; }
+.lab:has(#offset-x-plus:checked) .state-offset-x-plus { display:inline; }
+.lab:has(#offset-y-minus:checked) .state-offset-y-minus { display:inline; }
+.lab:has(#offset-y-plus:checked) .state-offset-y-plus { display:inline; }
+.lab:has(#quant-tenth:checked) .state-quant-tenth { display:inline; }
+.lab:has(#quant-quarter:checked) .state-quant-quarter { display:inline; }
+.lab:has(#quant-half:checked) .state-quant-half { display:inline; }
+.lab:has(#coord-bound:checked) .state-coord-bound { display:inline; }
