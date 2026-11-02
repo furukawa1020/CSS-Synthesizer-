@@ -11,3 +11,7 @@ class DrawingModelsTests(unittest.TestCase):
 
     def test_ellipse_axis_ratio_landmarks(self):
         self.landmarks('ellipse',[(.5,0),(0,.25),(-.5,0),(0,-.25),(.5,0)],k=2)
+
+    def test_astroid_cusps_have_positions_but_no_tangents(self):
+        self.landmarks('astroid',[(.5,0),(0,.5),(-.5,0),(0,-.5),(.5,0)])
+        for u in (0,.25,.5,.75,1):self.assertIsNone(tangent_angle('astroid',u,1,0,.5,0))

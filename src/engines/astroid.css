@@ -1,0 +1,12 @@
+.lab:has(#model-astroid:checked) .sample {
+--as-q: calc(var(--k) * var(--theta) + var(--phase));
+--as-c: cos(var(--as-q)); --as-s: sin(var(--as-q)); --as-a: calc(var(--clock) * 1rad);
+--as-x: calc(var(--amplitude) * var(--as-c) * var(--as-c) * var(--as-c));
+--as-y: calc(var(--amplitude) * var(--as-s) * var(--as-s) * var(--as-s));
+--as-dx: calc(-3 * var(--amplitude) * var(--k) * var(--as-c) * var(--as-c) * var(--as-s));
+--as-dy: calc(3 * var(--amplitude) * var(--k) * var(--as-s) * var(--as-s) * var(--as-c));
+--x: calc(var(--as-x) * cos(var(--as-a)) - var(--as-y) * sin(var(--as-a)));
+--y: calc(var(--as-x) * sin(var(--as-a)) + var(--as-y) * cos(var(--as-a)));
+--tangent-dx: calc(var(--as-dx) * cos(var(--as-a)) - var(--as-dy) * sin(var(--as-a)));
+--tangent-dy: calc(var(--as-dx) * sin(var(--as-a)) + var(--as-dy) * cos(var(--as-a)));
+}
