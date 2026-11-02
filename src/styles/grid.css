@@ -12,9 +12,12 @@
 .lab:has(#grid-polar:checked) .axes {
   background-image:
     repeating-radial-gradient(circle at center, transparent 0, transparent calc(11cqmin - 1px), var(--grid-color) calc(11cqmin - 1px), var(--grid-color) 11cqmin),
-    repeating-conic-gradient(from 0deg at center, var(--grid-color) 0deg .3deg, transparent .3deg 30deg);
+    repeating-conic-gradient(from 0deg at center, var(--grid-color) 0deg .3deg, transparent .3deg var(--polar-sector-angle,30deg));
   background-size: 100% 100%;
 }
 .lab:has(#grid-off:checked) .axes { visibility: hidden; }
 .lab:has(#grid-step-tenth:checked) .axes { --grid-spacing:4.4cqmin; }
 .lab:has(#grid-step-half:checked) .axes { --grid-spacing:22cqmin; }
+
+.lab:has(#sectors-8:checked) .axes { --polar-sector-angle:45deg; }
+.lab:has(#sectors-24:checked) .axes { --polar-sector-angle:15deg; }
