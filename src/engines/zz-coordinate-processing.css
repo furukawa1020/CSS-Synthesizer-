@@ -9,3 +9,5 @@
  .lab:has(:is(#fold-x,#fold-both):checked) .sample { --fold-x: abs(var(--swap-x, var(--x))); }
  .lab:has(:is(#fold-y,#fold-both):checked) .sample { --fold-y: abs(var(--swap-y, var(--y))); }
 }
+.lab:has(#project-x:checked) .sample { --project-y: 0; }
+.lab:has(#project-y:checked) .sample { --project-x: 0; }
