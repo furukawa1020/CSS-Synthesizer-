@@ -38,3 +38,9 @@ class ValidateTests(unittest.TestCase):
             self.assertEqual(result[0]['name'], 'batch1/index.json')
             self.assertFalse(result[0]['ok'])
 
+    def test_json_output_preserves_failure_and_diagnostics(self):
+        result = {'ok':False,'checks':[{'name':'test','ok':False,'errors':['診断']}]}
+        out = io.StringIO()
+        with patch('tools.validate.validate', return_value=result), contextlib.redirect_stdout(out):
+            self.assertEqual(main(['--json']), 1)
+        self.assertEqual(json.loads(out.getvalue()), result)
