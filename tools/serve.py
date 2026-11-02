@@ -19,6 +19,10 @@ class PreviewHandler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         super().end_headers()
 
+    def log_message(self, format, *args):
+        if not getattr(self.server, 'quiet', False):
+            super().log_message(format, *args)
+
     def do_HEAD(self):
         self.respond(head=True)
 
@@ -70,7 +74,7 @@ class PreviewHandler(BaseHTTPRequestHandler):
             self.wfile.write(data)
 
 
-def create_server(directory=ROOT / 'build', host='127.0.0.1', port=3000):
+def create_server(directory=ROOT / 'build', host='127.0.0.1', port=3000, *, quiet=False):
     directory = Path(directory)
     index = directory / 'index.html'
     if directory.is_symlink() or not directory.is_dir() or index.is_symlink() or not index.is_file():
@@ -79,17 +83,19 @@ def create_server(directory=ROOT / 'build', host='127.0.0.1', port=3000):
         raise ValueError('プレビューの接続先はlocalhostに限定します')
     server = ThreadingHTTPServer((host, port), PreviewHandler)
     server.directory = directory
+    server.quiet = quiet
     return server
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='HTML/CSSのローカル確認')
     parser.add_argument('--port', type=int, default=3000)
+    parser.add_argument('--quiet', action='store_true', help='アクセスログを抑制する')
     args = parser.parse_args()
     if not 0 <= args.port <= 65535:
         parser.error('portは0〜65535です（0は空きポート）')
     try:
-        server = create_server(port=args.port)
+        server = create_server(port=args.port, quiet=args.quiet)
     except (OSError, ValueError) as error:
         print(f'プレビューを開始できません: {error}', file=sys.stderr)
         sys.exit(1)
