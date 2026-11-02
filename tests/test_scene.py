@@ -41,7 +41,7 @@ class SceneTests(unittest.TestCase):
             self.assertEqual(sum('class="sample"' in s for s in html.split('<i ')),count)
             self.assertTrue(audit_html(html,count)['ok'])
             self.assertIn('--tick-index:2.25',html)
-            self.assertIn('反復3.25、位相37°、振幅81%',html)
+            self.assertIn('k=3.25、位相37°、振幅81%',html)
 
     def test_clock_is_finite_independent_and_stopped(self):
         from tools.scene import render_scene
@@ -155,3 +155,21 @@ class SceneTests(unittest.TestCase):
                 self.assertEqual(saved['clock_direction'],direction)
         for extra in ({'clock_period_seconds':True},{'clock_period_seconds':24.0},{'clock_period_seconds':0},{'clock_direction':[]},{'clock_direction':'back'}):
             with self.assertRaises(ValueError):validate_scene(self.data(**extra))
+
+    def test_observation_scene_options_survive_export_and_rebuild(self):
+        from tools.scene import export_scene
+        from tools.build import ROOT
+        original=load_scene(ROOT/'qa/scene-observation-example.json')
+        with tempfile.TemporaryDirectory() as folder:
+            out=Path(folder)/'scene'; export_scene(original,out)
+            self.assertEqual(load_scene(out/'scene.json'),original)
+            from html.parser import HTMLParser
+            class Checked(HTMLParser):
+                def __init__(self):super().__init__();self.ids=set()
+                def handle_starttag(self,tag,pairs):
+                    attrs=dict(pairs)
+                    if tag=='input' and 'checked' in attrs:self.ids.add(attrs.get('id'))
+            parser=Checked();parser.feed((out/'index.html').read_text())
+            for key,value in original['view'].items():
+                self.assertIn(key if type(value) is bool else value,parser.ids)
+            self.assertIn('period-48',parser.ids);self.assertIn('direction-reverse',parser.ids)

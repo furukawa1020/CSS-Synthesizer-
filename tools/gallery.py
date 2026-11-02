@@ -27,7 +27,7 @@ def gallery_html(presets, models, count=96):
     definitions = {model['id']: model for model in models}
     rows = []
     for preset in presets:
-        label = f"{names[preset['model']]}、反復{preset['k']}、位相{preset['phase']}度、振幅{preset['amplitude']}パーセント。時計0で停止。"
+        label = f"{names[preset['model']]}、k={preset['k']}、位相{preset['phase']}度、振幅{preset['amplitude']}パーセント。時計0で停止。"
         samples = ''.join(f'<i class="sample" data-index="{index}" style="--index-fallback:{index};--count-fallback:{count}"></i>' for index in range(count))
         unavailable = (f'<p class="model-unavailable model-unavailable-{preset["model"]}">このブラウザでは、このモデルに必要なCSS数式の機能が不足しているため描画しません。</p>'
                        if definitions[preset['model']].get('capability') else '')
@@ -39,7 +39,7 @@ def gallery_html(presets, models, count=96):
   </figure>
   <section><h2><a href="{preset['file']}">{escape(preset['name'])}<span aria-hidden="true"> ↗</span></a></h2>
     <p>{escape(names[preset['model']])}</p>
-    <dl><div><dt>反復 k</dt><dd>{preset['k']:.2f}</dd></div><div><dt>位相 φ</dt><dd>{preset['phase']}°</dd></div><div><dt>振幅 A</dt><dd>{preset['amplitude']}%</dd></div></dl>
+    <dl><div><dt>k</dt><dd>{preset['k']:.2f}</dd></div><div><dt>位相 φ</dt><dd>{preset['phase']}°</dd></div><div><dt>振幅 A</dt><dd>{preset['amplitude']}%</dd></div></dl>
     <p>96点・時計 t = 0・停止</p><details class="curve-formula"><summary>この形の式</summary><div class="equations">{model_equations_html(definitions[preset['model']])}</div></details><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a><br><a class="gallery-back" href="#gallery-index">形の索引へ戻る</a>
   </section>
 </li>''')
