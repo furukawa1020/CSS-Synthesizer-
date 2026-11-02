@@ -40,3 +40,13 @@ class PreviewTests(unittest.TestCase):
         for path in ('/nested/page.html', '/nested%2fpage.html', '/local.html', '/%252e.html', '/%00.html', '/%ff.html', '//evil.test/index.html'):
             with self.subTest(path=path): self.assertEqual(self.request(server, path)[0], 404)
         self.assertEqual(self.request(server, '/index.html?cache=1')[0], 200)
+
+    def test_security_headers_cover_success_and_errors(self):
+        server = self.start()
+        for method, path, code in [('GET','/',200),('GET','/missing',404),('POST','/',501),('HEAD','/missing',404)]:
+            status, headers, body = self.request(server, path, method)
+            self.assertEqual(status, code)
+            self.assertIn("script-src 'none'", headers['Content-Security-Policy'])
+            self.assertEqual(headers['X-Content-Type-Options'], 'nosniff')
+            self.assertEqual(headers['Cache-Control'], 'no-store')
+            if method == 'HEAD': self.assertEqual(body, b'')
