@@ -4,3 +4,5 @@
 .lab:has(#rotation-180:checked) { --plot-rotation: 180; }
 /* CSS matrix R*S applies the existing reflection before this rotation. */
 .plot { rotate: calc(var(--plot-rotation) * -1deg); }
+
+.lab:has(#rotation-270:checked) { --plot-rotation:270; }
