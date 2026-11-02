@@ -15,3 +15,7 @@
 .lab:has(#gain-x-two:checked) .sample { --gain-x: calc(var(--project-x, var(--fold-x, var(--swap-x, var(--x)))) * 2); }
 .lab:has(#gain-y-half:checked) .sample { --gain-y: calc(var(--project-y, var(--fold-y, var(--swap-y, var(--y)))) * .5); }
 .lab:has(#gain-y-two:checked) .sample { --gain-y: calc(var(--project-y, var(--fold-y, var(--swap-y, var(--y)))) * 2); }
+.lab:has(#offset-x-minus:checked) .sample { --move-x: calc(var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x))))) + -.25); }
+.lab:has(#offset-x-plus:checked) .sample { --move-x: calc(var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x))))) + .25); }
+.lab:has(#offset-y-minus:checked) .sample { --move-y: calc(var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y))))) + -.25); }
+.lab:has(#offset-y-plus:checked) .sample { --move-y: calc(var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y))))) + .25); }
