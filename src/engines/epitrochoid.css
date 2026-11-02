@@ -1,0 +1,11 @@
+.lab:has(#model-epitrochoid:checked) .sample {
+--ep-c: calc(1 + 1 / var(--k)); --ep-q: calc((var(--k) + 1) * var(--theta) + var(--phase)); --ep-a: calc(var(--clock) * 1rad);
+--ep-x: calc(var(--amplitude) * (var(--ep-c) * cos(var(--theta)) - .35 * cos(var(--ep-q))) / (var(--ep-c) + .35));
+--ep-y: calc(var(--amplitude) * (var(--ep-c) * sin(var(--theta)) - .35 * sin(var(--ep-q))) / (var(--ep-c) + .35));
+--ep-dx: calc(var(--amplitude) * (-1 * var(--ep-c) * sin(var(--theta)) + .35 * (var(--k) + 1) * sin(var(--ep-q))) / (var(--ep-c) + .35));
+--ep-dy: calc(var(--amplitude) * (var(--ep-c) * cos(var(--theta)) - .35 * (var(--k) + 1) * cos(var(--ep-q))) / (var(--ep-c) + .35));
+--x: calc(var(--ep-x) * cos(var(--ep-a)) - var(--ep-y) * sin(var(--ep-a)));
+--y: calc(var(--ep-x) * sin(var(--ep-a)) + var(--ep-y) * cos(var(--ep-a)));
+--tangent-dx: calc(var(--ep-dx) * cos(var(--ep-a)) - var(--ep-dy) * sin(var(--ep-a)));
+--tangent-dy: calc(var(--ep-dx) * sin(var(--ep-a)) + var(--ep-dy) * cos(var(--ep-a)));
+}
