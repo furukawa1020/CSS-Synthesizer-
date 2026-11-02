@@ -24,6 +24,7 @@ class ProcessingTests(unittest.TestCase):
     def test_round_half_ties_go_toward_positive_and_zero_bound_is_finite(self):
         p=dict(DEFAULTS,quantum=.5)
         self.assertEqual(process_point(-.25,.25,p),(0,.5))
+        self.assertAlmostEqual(process_point(-(.1+.05),0,dict(DEFAULTS,quantum=.1))[0],-.1)
         self.assertEqual(process_point(0,0,dict(DEFAULTS,bound=True)),(0,0))
         self.assertEqual(process_point(3,4,dict(DEFAULTS,bound=True)),(.6,.8))
         self.assertEqual(process_point(-.8,.4,dict(DEFAULTS,projection='x',offset_y=.25)),(-.8,.25))

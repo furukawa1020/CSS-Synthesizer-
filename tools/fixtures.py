@@ -137,9 +137,32 @@ def create_batch100_fixtures(directory=ROOT / 'build'):
     write('qa-batch100-print.html',re.sub(r'<input[^>]*>',print_choice,printed))
 
 
+
+def create_batch120_fixtures(directory=ROOT / 'build'):
+    """Print CSS branch and layout fixtures, without claiming real printing."""
+    directory = Path(directory)
+    printed = (directory / 'qa-comparison-print.html').read_text(encoding='utf-8')
+    groups = {'coordinate-quantize', 'gain-x', 'point-shape', 'point-blend'}
+    selected = {'quant-quarter', 'gain-x-two', 'shape-ring', 'blend-difference'}
+    def choice(match):
+        tag = match[0]
+        group = re.search(r'name="([^"]+)"', tag)
+        identifier = re.search(r'id="([^"]+)"', tag)
+        if not identifier:
+            return tag
+        if identifier[1] == 'coord-bound':
+            return tag[:-1] + ' checked>'
+        if group and group[1] in groups:
+            tag = re.sub(r'\schecked(?=[\s>])', '', tag)
+            if identifier[1] in selected:
+                tag = tag[:-1] + ' checked>'
+        return tag
+    (directory / 'qa-batch120-print.html').write_text(re.sub(r'<input[^>]*>', choice, printed), encoding='utf-8')
+
 if __name__ == '__main__':
     create_fixtures()
     create_comparison_fixtures()
     create_batch80_fixtures()
     create_batch100_fixtures()
+    create_batch120_fixtures()
     print('QA専用HTML/CSSを生成しました。CSS分岐のfixtureは実OSや他ブラウザの模擬ではありません。')

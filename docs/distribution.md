@@ -88,3 +88,5 @@ manifestが列挙した、同じディレクトリの観測JSONを順に検査�
 ## 12モデルと192点一覧
 
 今回の構成は22 HTML・2 CSSの24アプリファイル。README.txtとSHA256SUMSを含む26 ZIPエントリー。14プリセットとgallery-192.htmlを同じ資産定義から生成する。接線CLIも--require-allを使え、tools.shared_conditionsは全点座標と共有条件を照合する。QA/観測JSONと画像はZIPへ入れない。
+
+第6回（2026-11-02）の座標加工・索引・設定整理後も24アプリファイル、ZIP26エントリー。観測JSON・QAフィクスチャ・画像はZIPに入れない。
