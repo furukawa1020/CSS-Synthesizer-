@@ -5,6 +5,7 @@ from urllib.parse import unquote, urlsplit
 import argparse
 import json
 import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CSP = "default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'"
@@ -70,8 +71,14 @@ class PreviewHandler(BaseHTTPRequestHandler):
 
 
 def create_server(directory=ROOT / 'build', host='127.0.0.1', port=3000):
+    directory = Path(directory)
+    index = directory / 'index.html'
+    if directory.is_symlink() or not directory.is_dir() or index.is_symlink() or not index.is_file():
+        raise ValueError('index.htmlを含む通常の配信ディレクトリが必要です。先にbuildしてください')
+    if host not in ('127.0.0.1', 'localhost'):
+        raise ValueError('プレビューの接続先はlocalhostに限定します')
     server = ThreadingHTTPServer((host, port), PreviewHandler)
-    server.directory = Path(directory)
+    server.directory = directory
     return server
 
 
@@ -81,7 +88,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not 0 <= args.port <= 65535:
         parser.error('portは0〜65535です（0は空きポート）')
-    server = create_server(port=args.port)
+    try:
+        server = create_server(port=args.port)
+    except (OSError, ValueError) as error:
+        print(f'プレビューを開始できません: {error}', file=sys.stderr)
+        sys.exit(1)
     print(f'Local: http://127.0.0.1:{server.server_port}', flush=True)
     try:
         server.serve_forever()

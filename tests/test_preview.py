@@ -62,3 +62,9 @@ class PreviewTests(unittest.TestCase):
         server = self.start()
         self.assertGreater(server.server_port, 0)
         self.assertEqual(self.request(server)[0], 200)
+
+    def test_invalid_directory_fails_before_binding(self):
+        with self.assertRaises(ValueError): create_server(self.root/'missing', port=0)
+        alias = self.root/'alias'; alias.symlink_to(self.root, target_is_directory=True)
+        with self.assertRaises(ValueError): create_server(alias, port=0)
+        with self.assertRaises(ValueError): create_server(self.root, host='0.0.0.0', port=0)
