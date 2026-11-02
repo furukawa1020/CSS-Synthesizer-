@@ -22,3 +22,23 @@ class SceneTests(unittest.TestCase):
         for key, bad in [('k',True),('k',0),('k',8.01),('k',1.001),('phase',90.1),('amplitude',24),('amplitude',80.1),('k',float('inf'))]:
             with self.subTest(key=key,bad=bad), self.assertRaises(ValueError): validate_scene(self.data(**{key:bad}))
         self.assertEqual(validate_scene(self.data(k=1.01, phase=359, amplitude=26))['k'],1.01)
+
+    def test_render_selects_model_count_and_fractional_targets(self):
+        from tools.scene import render_scene
+        from tools.audit import audit_html
+        from html.parser import HTMLParser
+        class Inputs(HTMLParser):
+            def __init__(self): super().__init__(); self.selected=[]; self.initial=[]
+            def handle_starttag(self, tag, pairs):
+                a=dict(pairs)
+                if tag=='input' and 'checked' in a: self.selected.append(a.get('id'))
+                if tag=='span' and 'initial' in a.get('class','').split():self.initial.append(a)
+        for count in (96,192,384):
+            html=render_scene(self.data(k=3.25,phase=37,amplitude=81,count=count))
+            parsed=Inputs();parsed.feed(html)
+            self.assertIn('model-rose',parsed.selected)
+            self.assertEqual(len(parsed.initial),3)
+            self.assertEqual(sum('class="sample"' in s for s in html.split('<i ')),count)
+            self.assertTrue(audit_html(html,count)['ok'])
+            self.assertIn('--tick-index:2.25',html)
+            self.assertIn('反復3.25、位相37°、振幅81%',html)
