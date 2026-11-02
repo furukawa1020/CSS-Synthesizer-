@@ -55,3 +55,6 @@
  .gallery-main:has(#gallery-values:checked) .gallery-example { display:none; }
  .gallery-main:has(#gallery-values:checked) .gallery-list > li { grid-template-columns:minmax(0,1fr); }
 }
+
+.gallery-count { font-size:.875rem; }
+.gallery-count [data-count-model] { display:none; }
