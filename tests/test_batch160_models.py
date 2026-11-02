@@ -19,3 +19,6 @@ class DrawingModelsTests(unittest.TestCase):
     def test_cardioid_landmarks_and_origin_cusp(self):
         self.landmarks('cosine-polar',[(.5,0),(0,.25),(0,0),(0,-.25),(.5,0)])
         self.assertIsNone(tangent_angle('cosine-polar',.5,1,0,.5,0))
+
+    def test_epitrochoid_external_rolling_landmarks(self):
+        self.landmarks('epitrochoid',[(.5*1.65/2.35,0),(.5*.35/2.35,.5*2/2.35),(-.5,0),(.5*.35/2.35,-.5*2/2.35),(.5*1.65/2.35,0)])

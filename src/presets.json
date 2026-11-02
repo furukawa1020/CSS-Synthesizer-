@@ -134,5 +134,13 @@
     "k": 3,
     "phase": 90,
     "amplitude": 80
+  },
+  {
+    "file": "preset-epitrochoid-baseline.html",
+    "name": "外転曲線の基準値",
+    "model": "epitrochoid",
+    "k": 3,
+    "phase": 90,
+    "amplitude": 80
   }
 ]

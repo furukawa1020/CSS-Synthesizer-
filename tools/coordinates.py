@@ -12,7 +12,7 @@ import sys
 # 2π may be serialized as 6.28319 by a browser's computed-style API.
 # Keep this radian allowance separate from the coordinate tolerance in CSS px.
 _CLOCK_SERIALIZATION_MARGIN = 5e-6
-SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave", "lemniscate", "trochoid", "hypotrochoid", "exp-spiral", "ellipse", "astroid", "cosine-polar"})
+SUPPORTED_MODELS = frozenset({"lissajous", "wave", "rose", "spiral", "orbit", "fermat", "damped-wave", "standing-wave", "lemniscate", "trochoid", "hypotrochoid", "exp-spiral", "ellipse", "astroid", "cosine-polar", "epitrochoid"})
 
 
 def _result(errors: list[str], checked: int = 0, maximum: float = 0.0) -> dict:
@@ -192,6 +192,12 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
         elif model == "cosine-polar":
             radius = amplitude * (1 + math.cos(values['k'] * theta + phase)) / 2
             x, y = radius*math.cos(theta+clock), radius*math.sin(theta+clock)
+        elif model == "epitrochoid":
+            c = 1 + 1 / values['k']
+            q = (values['k']+1)*theta+phase
+            base_x = amplitude*(c*math.cos(theta)-.35*math.cos(q))/(c+.35)
+            base_y = amplitude*(c*math.sin(theta)-.35*math.sin(q))/(c+.35)
+            x,y = base_x*math.cos(clock)-base_y*math.sin(clock),base_x*math.sin(clock)+base_y*math.cos(clock)
         else:
             main = theta + clock
             secondary = values["k"] * theta + phase - clock
