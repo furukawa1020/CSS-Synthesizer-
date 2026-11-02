@@ -8,3 +8,13 @@
 }
 @supports not (color:hsl(calc(hypot(1,1) * 180) 80% 75%)) { .radius-color-choice { display:none !important; } .lab .radius-color-legend { display:none; } }
 @media print, (forced-colors:active) { .lab .radius-color-legend { display:none !important; } }
+.angle-color-legend { display:none; font-size:.8125rem; }
+.lab:has(#color-angle:checked) .angle-color-legend { display:block; }
+@supports (color:hsl(calc(atan2(1,1) * sign(hypot(1,1))) 80% 75%)) {
+ @media screen and (forced-colors:none) {
+  .lab:has(#color-angle:checked) .sample { --angle-hue:calc(atan2(var(--draw-y),var(--draw-x)) * sign(hypot(var(--draw-x),var(--draw-y)))); color:hsl(var(--angle-hue) 85% 75%); }
+  .lab:has(#color-angle:checked):has(#palette-paper:checked) .sample { color:hsl(var(--angle-hue) 75% 28%); }
+ }
+}
+@supports not (color:hsl(calc(atan2(1,1) * sign(hypot(1,1))) 80% 75%)) { .angle-color-choice { display:none !important; } .lab .angle-color-legend { display:none; } }
+@media print, (forced-colors:active) { .lab .angle-color-legend { display:none !important; } }
