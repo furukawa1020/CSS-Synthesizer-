@@ -69,3 +69,12 @@ class SceneTests(unittest.TestCase):
         for identifier in ('coord-swap','fold-both','project-y','gain-x-half','gain-y-two','offset-x-minus','offset-y-plus','quant-tenth','coord-bound'):
             self.assertRegex(html, 'id="'+identifier+r'"[^>]* checked>')
         with self.assertRaises(ValueError):validate_scene(self.data(processing={'quantum':.3}))
+
+    def test_title_is_text_and_survives_print_markup(self):
+        from tools.scene import render_scene
+        html=render_scene(self.data(title='<b>作品 & 試験</b>'))
+        self.assertIn('&lt;b&gt;作品 &amp; 試験&lt;/b&gt;',html)
+        self.assertNotIn('<b>作品',html)
+        self.assertIn('class="saved-scene-title"',html)
+        for title in ('', 'x'*121, 'line\nbreak'):
+            with self.assertRaises(ValueError):validate_scene(self.data(title=title))

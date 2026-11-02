@@ -7,7 +7,7 @@ from .json_data import loads_json
 from .models import load_models
 
 MAX_SCENE_BYTES = 16 * 1024
-FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view', 'processing'}
+FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view', 'processing', 'title'}
 
 
 def validate_scene(data, source=ROOT / 'src'):
@@ -38,6 +38,10 @@ def validate_scene(data, source=ROOT / 'src'):
     if errors:
         raise ValueError('; '.join(errors))
     result['processing'] = processing
+    title = data.get('title', '保存シーン')
+    if not isinstance(title, str) or not title.strip() or len(title) > 120 or any(ord(c) < 32 or 127 <= ord(c) < 160 for c in title):
+        raise ValueError('titleは1〜120文字の1行テキストです')
+    result['title'] = title.strip()
     return result
 
 
@@ -83,6 +87,10 @@ def render_scene(data, source=ROOT / 'src'):
     html = html.replace('<main class="lab" style="', f'<main class="lab" style="--clock-start:{scene["clock_radians"]:.17g};', 1)
     html = apply_controls(html, scene['view'])
     html = apply_controls(html, processing_controls(scene['processing']))
+    from html import escape
+    title = escape(scene['title'])
+    html = html.replace('<title>CSS 視覚シンセサイザー</title>', f'<title>{title} — CSS 視覚シンセサイザー</title>')
+    html = html.replace('<figure class="scene">', f'<figure class="scene"><h2 class="saved-scene-title">{title}</h2>', 1)
     return html
 
 
