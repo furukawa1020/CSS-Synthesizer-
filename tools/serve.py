@@ -12,6 +12,12 @@ TYPES = {'.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8'}
 
 
 class PreviewHandler(BaseHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Content-Security-Policy', CSP)
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Cache-Control', 'no-store')
+        super().end_headers()
+
     def do_HEAD(self):
         self.respond(head=True)
 
@@ -46,9 +52,6 @@ class PreviewHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', str(len(data)))
-        self.send_header('Content-Security-Policy', CSP)
-        self.send_header('X-Content-Type-Options', 'nosniff')
-        self.send_header('Cache-Control', 'no-store')
         self.end_headers()
         if not head:
             self.wfile.write(data)
