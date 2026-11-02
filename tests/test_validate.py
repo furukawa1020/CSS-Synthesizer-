@@ -20,3 +20,21 @@ class ValidateTests(unittest.TestCase):
     def test_cli_reports_failure(self):
         with patch('tools.validate.validate', return_value={'ok':False,'checks':[{'name':'broken','ok':False,'errors':['bad']}]}), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(main([]), 1)
+
+    def test_evidence_requires_manifests_and_rejects_symlink_batches(self):
+        from tools.validate import evidence_checks
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            self.assertFalse(evidence_checks(root)[0]['ok'])
+            (root/'batch1').symlink_to(root, target_is_directory=True)
+            self.assertFalse(evidence_checks(root)[0]['ok'])
+
+    def test_malformed_manifest_is_a_failed_check(self):
+        from tools.validate import evidence_checks
+        with tempfile.TemporaryDirectory() as folder:
+            batch = Path(folder)/'batch1'; batch.mkdir()
+            (batch/'index.json').write_text('{"snapshots":[]}')
+            result = evidence_checks(Path(folder))
+            self.assertEqual(result[0]['name'], 'batch1/index.json')
+            self.assertFalse(result[0]['ok'])
+
