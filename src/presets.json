@@ -150,5 +150,13 @@
     "k": 3,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-astroid.html",
+    "name": "四つの尖点",
+    "model": "astroid",
+    "k": 1,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
