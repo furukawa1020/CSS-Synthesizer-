@@ -57,3 +57,8 @@ class PreviewTests(unittest.TestCase):
             self.assertEqual(self.request(server, headers={'Host':host})[0], 403, host)
         for host in ('localhost', f'127.0.0.1:{server.server_port}', f'localhost:{server.server_port}'):
             self.assertEqual(self.request(server, headers={'Host':host})[0], 200)
+
+    def test_zero_port_allocates_a_working_listener(self):
+        server = self.start()
+        self.assertGreater(server.server_port, 0)
+        self.assertEqual(self.request(server)[0], 200)
