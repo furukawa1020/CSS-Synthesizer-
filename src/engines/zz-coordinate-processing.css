@@ -11,3 +11,7 @@
 }
 .lab:has(#project-x:checked) .sample { --project-y: 0; }
 .lab:has(#project-y:checked) .sample { --project-x: 0; }
+.lab:has(#gain-x-half:checked) .sample { --gain-x: calc(var(--project-x, var(--fold-x, var(--swap-x, var(--x)))) * .5); }
+.lab:has(#gain-x-two:checked) .sample { --gain-x: calc(var(--project-x, var(--fold-x, var(--swap-x, var(--x)))) * 2); }
+.lab:has(#gain-y-half:checked) .sample { --gain-y: calc(var(--project-y, var(--fold-y, var(--swap-y, var(--y)))) * .5); }
+.lab:has(#gain-y-two:checked) .sample { --gain-y: calc(var(--project-y, var(--fold-y, var(--swap-y, var(--y)))) * 2); }
