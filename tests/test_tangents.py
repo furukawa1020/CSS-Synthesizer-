@@ -37,6 +37,9 @@ def position(model, u, k, phi, a, t):
     if model == 'ellipse':
         x,y=a*math.cos(theta),a*math.sin(theta)/k
         return x*math.cos(phi+t)-y*math.sin(phi+t), x*math.sin(phi+t)+y*math.cos(phi+t)
+    if model == 'astroid':
+        q=k*theta+phi; x,y=a*math.cos(q)**3,a*math.sin(q)**3
+        return x*math.cos(t)-y*math.sin(t),x*math.sin(t)+y*math.cos(t)
     return a * (.65 * math.cos(theta+t) + .35 * math.cos(k*theta+phi-t)), a * (.65 * math.sin(theta+t) - .35 * math.sin(k*theta+phi-t))
 
 
