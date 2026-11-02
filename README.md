@@ -39,6 +39,12 @@ python3 -m tools.serve
 
 HTMLのDialog・PopoverとMathMLによる説明を参照できます。開閉の短いCSSトランジションは、端末の動きを減らす設定で解除します。
 
+## 初期状態をJSONで持ち運ぶ
+
+`python3 -m tools.scene qa/scene-example.json --output tmp/my-scene`で、記入したモデル・入力・点数・停止時計・表示設定・座標加工から独立HTML/CSSと再生成用JSONを作れます。先に`tmp`を作成し、新規の出力先を指定します。ブラウザー内の変更を読み取る自動保存ではありません。[使い方と制限](docs/batch140/scenes.md)。
+
+`python3 -m tools.validate --json`で生成鮮度・ソース・HTML/CSS・保存した全観測バッチをまとめて検査できます。
+
 ## 配布する・検査する
 
 変更をコミットしたソースから生成します。
@@ -62,7 +68,7 @@ ZIPは22 HTML・2 CSSの24アプリファイル、使い方、SHA-256一覧を�
 
 候補を生成・監査してから`build/`を置き換えるため、通常の生成エラーで前回のビルドを先に削除しません。配置は二段階のrenameであり、電源断耐性や配信中の完全な原子性を保証しません。`python3 -m tools.build --check`は現在のソースから候補を作って照合し、既存buildを変更せず鮮度を検査します。
 
-最新の[20件の実装一覧](docs/batch120/README.md)、[ブラウザ検証](docs/batch120/validation.md)、[受け入れ状況](docs/acceptance.md)で実装と観測を分けています。前回の[20件](docs/batch80/README.md)と[さらに前の20件](docs/batch60/README.md)と[その前の20件](docs/batch40/README.md)と[検証記録](docs/batch40/validation.md)、[最初の20件](docs/batch20/README.md)も残しています。実機タッチ・実OS・読み上げ・他ブラウザ・一般端末の性能などの残件は[Issue #3](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)で管理します。
+最新の[保存シーンと開発ツール20件](docs/batch140/README.md)、[検証と制限](docs/batch140/validation.md)、前回の[20件の実装一覧](docs/batch120/README.md)、[ブラウザ検証](docs/batch120/validation.md)、[受け入れ状況](docs/acceptance.md)で実装と観測を分けています。前回の[20件](docs/batch80/README.md)と[さらに前の20件](docs/batch60/README.md)と[その前の20件](docs/batch40/README.md)と[検証記録](docs/batch40/validation.md)、[最初の20件](docs/batch20/README.md)も残しています。実機タッチ・実OS・読み上げ・他ブラウザ・一般端末の性能などの残件は[Issue #3](https://github.com/furukawa1020/CSS-Synthesizer-/issues/3)で管理します。
 
 `python3 -m tools.coordinates --batch 観測manifest.json`は、同じディレクトリの観測JSONを一覧から独立照合します。`--require-all`で全点が揃うことを要求できます。`tools.tangents`は接線方向の観測を別の数式で検査し、同じ形式の`--batch`と`--require-all`も使えます。`python3 -m tools.shared_conditions manifest.json`は全点の独立座標照合と、2モデル以上の入力・時計・点数・表示変換の一致を検査します。保存した有限ケースの再照合は全入力・全ブラウザの証明ではありません。
 

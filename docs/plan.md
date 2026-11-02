@@ -1,10 +1,10 @@
 # 作業計画と現在地
 
-更新：2026-11-02（日本時間）。第6回の20件はIssue #217〜#236、PR #237〜#256。先にIssueを作り、Issue別ブランチ・日本語PR・対象headのCI成功後のマージで進める。
+更新：2026-11-02（日本時間）。第7回の20件はIssue #257〜#276。前回未マージだったPR #240〜#256はmainへ統合済み。先にIssueを作り、Issue別ブランチ・日本語PR・対象headのCI成功後のマージで進める。
 
-座標加工7段階、加工状態、輪/符号色/合成/逆順配色/格子、表示だけのresetと用途別開閉、比較と一覧の索引/件数、加工の独立検査、統合検証を扱う。[一覧](batch120/README.md)、[数式](batch120/processing.md)、[観測と制限](batch120/validation.md)。
+保存シーンJSONからのHTML/CSS生成、再生成用JSON、一括検証CLI、ローカルプレビューを扱う。[第7回の一覧](batch140/README.md)、[使い方](batch140/scenes.md)、[検証と制限](batch140/validation.md)。前回の[座標加工20件](batch120/README.md)も保持する。
 
-HTML/CSSのみ、開発もPython標準ライブラリのみ。JS/TS/Node、Canvas/SVG描画、左色線の付箋カード・強い影・丸いカード列を加えない。非表示・間引きを性能合格として扱わない。音声・自由配線・永続保存・アカウント・公開デプロイ・GitHub Releaseは範囲外。
+HTML/CSSのみ、開発もPython標準ライブラリのみ。JS/TS/Node、Canvas/SVG描画、左色線の付箋カード・強い影・丸いカード列を加えない。非表示・間引きを性能合格として扱わない。音声・自由配線・ブラウザー内の永続保存・アカウント・公開デプロイ・GitHub Releaseは範囲外。
 
 ## 継続するIssue
 

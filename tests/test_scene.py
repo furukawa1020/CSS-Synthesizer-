@@ -86,6 +86,10 @@ class SceneTests(unittest.TestCase):
             out=Path(folder)/'scene'
             export_scene(self.data(count=96),out)
             self.assertEqual({p.name for p in out.iterdir()},{'index.html','style.css','engine.css','scene.json'})
+            text=(out/'index.html').read_text()
+            self.assertIn('保存シーンの表示設定へ戻す',text)
+            self.assertNotIn('曲線を比較する',text)
+            self.assertNotIn('切り替えると別ページを開きます',text)
             self.assertTrue(audit_directory(out,assets=(('index.html',96),('style.css',None),('engine.css',None)))['ok'])
             before={p.name:p.read_bytes() for p in out.iterdir()}
             with self.assertRaises(ValueError): export_scene(self.data(),out)
@@ -103,3 +107,37 @@ class SceneTests(unittest.TestCase):
             export_scene(load_scene(a/'scene.json'),b)
             self.assertEqual({p.name:p.read_bytes() for p in a.iterdir()},{p.name:p.read_bytes() for p in b.iterdir()})
             self.assertEqual(canonical_scene(data),canonical_scene(dict(reversed(list(data.items())))))
+
+    def test_large_numbers_and_deep_json_are_reported_as_invalid(self):
+        for data in (self.data(k=10**1000),self.data(clock_radians=10**1000)):
+            with self.assertRaises(ValueError):validate_scene(data)
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'deep.json';path.write_text('['*2000+'0'+']'*2000)
+            with self.assertRaises(ValueError):load_scene(path)
+
+    def test_all_models_and_counts_export_audited_files(self):
+        from tools.scene import export_scene
+        from tools.models import load_models
+        from tools.build import ROOT
+        with tempfile.TemporaryDirectory() as folder:
+            for model in load_models(ROOT/'src'):
+                for count in (96,192,384):
+                    out=Path(folder)/(model['id']+str(count))
+                    export_scene(dict(version=1,model=model['id'],count=count,k=7.99,phase=359,amplitude=99),out)
+                    self.assertEqual(load_scene(out/'scene.json')['model'],model['id'])
+
+    def test_install_failure_rolls_back_our_new_directory(self):
+        from unittest.mock import patch
+        from tools.scene import export_scene
+        import os
+        original=os.replace
+        calls=[]
+        def fail_after_first(a,b):
+            calls.append(a)
+            if len(calls)==2:raise OSError('simulated disk failure')
+            return original(a,b)
+        with tempfile.TemporaryDirectory() as folder:
+            out=Path(folder)/'output'
+            with patch('os.replace',side_effect=fail_after_first), self.assertRaises(OSError):export_scene(self.data(),out)
+            self.assertFalse(out.exists())
+            self.assertEqual(list(Path(folder).iterdir()),[])

@@ -24,12 +24,12 @@ def validate_scene(data, source=ROOT / 'src'):
         raise ValueError('countは96/192/384です')
     for key, low, high, scale in (('k', 1, 8, 100), ('phase', 0, 360, 1), ('amplitude', 25, 100, 1)):
         value = result[key]
-        if (type(value) not in (int, float) or not math.isfinite(value) or not low <= value <= high
+        if (type(value) not in (int, float) or not low <= value <= high or not math.isfinite(value)
                 or Decimal(str(value)) * scale != (Decimal(str(value)) * scale).to_integral_value()):
             raise ValueError(f'{key}は範囲内の対応する精度で指定してください')
         result[key] = float(value) if key == 'k' else int(value)
     clock = data.get('clock_radians', 0)
-    if type(clock) not in (int, float) or not math.isfinite(clock) or not 0 <= clock <= math.tau:
+    if type(clock) not in (int, float) or not 0 <= clock <= math.tau or not math.isfinite(clock):
         raise ValueError('clock_radiansは0〜2πの有限数です')
     result['clock_radians'] = float(clock)
     result['view'] = validate_view(data.get('view', {}), source)
@@ -53,7 +53,11 @@ def load_scene(path, source=ROOT / 'src'):
         raw = stream.read(MAX_SCENE_BYTES + 1)
     if len(raw) > MAX_SCENE_BYTES:
         raise ValueError('sceneは16KiB以下にしてください')
-    return validate_scene(loads_json(raw.decode('utf-8')), source)
+    try:
+        data = loads_json(raw.decode('utf-8'))
+    except RecursionError as error:
+        raise ValueError('sceneのJSONが深すぎます') from error
+    return validate_scene(data, source)
 
 
 def render_scene(data, source=ROOT / 'src'):
@@ -74,7 +78,6 @@ def render_scene(data, source=ROOT / 'src'):
         ('amplitude', scene['amplitude'], 25, 5, f"{scene['amplitude']}%"),
     ):
         if (value - low) % step:
-            marker = f'@@SCENE_{prefix.upper()}@@'
             import re
             track = re.compile(r'(<div class="input-band input-' + prefix + r'"[^>]*><div class="ticks"[^>]*>)(.*?)(</div>)', re.S)
             def add(match):
@@ -91,6 +94,7 @@ def render_scene(data, source=ROOT / 'src'):
     title = escape(scene['title'])
     html = html.replace('<title>CSS 視覚シンセサイザー</title>', f'<title>{title} — CSS 視覚シンセサイザー</title>')
     html = html.replace('<figure class="scene">', f'<figure class="scene"><h2 class="saved-scene-title">{title}</h2>', 1)
+    html = html.replace('表示設定だけを標準へ戻す', '保存シーンの表示設定へ戻す')
     return html
 
 
@@ -214,9 +218,10 @@ def standalone_html(html):
     import re
     html = re.sub(r'<details class="preset-picker">.*?</details>', '', html, flags=re.S)
     html = re.sub(r'<nav class="density-picker"[^>]*>.*?</nav>', '', html, flags=re.S)
+    html = re.sub(r'<p>描画点数：.*?</p>', '<p>点数は保存シーンJSONのcountで指定します。変更する場合は再生成してください。</p>', html, flags=re.S)
     def local_link(match):
         href = match[2]
-        return match[0] if href.startswith(('#', 'https://')) else match[4]
+        return match[0] if href.startswith(('#', 'https://')) else ''
     html = re.sub(r'<a\b([^>]*?)href="([^"]+)"([^>]*)>(.*?)</a>', local_link, html, flags=re.S)
     return html.replace('<div class="workspace">', '<p class="saved-scene-note">保存シーンの単独出力です。モデルと入力はこの画面で調整できます。別ページの一覧・点数切替は含みません。ブラウザー内の変更は自動保存されません。</p><div class="workspace">', 1)
 
