@@ -85,7 +85,7 @@ class SceneTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             out=Path(folder)/'scene'
             export_scene(self.data(count=96),out)
-            self.assertEqual({p.name for p in out.iterdir()},{'index.html','style.css','engine.css'})
+            self.assertEqual({p.name for p in out.iterdir()},{'index.html','style.css','engine.css','scene.json'})
             self.assertTrue(audit_directory(out,assets=(('index.html',96),('style.css',None),('engine.css',None)))['ok'])
             before={p.name:p.read_bytes() for p in out.iterdir()}
             with self.assertRaises(ValueError): export_scene(self.data(),out)
@@ -93,3 +93,13 @@ class SceneTests(unittest.TestCase):
             with self.assertRaises(ValueError): export_scene(self.data(k=999),Path(folder)/'bad')
             self.assertFalse((Path(folder)/'bad').exists())
             self.assertFalse(list(Path(folder).glob('.scene-candidate-*')))
+
+    def test_canonical_scene_rebuilds_identical_files(self):
+        from tools.scene import export_scene, canonical_scene
+        data=self.data(k=2.37,phase=17,amplitude=73,title='作品',view={'point-shape':'shape-ring'},processing={'fold':'both'})
+        with tempfile.TemporaryDirectory() as folder:
+            a=Path(folder)/'a'; b=Path(folder)/'b'
+            export_scene(data,a)
+            export_scene(load_scene(a/'scene.json'),b)
+            self.assertEqual({p.name:p.read_bytes() for p in a.iterdir()},{p.name:p.read_bytes() for p in b.iterdir()})
+            self.assertEqual(canonical_scene(data),canonical_scene(dict(reversed(list(data.items())))))
