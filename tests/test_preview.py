@@ -68,3 +68,11 @@ class PreviewTests(unittest.TestCase):
         alias = self.root/'alias'; alias.symlink_to(self.root, target_is_directory=True)
         with self.assertRaises(ValueError): create_server(alias, port=0)
         with self.assertRaises(ValueError): create_server(self.root, host='0.0.0.0', port=0)
+
+    def test_quiet_suppresses_logs_without_changing_responses(self):
+        server = self.start(quiet=True)
+        capture = io.StringIO()
+        with contextlib.redirect_stderr(capture):
+            self.assertEqual(self.request(server)[0], 200)
+            self.assertEqual(self.request(server, '/missing')[0], 404)
+        self.assertEqual(capture.getvalue(), '')
