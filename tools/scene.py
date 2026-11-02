@@ -195,6 +195,7 @@ def export_scene(data, destination, root=ROOT):
         result = audit_directory(candidate, assets=specs)
         if not result['ok']:
             raise ValueError('; '.join(result['errors']))
+        (candidate / 'scene.json').write_text(canonical_scene(scene, source), encoding='utf-8')
         # mkdir is exclusive, unlike rename over an empty directory. Move into
         # that reservation, removing only our own empty reservation on failure.
         destination.mkdir()
@@ -202,7 +203,7 @@ def export_scene(data, destination, root=ROOT):
             for path in candidate.iterdir():
                 os.replace(path, destination / path.name)
         except OSError:
-            for name, _ in specs:
+            for name in (*[name for name, _ in specs], 'scene.json'):
                 (destination / name).unlink(missing_ok=True)
             destination.rmdir()
             raise
@@ -218,6 +219,11 @@ def standalone_html(html):
         return match[0] if href.startswith(('#', 'https://')) else match[4]
     html = re.sub(r'<a\b([^>]*?)href="([^"]+)"([^>]*)>(.*?)</a>', local_link, html, flags=re.S)
     return html.replace('<div class="workspace">', '<p class="saved-scene-note">保存シーンの単独出力です。モデルと入力はこの画面で調整できます。別ページの一覧・点数切替は含みません。ブラウザー内の変更は自動保存されません。</p><div class="workspace">', 1)
+
+
+def canonical_scene(data, source=ROOT / 'src'):
+    import json
+    return json.dumps(validate_scene(data, source), ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + '\n'
 
 
 def main(argv=None):
