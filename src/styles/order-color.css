@@ -3,8 +3,10 @@
 .order-legend-spectrum { inline-size: 96px; block-size: 6px; background: linear-gradient(90deg, hsl(30 85% 40%), hsl(90 85% 40%), hsl(150 85% 40%), hsl(210 85% 40%)); }
 .lab:has(#color-order:checked) .order-legend { display: flex; }
 @media not (forced-colors: active) {
-  .lab:has(#color-order:checked) .sample { color: hsl(calc(30 + var(--u) * 180) 85% 78%); }
-  .lab:has(#color-order:checked):has(#palette-paper:checked) .sample { color: hsl(calc(30 + var(--u) * 180) 70% 28%); }
+  .lab:has(#color-order:checked) .sample { color: hsl(calc(30 + var(--order-u, var(--u)) * 180) 85% 78%); }
+  .lab:has(#color-order:checked):has(#palette-paper:checked) .sample { color: hsl(calc(30 + var(--order-u, var(--u)) * 180) 70% 28%); }
 }
 @media (forced-colors: active) { .lab .order-legend { display: none; } }
 @media print { .lab .order-legend { display: none; } }
+.lab:has(#order-reverse:checked) .sample { --order-u:calc(1 - var(--u)); }
+.lab:has(#order-reverse:checked) .order-legend-spectrum { transform:scaleX(-1); }
