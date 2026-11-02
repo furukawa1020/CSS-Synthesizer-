@@ -54,3 +54,10 @@ jobs:
           for shared_manifest in qa/evidence/batch100/shared-*.json; do
             python3 -m tools.shared_conditions "$shared_manifest" || exit 1
           done
+      - name: 加工した座標を全点照合する
+        run: python3 -m tools.coordinates --batch qa/evidence/batch120/index.json --require-all
+      - name: 加工を含む共有条件を照合する
+        run: |
+          for shared_manifest in qa/evidence/batch120/shared-*.json; do
+            python3 -m tools.shared_conditions "$shared_manifest" || exit 1
+          done

@@ -46,7 +46,15 @@ def process_point(x, y, p):
     y = y * p['gain_y'] + p['offset_y']
     if p['quantum']:
         q = p['quantum']
-        x, y = math.floor(x / q + .5) * q, math.floor(y / q + .5) * q
+        def nearest(value):
+            # Model arithmetic can place a mathematical half-tie a few ulps
+            # on either side. Snap only this 1e-12-cell arithmetic boundary;
+            # the CSS-pixel geometry tolerance is unchanged.
+            scaled = value / q
+            lower = math.floor(scaled)
+            tie = math.isclose(scaled - lower, .5, rel_tol=0, abs_tol=1e-12)
+            return (lower + 1 if tie else math.floor(scaled + .5)) * q
+        x, y = nearest(x), nearest(y)
     if p['bound']:
         denominator = max(1, math.hypot(x, y))
         x, y = x / denominator, y / denominator

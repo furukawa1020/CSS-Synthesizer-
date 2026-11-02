@@ -1,0 +1,16 @@
+{
+  "snapshots": [
+    "coord-49-lissajous.json",
+    "coord-50-wave.json",
+    "coord-51-rose.json",
+    "coord-52-spiral.json",
+    "coord-53-orbit.json",
+    "coord-54-fermat.json",
+    "coord-55-damped-wave.json",
+    "coord-56-standing-wave.json",
+    "coord-57-lemniscate.json",
+    "coord-58-trochoid.json",
+    "coord-59-hypotrochoid.json",
+    "coord-60-exp-spiral.json"
+  ]
+}
