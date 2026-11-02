@@ -4,6 +4,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import argparse
 import json
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 CSP = "default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'"
@@ -19,19 +20,27 @@ class PreviewHandler(BaseHTTPRequestHandler):
 
     def respond(self, head):
         try:
-            pathname = unquote(urlsplit(self.path).path)
+            url = urlsplit(self.path)
+            if url.scheme or url.netloc:
+                raise ValueError('ローカルのパスにしてください')
+            pathname = unquote(url.path, errors='strict')
             if pathname == '/__qa/environment':
                 data = json.dumps({'userAgent': self.headers.get('User-Agent', 'unknown')}).encode()
                 content_type = 'application/json; charset=utf-8'
             else:
                 root = self.server.directory.resolve()
-                path = (root / ('index.html' if pathname == '/' else pathname.lstrip('/'))).resolve()
+                name = 'index.html' if pathname == '/' else pathname.removeprefix('/')
+                if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*\.(?:html|css)', name):
+                    raise ValueError('直下のHTML/CSSだけを配信します')
+                path = root / name
+                if path.is_symlink():
+                    raise ValueError('シンボリックリンクは配信しません')
                 if not path.is_relative_to(root) or not path.is_file() or path.suffix not in TYPES:
                     self.send_error(404)
                     return
                 data = path.read_bytes()
                 content_type = TYPES[path.suffix]
-        except (ValueError, OSError):
+        except (ValueError, OSError, UnicodeError):
             self.send_error(404)
             return
         self.send_response(200)
