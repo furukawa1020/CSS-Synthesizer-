@@ -5,7 +5,7 @@
     linear-gradient(transparent calc(50% - .5px), var(--axis-color) calc(50% - .5px), var(--axis-color) calc(50% + .5px), transparent calc(50% + .5px)),
     linear-gradient(90deg, transparent calc(50% - .5px), var(--grid-color) calc(50% - .5px), var(--grid-color) calc(50% + .5px), transparent calc(50% + .5px)),
     linear-gradient(transparent calc(50% - .5px), var(--grid-color) calc(50% - .5px), var(--grid-color) calc(50% + .5px), transparent calc(50% + .5px));
-  background-size: 100% 100%, 100% 100%, 11cqmin 11cqmin, 11cqmin 11cqmin;
+  background-size: 100% 100%, 100% 100%, var(--grid-spacing, 11cqmin) var(--grid-spacing, 11cqmin), var(--grid-spacing, 11cqmin) var(--grid-spacing, 11cqmin);
   background-position: center;
 }
 .axes::before { border-color: var(--circle-color); }
@@ -16,3 +16,5 @@
   background-size: 100% 100%;
 }
 .lab:has(#grid-off:checked) .axes { visibility: hidden; }
+.lab:has(#grid-step-tenth:checked) .axes { --grid-spacing:4.4cqmin; }
+.lab:has(#grid-step-half:checked) .axes { --grid-spacing:22cqmin; }
