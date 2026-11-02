@@ -42,7 +42,7 @@ def comparison_html(template, parameters, models, count=96):
 </figure>''')
     index = '<nav id="comparison-index" class="comparison-index" aria-label="選択した図への移動"><p>選択中の図へ</p><ul>' + ''.join(f'<li data-jump-model="{m["id"]}"><a href="#curve-{m["id"]}">{escape(m["name"])}</a></li>' for m in models) + '</ul><a href="#controls">共有入力へ</a></nav>'
     generic = {
-        '@@MODEL_K_LABELS@@': '反復 k', '@@MODEL_K_HELP@@': '各モデルの反復・巻き数を同時に変える',
+        '@@MODEL_K_LABELS@@': '反復 k', '@@MODEL_K_HELP@@': '各モデルの反復・巻き数・半径比などを同時に変える',
         '@@MODEL_PHASE_HELP@@': '各モデルの位相 φ を同時に変える',
         '@@MODEL_AMPLITUDE_LABELS@@': '振幅 A', '@@MODEL_AMPLITUDE_HELP@@': '各モデルの振幅を同時に変える',
     }

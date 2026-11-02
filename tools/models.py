@@ -92,7 +92,7 @@ def model_reference_html(models):
             f'<details class="model-reference-item" id="model-reference-{model["id"]}">'
             f'<summary>{escape(model["name"])}</summary>'
             '<div class="model-reference-content"><dl>'
-            f'<div><dt>反復 k — {escape(model["k_label"])}</dt><dd>{escape(model["k_help"])}</dd></div>'
+            f'<div><dt>k — {escape(model["k_label"])}</dt><dd>{escape(model["k_help"])}</dd></div>'
             f'<div><dt>位相 φ</dt><dd>{escape(model["phase_help"])}</dd></div>'
             f'<div><dt>振幅 A — {escape(model["amplitude_label"])}</dt><dd>{escape(model["amplitude_help"])}</dd></div>'
             f'</dl><div class="equations">{equations}</div>'

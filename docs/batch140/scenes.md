@@ -14,13 +14,15 @@ python3 -m tools.serve --directory tmp/my-scene --port 0 --quiet
 
 ## 形式
 
-version=1とmodelが必須です。未指定の値はk=3、phase=90、amplitude=80、count=192、clock_radians=0、title=保存シーン、view={}、processingは無加工です。modelはsrc/models.jsonの12種から選びます。
+version=1とmodelが必須です。未指定の値はk=3、phase=90、amplitude=80、count=192、clock_radians=0、clock_period_seconds=24、clock_direction=forward、title=保存シーン、view={}、processingは無加工です。modelはsrc/models.jsonの16種から選びます。
 
 - k：1〜8、0.01刻み。
 - phase：0〜360、1度刻み。
 - amplitude：25〜100、1%刻み。
 - count：96/192/384。
 - clock_radians：0〜2πの有限数。位相phaseとは別で、停止から始まります。再生すると保存した時計位置から進みます。時計の周期・方向切替では従来どおり位置が移り得ます。
+- clock_period_seconds：6/12/24/48/96。秒単位の周期。
+- clock_direction：forward/reverse。逆方向でも保存した周期内位置から始まるようCSSを設定します。ライブ動作は未検証です。
 - title：1〜120文字の1行テキスト。HTMLとして解釈せず、題名として表示します。
 - view：既存の表示設定のラジオグループ名→選択ID、チェックボックスID→真偽値。例は同梱JSONを参照。比較専用設定・時間・モデルを混入できません。表示設定resetは、この保存シーンで指定したHTMLの初期選択へ戻します。
 - processing：交換swap、折返しfold、投影projection、gain_x/y、offset_x/y、quantum、bound。[既存加工の定義](../batch120/processing.md)を使います。処理中の接線は従来どおり丸点になります。

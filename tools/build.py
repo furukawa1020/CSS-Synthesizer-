@@ -40,7 +40,7 @@ def single_html(template, models, presets, count, preset=None):
         '@@TIME_AUTO@@': '' if preset else ' checked',
         '@@TIME_PLAY@@': '',
         '@@TIME_STOP@@': ' checked' if preset else '',
-        '@@BASELINE_LABEL@@': f"基準値：反復{state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
+        '@@BASELINE_LABEL@@': f"基準値：k={state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
         '@@PRESET_LINKS@@': preset_links(presets, preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
         '@@COUNT@@': str(count),

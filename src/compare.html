@@ -16,8 +16,9 @@
       <p class="comparison-empty"><span class="comparison-empty-screen">比較するモデルを1つ以上選んでください。</span><span class="comparison-empty-print">比較図は選択されていません。</span></p>
       <section class="comparison-print-summary" aria-label="比較図の印刷値">
         <h2>共有入力 — 時計を停止した比較</h2>
-        <p>反復k：<output class="readout-k" aria-label="印刷する反復"></output> ／ 位相φ：<output class="readout-phase" aria-label="印刷する位相"></output> ／ 振幅A：<output class="readout-amplitude" aria-label="印刷する振幅"></output></p>
+        <p>k：<output class="readout-k" aria-label="印刷するk"></output> ／ 位相φ：<output class="readout-phase" aria-label="印刷する位相"></output> ／ 振幅A：<output class="readout-amplitude" aria-label="印刷する振幅"></output></p>
         <p>自動時計t（約）：<output class="print-clock" aria-label="印刷する共有時計（ミリラジアン）"></output>。入力の位相φとは別です。選択したモデルを同じ有効値・時計で描画します。</p>
+        <p>時計の周期と方向：@@FRAGMENT:clock-readout@@</p>
         @@FRAGMENT:view-print-summary@@
       </section>
       <div class="comparison-plots">@@COMPARISON_PLOTS@@</div>
@@ -30,7 +31,7 @@
       @@FRAGMENT:clock-options@@
         @@COMPARISON_PARAMETERS@@
       @@FRAGMENT:view-comparison@@
-      <p class="baseline-only">基準値：反復3.00、位相90°、振幅80%。</p>
+      <p class="baseline-only">基準値：k=3.00、位相90°、振幅80%。</p>
     </aside>
   </div>
   <footer><span>HTML + CSS · 同じ入力で比べる</span><a href="index.html">単独の描画へ戻る ↗</a></footer>

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "アステロイドの距離と基準円",
+  "model": "astroid",
+  "k": 1,
+  "phase": 0,
+  "amplitude": 90,
+  "count": 192,
+  "clock_radians": 1.2,
+  "clock_period_seconds": 48,
+  "clock_direction": "reverse",
+  "view": {
+    "point-color": "color-radius",
+    "point-shape": "shape-cross",
+    "opacity-radius": true,
+    "reference-origin": true,
+    "reference-circle": true,
+    "grid": "grid-polar",
+    "polar-sectors": "sectors-24",
+    "plot-scale": "scale-125"
+  },
+  "processing": {}
+}
