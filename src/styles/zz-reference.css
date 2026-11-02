@@ -5,3 +5,6 @@
 .origin-reference::after { block-size:12px; border-inline-start:1px solid currentColor; }
 .origin-reference i { position:absolute; left:50%; top:50%; translate:-50% -50%; border:2px solid currentColor; border-radius:50%; }
 @media print, (forced-colors:active) { .lab .origin-reference { opacity:1; } }
+.unit-reference { display:none; position:absolute; left:50%; top:50%; inline-size:calc(88cqmin + 1px); block-size:calc(88cqmin + 1px); box-sizing:border-box; border:1px solid currentColor; border-radius:50%; translate:-50% -50%; pointer-events:none; opacity:.35; }
+.lab:has(#reference-circle:checked) .unit-reference { display:block; }
+@media print, (forced-colors:active) { .lab .unit-reference { opacity:1; } }
