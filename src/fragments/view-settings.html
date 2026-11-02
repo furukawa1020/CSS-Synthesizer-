@@ -8,33 +8,40 @@
     <form class="view-form">
     <button type="reset" class="view-reset">表示設定だけを標準へ戻す</button>
     <p class="view-option-note">形・3入力・時計・比較するモデルは保持します。設定グループの開閉は戻しません。</p>
+<details class="view-group"><summary>座標加工</summary>
+<p class="view-option-note">交換→絶対値→投影→ゲイン→移動→量子化→半径制限。最後に反転・回転・表示倍率。加工中の接線選択は丸点になります。</p>@@FRAGMENT:coordinate-swap@@
+@@FRAGMENT:coordinate-fold@@
+@@FRAGMENT:coordinate-projection@@
+@@FRAGMENT:coordinate-gain@@
+@@FRAGMENT:coordinate-offset@@
+@@FRAGMENT:coordinate-quantize@@
+@@FRAGMENT:coordinate-bound@@
+</details>
+<details class="view-group"><summary>点と色</summary>
+@@FRAGMENT:view-points@@
+@@FRAGMENT:view-shape@@
+@@FRAGMENT:view-palette@@
+@@FRAGMENT:view-order@@
+@@FRAGMENT:view-opacity@@
+@@FRAGMENT:view-blend@@
+</details>
+<details class="view-group"><summary>補助表示</summary>
     <fieldset class="view-option"><legend>図中の説明</legend><label><input id="view-labels" type="checkbox" checked><span>形の名前・点数・座標の説明を表示</span></label></fieldset>
-    @@FRAGMENT:view-grid@@
-    @@FRAGMENT:view-points@@
-    @@FRAGMENT:view-shape@@
-    @@FRAGMENT:view-palette@@
-    @@FRAGMENT:view-order@@
-    @@FRAGMENT:view-range@@
-    @@FRAGMENT:view-mirror@@
-    @@FRAGMENT:view-rotation@@
-    @@FRAGMENT:view-scale@@
-    @@FRAGMENT:view-endpoints@@
-    @@FRAGMENT:view-aspect@@
-    @@FRAGMENT:view-snap@@
-    @@FRAGMENT:view-phase-unit@@
-    @@FRAGMENT:view-opacity@@
-    @@FRAGMENT:view-grid-contrast@@
-    @@FRAGMENT:view-cadence@@
-<p class="view-option-note coordinate-sequence">加工順：交換 → 絶対値 → 投影 → ゲイン → 移動 → 量子化 → 半径制限。その後に反転・回転・表示倍率を適用します。加工中に接線を選ぶと丸点になります。</p>
-    @@FRAGMENT:coordinate-swap@@
-    @@FRAGMENT:coordinate-fold@@
-    @@FRAGMENT:coordinate-projection@@
-    @@FRAGMENT:coordinate-gain@@
-    @@FRAGMENT:coordinate-offset@@
-    @@FRAGMENT:coordinate-quantize@@
-    @@FRAGMENT:coordinate-bound@@
-    @@FRAGMENT:view-blend@@
-    @@FRAGMENT:view-grid-spacing@@
+@@FRAGMENT:view-grid@@
+@@FRAGMENT:view-grid-spacing@@
+@@FRAGMENT:view-grid-contrast@@
+@@FRAGMENT:view-range@@
+@@FRAGMENT:view-cadence@@
+@@FRAGMENT:view-endpoints@@
+@@FRAGMENT:view-mirror@@
+@@FRAGMENT:view-rotation@@
+@@FRAGMENT:view-scale@@
+@@FRAGMENT:view-aspect@@
+</details>
+<details class="view-group"><summary>入力と配置</summary>
+@@FRAGMENT:view-snap@@
+@@FRAGMENT:view-phase-unit@@
+</details>
     </form>
   </section>
 </div>
