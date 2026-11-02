@@ -3,3 +3,4 @@
  inset: 0; inline-size: auto; block-size: auto; translate: none; rotate: none;
  border: 0; border-radius: 50%; clip-path: none; opacity: 1; visibility: visible;
 }
+@supports not (opacity: abs(-1)) { .coordinate-controls:has(#fold-none) { display:none; } }

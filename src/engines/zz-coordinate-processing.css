@@ -5,3 +5,7 @@
  transform: translate(calc(var(--draw-x) * 44cqmin), calc(var(--draw-y) * -44cqmin)) translate(-50%, -50%);
 }
 .lab:has(#coord-swap:checked) .sample { --swap-x: var(--y); --swap-y: var(--x); }
+@supports (opacity: abs(-1)) {
+ .lab:has(:is(#fold-x,#fold-both):checked) .sample { --fold-x: abs(var(--swap-x, var(--x))); }
+ .lab:has(:is(#fold-y,#fold-both):checked) .sample { --fold-y: abs(var(--swap-y, var(--y))); }
+}
