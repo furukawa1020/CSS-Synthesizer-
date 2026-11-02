@@ -60,3 +60,12 @@ class SceneTests(unittest.TestCase):
         self.assertRegex(html,r'id="shape-ring"[^>]* checked>')
         self.assertNotRegex(html,r'id="shape-round"[^>]* checked>')
         self.assertNotRegex(html,r'id="view-labels"[^>]* checked>')
+
+    def test_processing_maps_validated_math_options_to_controls(self):
+        from tools.scene import render_scene, processing_controls
+        from tools.processing import DEFAULTS
+        options=dict(DEFAULTS,swap=True,fold='both',projection='y',gain_x=.5,gain_y=2,offset_x=-.25,offset_y=.25,quantum=.1,bound=True)
+        html=render_scene(self.data(processing=options))
+        for identifier in ('coord-swap','fold-both','project-y','gain-x-half','gain-y-two','offset-x-minus','offset-y-plus','quant-tenth','coord-bound'):
+            self.assertRegex(html, 'id="'+identifier+r'"[^>]* checked>')
+        with self.assertRaises(ValueError):validate_scene(self.data(processing={'quantum':.3}))

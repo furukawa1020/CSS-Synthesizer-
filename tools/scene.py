@@ -7,7 +7,7 @@ from .json_data import loads_json
 from .models import load_models
 
 MAX_SCENE_BYTES = 16 * 1024
-FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view'}
+FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view', 'processing'}
 
 
 def validate_scene(data, source=ROOT / 'src'):
@@ -33,6 +33,11 @@ def validate_scene(data, source=ROOT / 'src'):
         raise ValueError('clock_radiansは0〜2πの有限数です')
     result['clock_radians'] = float(clock)
     result['view'] = validate_view(data.get('view', {}), source)
+    from .processing import processing_options
+    processing, errors = processing_options(data.get('processing', {}))
+    if errors:
+        raise ValueError('; '.join(errors))
+    result['processing'] = processing
     return result
 
 
@@ -77,6 +82,7 @@ def render_scene(data, source=ROOT / 'src'):
                 raise ValueError('保存シーンの初期位置を設定できません')
     html = html.replace('<main class="lab" style="', f'<main class="lab" style="--clock-start:{scene["clock_radians"]:.17g};', 1)
     html = apply_controls(html, scene['view'])
+    html = apply_controls(html, processing_controls(scene['processing']))
     return html
 
 
@@ -131,3 +137,15 @@ def apply_controls(html, selections):
         tag = re.sub(r'\schecked(?=[\s>])', '', tag)
         return tag[:-1] + (' checked>' if selected else '>')
     return re.sub(r'<input\b[^>]*>', choose, html)
+
+
+def processing_controls(options):
+    def gain(axis): return f'gain-{axis}-' + {.5:'half',1:'one',2:'two'}[options[f'gain_{axis}']]
+    def offset(axis): return f'offset-{axis}-' + {-.25:'minus',0:'zero',.25:'plus'}[options[f'offset_{axis}']]
+    return {
+        'coordinate-swap':options['swap'], 'coordinate-fold':'fold-' + options['fold'],
+        'coordinate-projection':'project-' + options['projection'],
+        'gain-x':gain('x'), 'gain-y':gain('y'), 'offset-x':offset('x'), 'offset-y':offset('y'),
+        'coordinate-quantize':'quant-' + {0:'none',.1:'tenth',.25:'quarter',.5:'half'}[options['quantum']],
+        'coordinate-bound':options['bound'],
+    }
