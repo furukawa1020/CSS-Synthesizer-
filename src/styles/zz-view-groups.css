@@ -1,0 +1,5 @@
+.view-group { border-block-start:1px solid var(--rule); margin-block-start:12px; }
+.view-group > summary { min-block-size:44px; padding-block:10px; cursor:pointer; font-size:.9375rem; }
+.view-group .view-option { margin-block-start:8px; }
+.view-form { min-inline-size:0; }
+.view-reset { margin-block:12px; }
