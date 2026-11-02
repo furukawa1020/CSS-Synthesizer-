@@ -1,1 +1,3 @@
 <fieldset class="view-option view-opacity"><legend>点の不透明度</legend><div class="view-choices"><label><input id="opacity-full" type="radio" name="opacity" checked><span>100%</span></label><label><input id="opacity-half" type="radio" name="opacity"><span>50%</span></label><label><input id="opacity-quarter" type="radio" name="opacity"><span>25%</span></label></div><p class="view-option-note">点の塗りだけを薄くします。計算する点数や振幅は変えません。強制カラーと印刷では100%です。</p></fieldset>
+
+<label class="radius-opacity-choice"><input id="opacity-radius" type="checkbox"><span>原点から遠い点を濃くする</span></label><p class="view-option-note">加工後・表示変換前の半径rで、固定不透明度に0.25+0.75×clamp(0,r,1)を掛けます。範囲・間隔の非表示は維持。印刷・強制カラーでは解除します。</p>
