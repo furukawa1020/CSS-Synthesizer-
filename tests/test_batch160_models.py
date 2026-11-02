@@ -15,3 +15,7 @@ class DrawingModelsTests(unittest.TestCase):
     def test_astroid_cusps_have_positions_but_no_tangents(self):
         self.landmarks('astroid',[(.5,0),(0,.5),(-.5,0),(0,-.5),(.5,0)])
         for u in (0,.25,.5,.75,1):self.assertIsNone(tangent_angle('astroid',u,1,0,.5,0))
+
+    def test_cardioid_landmarks_and_origin_cusp(self):
+        self.landmarks('cosine-polar',[(.5,0),(0,.25),(0,0),(0,-.25),(.5,0)])
+        self.assertIsNone(tangent_angle('cosine-polar',.5,1,0,.5,0))

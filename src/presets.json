@@ -126,5 +126,13 @@
     "k": 3,
     "phase": 90,
     "amplitude": 80
+  },
+  {
+    "file": "preset-cosine-polar-baseline.html",
+    "name": "余弦半径の基準値",
+    "model": "cosine-polar",
+    "k": 3,
+    "phase": 90,
+    "amplitude": 80
   }
 ]

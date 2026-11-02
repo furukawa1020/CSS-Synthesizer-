@@ -1,0 +1,8 @@
+.lab:has(#model-cosine-polar:checked) .sample {
+--cp-q: calc(var(--k) * var(--theta) + var(--phase)); --cp-a: calc(var(--theta) + var(--clock) * 1rad);
+--cp-r: calc(var(--amplitude) * (1 + cos(var(--cp-q))) / 2);
+--cp-dr: calc(-.5 * var(--amplitude) * var(--k) * sin(var(--cp-q)));
+--x: calc(var(--cp-r) * cos(var(--cp-a))); --y: calc(var(--cp-r) * sin(var(--cp-a)));
+--tangent-dx: calc(var(--cp-dr) * cos(var(--cp-a)) - var(--cp-r) * sin(var(--cp-a)));
+--tangent-dy: calc(var(--cp-dr) * sin(var(--cp-a)) + var(--cp-r) * cos(var(--cp-a)));
+}
