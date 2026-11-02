@@ -142,5 +142,13 @@
     "k": 3,
     "phase": 90,
     "amplitude": 80
+  },
+  {
+    "file": "preset-ellipse.html",
+    "name": "扁平な楕円",
+    "model": "ellipse",
+    "k": 3,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
