@@ -55,6 +55,9 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
     if not isinstance(snapshot, dict):
         return _result(errors + ["snapshotはJSONオブジェクトで指定してください"])
 
+    from .processing import processing_options, process_point
+    processing, processing_errors = processing_options(snapshot.get("processing", {}))
+    errors.extend(processing_errors)
     model = snapshot.get("model")
     if not isinstance(model, str) or model not in SUPPORTED_MODELS:
         errors.append("modelは対応するモデルIDで指定してください")
@@ -182,6 +185,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
             secondary = values["k"] * theta + phase - clock
             x = amplitude * (.65 * math.cos(main) + .35 * math.cos(secondary))
             y = amplitude * (.65 * math.sin(main) - .35 * math.sin(secondary))
+        x, y = process_point(x, y, processing)
         x *= -1 if mirrors["mirror_x"] else 1
         y *= -1 if mirrors["mirror_y"] else 1
         angle = math.radians(rotation)
