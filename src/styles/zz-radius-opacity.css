@@ -1,0 +1,5 @@
+@supports (opacity:hypot(1,1)) {
+ .lab:has(#opacity-radius:checked) .sample { --radius-opacity:calc(.25 + .75 * clamp(0,hypot(var(--draw-x),var(--draw-y)),1)); }
+}
+@supports not (opacity:hypot(1,1)) { .radius-opacity-choice { display:none !important; } }
+@media print, (forced-colors:active) { .lab .sample { --radius-opacity:1 !important; } }
