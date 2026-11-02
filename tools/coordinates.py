@@ -87,8 +87,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
         errors.append("rotation_degreesは有限数で指定してください")
 
     plot_scale = _finite_number(snapshot.get("plot_scale", 1))
-    if plot_scale not in (.5, .75, 1):
-        errors.append("plot_scaleは0.5・0.75・1で指定してください")
+    if plot_scale not in (.5, .75, 1, 1.25, 1.5):
+        errors.append("plot_scaleは0.5・0.75・1・1.25・1.5で指定してください")
 
     stage = snapshot.get("stage")
     dimensions = {}
