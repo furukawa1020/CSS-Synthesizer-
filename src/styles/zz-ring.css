@@ -1,0 +1,3 @@
+.lab:has(#shape-ring:checked) .sample::after { border:1px solid currentColor; border-radius:50%; background:transparent; }
+@media print { .lab:has(#shape-ring:checked) .sample::after { background:transparent !important; border:1px solid #111 !important; } }
+@media (forced-colors:active) { .lab:has(#shape-ring:checked) .sample::after { background:transparent; border-color:CanvasText; } }
