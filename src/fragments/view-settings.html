@@ -5,6 +5,9 @@
     <div class="view-panel-header"><h2 id="view-title">表示設定</h2><button type="button" class="view-settings-close" popovertarget="view-panel" popovertargetaction="hide">閉じる</button></div>
     <p class="view-description">形の見え方と帯の調整方法を選びます。吸着を切り替えると、帯の位置が移ることがあります。</p>
     <p class="forced-colors-note">強制カラーでは、補助線を原点の軸と基準円で表示します。「なし」で隠せます。</p>
+    <form class="view-form">
+    <button type="reset" class="view-reset">表示設定だけを標準へ戻す</button>
+    <p class="view-option-note">形・3入力・時計・比較するモデルは保持します。設定グループの開閉は戻しません。</p>
     <fieldset class="view-option"><legend>図中の説明</legend><label><input id="view-labels" type="checkbox" checked><span>形の名前・点数・座標の説明を表示</span></label></fieldset>
     @@FRAGMENT:view-grid@@
     @@FRAGMENT:view-points@@
@@ -32,5 +35,6 @@
     @@FRAGMENT:coordinate-bound@@
     @@FRAGMENT:view-blend@@
     @@FRAGMENT:view-grid-spacing@@
+    </form>
   </section>
 </div>
