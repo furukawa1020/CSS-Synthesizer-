@@ -40,3 +40,34 @@ def load_scene(path, source=ROOT / 'src'):
     if len(raw) > MAX_SCENE_BYTES:
         raise ValueError('sceneは16KiB以下にしてください')
     return validate_scene(loads_json(raw.decode('utf-8')), source)
+
+
+def render_scene(data, source=ROOT / 'src'):
+    from .build import single_html
+    from .source import expand_fragments
+    from .presets import load_presets
+    scene = validate_scene(data, source)
+    models = load_models(source)
+    presets = load_presets(source, {m['id'] for m in models})
+    template = expand_fragments((Path(source) / 'page.html').read_text(encoding='utf-8'), source)
+    state = dict(scene, name='保存シーン', file='index.html')
+    html = single_html(template, models, presets, scene['count'], state)
+    # Additional initial targets use the existing continuous track; they do not
+    # insert an extra interval or change the standard jump link IDs.
+    for prefix, value, low, step, text in (
+        ('k', scene['k'], 1, 1, f"{scene['k']:.2f}"),
+        ('phase', scene['phase'], 0, 90, f"{scene['phase']}°"),
+        ('amplitude', scene['amplitude'], 25, 5, f"{scene['amplitude']}%"),
+    ):
+        if (value - low) % step:
+            marker = f'@@SCENE_{prefix.upper()}@@'
+            import re
+            track = re.compile(r'(<div class="input-band input-' + prefix + r'"[^>]*><div class="ticks"[^>]*>)(.*?)(</div>)', re.S)
+            def add(match):
+                content = match[2].replace('tick initial', 'tick')
+                target = f'<span class="tick initial scene-initial" style="--tick-index:{(value-low)/step:g}">{text}</span>'
+                return match[1] + content + target + match[3]
+            html, changed = track.subn(add, html)
+            if changed != 1:
+                raise ValueError('保存シーンの初期位置を設定できません')
+    return html
