@@ -158,5 +158,13 @@
     "k": 1,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-cosine-polar.html",
+    "name": "カージオイド",
+    "model": "cosine-polar",
+    "k": 1,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
