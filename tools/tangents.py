@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 from .coordinates import _finite_number
 
-MODELS = {'astroid', 'ellipse', 'exp-spiral', 'hypotrochoid', 'trochoid', 'lemniscate', 'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
+MODELS = {'cosine-polar', 'astroid', 'ellipse', 'exp-spiral', 'hypotrochoid', 'trochoid', 'lemniscate', 'lissajous', 'wave', 'rose', 'spiral', 'orbit', 'fermat', 'damped-wave', 'standing-wave'}
 EPSILON = 1e-6
 
 
@@ -62,6 +62,11 @@ def tangent_vector(model, u, k, phase_degrees, amplitude, clock):
         c,s = math.cos(q),math.sin(q)
         dx,dy = -3*amplitude*k*c*c*s, 3*amplitude*k*s*s*c
         return dx*math.cos(clock)-dy*math.sin(clock), dx*math.sin(clock)+dy*math.cos(clock)
+    if model == 'cosine-polar':
+        radius = amplitude*(1+math.cos(k*theta+phase))/2
+        dr = -amplitude*k*math.sin(k*theta+phase)/2
+        angle = theta+clock
+        return dr*math.cos(angle)-radius*math.sin(angle), dr*math.sin(angle)+radius*math.cos(angle)
     if model == 'orbit':
         main, secondary = theta + clock, k * theta + phase - clock
         return amplitude * (-.65 * math.sin(main) - .35 * k * math.sin(secondary)), amplitude * (.65 * math.cos(main) - .35 * k * math.cos(secondary))
