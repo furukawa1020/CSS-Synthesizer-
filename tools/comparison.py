@@ -33,7 +33,7 @@ def comparison_html(template, parameters, models, count=96):
         plots.append(f'''<figure id="curve-{model['id']}" tabindex="-1" class="lab comparison-example" data-static-model="{model['id']}">
   <div class="stage" role="img" aria-label="{escape(model['name'], quote=True)}の点の軌跡。共有入力と時計で描画。">
     <div class="stage-heading" aria-hidden="true"><span>{escape(model['name'])}</span><span>{count} 点</span></div>
-    <div class="axes" aria-hidden="true">@@FRAGMENT:axis-labels@@</div><div class="plot" aria-hidden="true">{samples}</div>
+    <div class="axes" aria-hidden="true">@@FRAGMENT:axis-labels@@</div>@@FRAGMENT:plot-reference@@<div class="plot" aria-hidden="true">{samples}</div>
     <span class="sample-count" data-total="{count}" aria-hidden="true"></span>
     <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
   </div>

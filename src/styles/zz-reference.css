@@ -1,0 +1,7 @@
+.origin-reference { display:none; position:absolute; left:50%; top:50%; inline-size:12px; block-size:12px; translate:-50% -50%; pointer-events:none; opacity:.65; }
+.lab:has(#reference-origin:checked) .origin-reference { display:block; }
+.origin-reference::before,.origin-reference::after { content:''; position:absolute; left:50%; top:50%; translate:-50% -50%; }
+.origin-reference::before { inline-size:12px; border-block-start:1px solid currentColor; }
+.origin-reference::after { block-size:12px; border-inline-start:1px solid currentColor; }
+.origin-reference i { position:absolute; left:50%; top:50%; translate:-50% -50%; border:2px solid currentColor; border-radius:50%; }
+@media print, (forced-colors:active) { .lab .origin-reference { opacity:1; } }
