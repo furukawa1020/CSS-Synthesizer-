@@ -2,3 +2,7 @@
 .lab:has(#scale-75:checked) { --plot-scale: .75; }
 .lab:has(#scale-50:checked) { --plot-scale: .5; }
 .plot { scale: calc(var(--view-x) * var(--plot-scale)) calc(var(--view-y) * var(--plot-scale)); }
+
+.lab:has(#scale-125:checked) { --plot-scale:1.25; }
+
+.lab:has(#scale-150:checked) { --plot-scale:1.5; }
