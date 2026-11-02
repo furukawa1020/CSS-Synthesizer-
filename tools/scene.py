@@ -157,3 +157,84 @@ def processing_controls(options):
         'coordinate-quantize':'quant-' + {0:'none',.1:'tenth',.25:'quarter',.5:'half'}[options['quantum']],
         'coordinate-bound':options['bound'],
     }
+
+
+def export_scene(data, destination, root=ROOT):
+    """Install a new self-contained directory; never replace existing output."""
+    import os
+    import tempfile
+    from .source import compose_css
+    from .gallery import static_model_selectors
+    from .models import model_styles
+    from .comparison import comparison_styles
+    from .gallery import gallery_styles
+    from .model_engines import validate_engine_models
+    from .audit import audit_directory
+    root = Path(root)
+    source = root / 'src'
+    scene = validate_scene(data, source)
+    destination = Path(destination)
+    if destination.exists() or destination.is_symlink():
+        raise ValueError('出力先は存在しない新しいフォルダーにしてください')
+    if not destination.parent.is_dir():
+        raise ValueError('出力先の親ディレクトリがありません')
+    models = load_models(source)
+    specs = (('index.html', scene['count']), ('style.css', None), ('engine.css', None))
+    with tempfile.TemporaryDirectory(prefix='.scene-candidate-', dir=destination.parent) as folder:
+        candidate = Path(folder) / 'output'
+        candidate.mkdir()
+        html = standalone_html(render_scene(scene, source))
+        (candidate / 'index.html').write_text(html, encoding='utf-8')
+        for name in ('style.css', 'engine.css'):
+            css = compose_css(source, name)
+            if name == 'style.css':
+                css += '\n' + gallery_styles(models) + '\n' + model_styles(models) + '\n' + comparison_styles(models)
+            else:
+                validate_engine_models(models, css)
+            (candidate / name).write_text(static_model_selectors(css, models), encoding='utf-8')
+        result = audit_directory(candidate, assets=specs)
+        if not result['ok']:
+            raise ValueError('; '.join(result['errors']))
+        # mkdir is exclusive, unlike rename over an empty directory. Move into
+        # that reservation, removing only our own empty reservation on failure.
+        destination.mkdir()
+        try:
+            for path in candidate.iterdir():
+                os.replace(path, destination / path.name)
+        except OSError:
+            for name, _ in specs:
+                (destination / name).unlink(missing_ok=True)
+            destination.rmdir()
+            raise
+    return destination
+
+
+def standalone_html(html):
+    import re
+    html = re.sub(r'<details class="preset-picker">.*?</details>', '', html, flags=re.S)
+    html = re.sub(r'<nav class="density-picker"[^>]*>.*?</nav>', '', html, flags=re.S)
+    def local_link(match):
+        href = match[2]
+        return match[0] if href.startswith(('#', 'https://')) else match[4]
+    html = re.sub(r'<a\b([^>]*?)href="([^"]+)"([^>]*)>(.*?)</a>', local_link, html, flags=re.S)
+    return html.replace('<div class="workspace">', '<p class="saved-scene-note">保存シーンの単独出力です。モデルと入力はこの画面で調整できます。別ページの一覧・点数切替は含みません。ブラウザー内の変更は自動保存されません。</p><div class="workspace">', 1)
+
+
+def main(argv=None):
+    import argparse
+    import sys
+    parser = argparse.ArgumentParser(description='JSONの保存シーンからHTML/CSSを生成する')
+    parser.add_argument('scene', type=Path)
+    parser.add_argument('--output', type=Path, required=True, help='新規出力フォルダー')
+    args = parser.parse_args(argv)
+    try:
+        output = export_scene(load_scene(args.scene), args.output)
+    except (OSError, ValueError, UnicodeError) as error:
+        print(f'保存シーンを生成できません: {error}', file=sys.stderr)
+        return 1
+    print(f'保存シーンを生成しました: {output / "index.html"}')
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

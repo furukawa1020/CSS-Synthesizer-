@@ -78,3 +78,18 @@ class SceneTests(unittest.TestCase):
         self.assertIn('class="saved-scene-title"',html)
         for title in ('', 'x'*121, 'line\nbreak'):
             with self.assertRaises(ValueError):validate_scene(self.data(title=title))
+
+    def test_export_is_independent_audited_and_never_overwrites(self):
+        from tools.scene import export_scene
+        from tools.audit import audit_directory
+        with tempfile.TemporaryDirectory() as folder:
+            out=Path(folder)/'scene'
+            export_scene(self.data(count=96),out)
+            self.assertEqual({p.name for p in out.iterdir()},{'index.html','style.css','engine.css'})
+            self.assertTrue(audit_directory(out,assets=(('index.html',96),('style.css',None),('engine.css',None)))['ok'])
+            before={p.name:p.read_bytes() for p in out.iterdir()}
+            with self.assertRaises(ValueError): export_scene(self.data(),out)
+            self.assertEqual(before,{p.name:p.read_bytes() for p in out.iterdir()})
+            with self.assertRaises(ValueError): export_scene(self.data(k=999),Path(folder)/'bad')
+            self.assertFalse((Path(folder)/'bad').exists())
+            self.assertFalse(list(Path(folder).glob('.scene-candidate-*')))
