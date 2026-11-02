@@ -110,5 +110,21 @@
     "k": 4,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-ellipse-baseline.html",
+    "name": "楕円の基準値",
+    "model": "ellipse",
+    "k": 3,
+    "phase": 90,
+    "amplitude": 80
+  },
+  {
+    "file": "preset-astroid-baseline.html",
+    "name": "アステロイドの基準値",
+    "model": "astroid",
+    "k": 3,
+    "phase": 90,
+    "amplitude": 80
   }
 ]
