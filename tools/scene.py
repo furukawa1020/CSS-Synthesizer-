@@ -7,7 +7,7 @@ from .json_data import loads_json
 from .models import load_models
 
 MAX_SCENE_BYTES = 16 * 1024
-FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count'}
+FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians'}
 
 
 def validate_scene(data, source=ROOT / 'src'):
@@ -28,6 +28,10 @@ def validate_scene(data, source=ROOT / 'src'):
                 or Decimal(str(value)) * scale != (Decimal(str(value)) * scale).to_integral_value()):
             raise ValueError(f'{key}は範囲内の対応する精度で指定してください')
         result[key] = float(value) if key == 'k' else int(value)
+    clock = data.get('clock_radians', 0)
+    if type(clock) not in (int, float) or not math.isfinite(clock) or not 0 <= clock <= math.tau:
+        raise ValueError('clock_radiansは0〜2πの有限数です')
+    result['clock_radians'] = float(clock)
     return result
 
 
@@ -70,4 +74,5 @@ def render_scene(data, source=ROOT / 'src'):
             html, changed = track.subn(add, html)
             if changed != 1:
                 raise ValueError('保存シーンの初期位置を設定できません')
+    html = html.replace('<main class="lab" style="', f'<main class="lab" style="--clock-start:{scene["clock_radians"]:.17g};', 1)
     return html

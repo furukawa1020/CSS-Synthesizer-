@@ -20,7 +20,7 @@
   animation-direction: var(--clock-direction, normal);
   timeline-scope: --k-input, --phase-input, --amplitude-input;
 }
-@keyframes clock { from { --clock: 0; } to { --clock: 6.283185307179586; } }
+@keyframes clock { from { --clock: var(--clock-start, 0); } to { --clock: calc(var(--clock-start, 0) + 6.283185307179586); } }
 @keyframes k-input { from { --k-raw: 1; } to { --k-raw: 8; } }
 @keyframes phase-input { from { --phase-raw: 0; } to { --phase-raw: 360; } }
 @keyframes amplitude-input { from { --amplitude-raw: .25; } to { --amplitude-raw: 1; } }
