@@ -26,6 +26,18 @@ class PreviewHandler(BaseHTTPRequestHandler):
 
     def respond(self, head):
         try:
+            hosts = self.headers.get_all('Host', [])
+            authority = urlsplit('//' + hosts[0]) if len(hosts) == 1 else None
+            if (authority is None or authority.hostname not in ('localhost', '127.0.0.1', '::1')
+                    or authority.username is not None or authority.password is not None
+                    or authority.path or authority.query or authority.fragment
+                    or (authority.port is not None and authority.port != self.server.server_port)):
+                self.send_error(403)
+                return
+        except ValueError:
+            self.send_error(403)
+            return
+        try:
             url = urlsplit(self.path)
             if url.scheme or url.netloc:
                 raise ValueError('ローカルのパスにしてください')

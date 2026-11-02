@@ -50,3 +50,10 @@ class PreviewTests(unittest.TestCase):
             self.assertEqual(headers['X-Content-Type-Options'], 'nosniff')
             self.assertEqual(headers['Cache-Control'], 'no-store')
             if method == 'HEAD': self.assertEqual(body, b'')
+
+    def test_host_header_must_name_local_preview(self):
+        server = self.start()
+        for host in ('evil.test', 'localhost.evil.test', 'localhost@evil.test', 'evil.test@localhost', 'localhost/path', 'localhost:wrong', 'localhost:1'):
+            self.assertEqual(self.request(server, headers={'Host':host})[0], 403, host)
+        for host in ('localhost', f'127.0.0.1:{server.server_port}', f'localhost:{server.server_port}'):
+            self.assertEqual(self.request(server, headers={'Host':host})[0], 200)
