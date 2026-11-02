@@ -7,7 +7,7 @@ from .json_data import loads_json
 from .models import load_models
 
 MAX_SCENE_BYTES = 16 * 1024
-FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view', 'processing', 'title'}
+FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view', 'processing', 'title', 'clock_period_seconds', 'clock_direction'}
 
 
 def validate_scene(data, source=ROOT / 'src'):
@@ -42,6 +42,14 @@ def validate_scene(data, source=ROOT / 'src'):
     if not isinstance(title, str) or not title.strip() or len(title) > 120 or any(ord(c) < 32 or 127 <= ord(c) < 160 for c in title):
         raise ValueError('titleは1〜120文字の1行テキストです')
     result['title'] = title.strip()
+    period = data.get('clock_period_seconds', 24)
+    direction = data.get('clock_direction', 'forward')
+    if type(period) is not int or period not in (6, 12, 24, 48, 96):
+        raise ValueError('clock_period_secondsは6/12/24/48/96です')
+    if not isinstance(direction, str) or direction not in ('forward', 'reverse'):
+        raise ValueError('clock_directionはforward/reverseです')
+    result['clock_period_seconds'] = period
+    result['clock_direction'] = direction
     return result
 
 
@@ -88,6 +96,7 @@ def render_scene(data, source=ROOT / 'src'):
             if changed != 1:
                 raise ValueError('保存シーンの初期位置を設定できません')
     html = html.replace('<main class="lab" style="', f'<main class="lab" style="--clock-start:{scene["clock_radians"]:.17g};', 1)
+    html = apply_controls(html, {'clock-period':f'period-{scene["clock_period_seconds"]}', 'clock-direction':f'direction-{scene["clock_direction"]}'})
     html = apply_controls(html, scene['view'])
     html = apply_controls(html, processing_controls(scene['processing']))
     from html import escape
