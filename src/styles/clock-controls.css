@@ -14,3 +14,13 @@
 .clock-reverse-label { display:none; }
 .lab:has(#direction-reverse:checked) .clock-forward-label { display:none; }
 .lab:has(#direction-reverse:checked) .clock-reverse-label { display:inline; }
+
+.period-6 { display:none; }
+.lab:has(#period-6:checked) { --clock-duration:6s; }
+.lab:has(#period-6:checked) .period-24 { display:none; }
+.lab:has(#period-6:checked) .period-6 { display:inline; }
+
+.period-96 { display:none; }
+.lab:has(#period-96:checked) { --clock-duration:96s; }
+.lab:has(#period-96:checked) .period-24 { display:none; }
+.lab:has(#period-96:checked) .period-96 { display:inline; }
