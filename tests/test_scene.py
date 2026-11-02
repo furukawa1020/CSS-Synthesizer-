@@ -51,3 +51,12 @@ class SceneTests(unittest.TestCase):
         self.assertIn('--clock-start:3.1415926535897931;',html)
         self.assertIn('value="stop" checked',html)
         self.assertIn('--phase-raw:90;',html)
+
+    def test_view_only_accepts_real_settings_and_selects_one_radio(self):
+        from tools.scene import render_scene
+        for bad in ({'point-shape':['shape-round','shape-ring']}, {'point-shape':'time-play'}, {'mirror-x':1}, {'coordinate-fold':'fold-x'}, {'unknown':True}):
+            with self.assertRaises(ValueError): validate_scene(self.data(view=bad))
+        html=render_scene(self.data(view={'point-shape':'shape-ring','mirror-x':True,'view-labels':False}))
+        self.assertRegex(html,r'id="shape-ring"[^>]* checked>')
+        self.assertNotRegex(html,r'id="shape-round"[^>]* checked>')
+        self.assertNotRegex(html,r'id="view-labels"[^>]* checked>')

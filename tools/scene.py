@@ -7,7 +7,7 @@ from .json_data import loads_json
 from .models import load_models
 
 MAX_SCENE_BYTES = 16 * 1024
-FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians'}
+FIELDS = {'version', 'model', 'k', 'phase', 'amplitude', 'count', 'clock_radians', 'view'}
 
 
 def validate_scene(data, source=ROOT / 'src'):
@@ -32,6 +32,7 @@ def validate_scene(data, source=ROOT / 'src'):
     if type(clock) not in (int, float) or not math.isfinite(clock) or not 0 <= clock <= math.tau:
         raise ValueError('clock_radiansは0〜2πの有限数です')
     result['clock_radians'] = float(clock)
+    result['view'] = validate_view(data.get('view', {}), source)
     return result
 
 
@@ -75,4 +76,58 @@ def render_scene(data, source=ROOT / 'src'):
             if changed != 1:
                 raise ValueError('保存シーンの初期位置を設定できません')
     html = html.replace('<main class="lab" style="', f'<main class="lab" style="--clock-start:{scene["clock_radians"]:.17g};', 1)
+    html = apply_controls(html, scene['view'])
     return html
+
+
+def view_inputs(source=ROOT / 'src'):
+    from html.parser import HTMLParser
+    from .source import expand_fragments
+    class Inputs(HTMLParser):
+        def __init__(self): super().__init__(); self.inputs = {}
+        def handle_starttag(self, tag, pairs):
+            attrs = dict(pairs)
+            if tag == 'input' and attrs.get('type') in ('radio', 'checkbox'):
+                self.inputs[attrs['id']] = attrs
+    parser = Inputs()
+    path = Path(source) / 'fragments/view-settings.html'
+    parser.feed(expand_fragments(path.read_text(encoding='utf-8'), source))
+    return parser.inputs
+
+
+def validate_view(value, source=ROOT / 'src'):
+    if not isinstance(value, dict):
+        raise ValueError('viewはオブジェクトです')
+    radios = {}
+    checkboxes = set()
+    for identifier, attrs in view_inputs(source).items():
+        name = attrs.get('name', identifier)
+        if name.startswith(('coordinate-', 'gain-', 'offset-')):
+            continue
+        if attrs['type'] == 'radio':
+            radios.setdefault(name, set()).add(identifier)
+        else:
+            checkboxes.add(identifier)
+    for key, item in value.items():
+        if key in checkboxes and type(item) is bool:
+            continue
+        if key in radios and isinstance(item, str) and item in radios[key]:
+            continue
+        raise ValueError(f'view.{key}は対応する表示設定ではありません')
+    return dict(value)
+
+
+def apply_controls(html, selections):
+    import re
+    def choose(match):
+        tag = match[0]
+        attrs = dict(re.findall(r'([a-z-]+)="([^"]*)"', tag))
+        identifier = attrs.get('id')
+        key = attrs.get('name', identifier)
+        if key not in selections:
+            return tag
+        value = selections[key]
+        selected = value if type(value) is bool else value == identifier
+        tag = re.sub(r'\schecked(?=[\s>])', '', tag)
+        return tag[:-1] + (' checked>' if selected else '>')
+    return re.sub(r'<input\b[^>]*>', choose, html)
