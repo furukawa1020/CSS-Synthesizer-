@@ -22,3 +22,12 @@
 .lab:has(#quant-tenth:checked) .sample { --quant-x: calc(round(nearest, calc(var(--move-x, var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x)))))) * 10), 1) / 10); --quant-y: calc(round(nearest, calc(var(--move-y, var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y)))))) * 10), 1) / 10); }
 .lab:has(#quant-quarter:checked) .sample { --quant-x: calc(round(nearest, calc(var(--move-x, var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x)))))) * 4), 1) / 4); --quant-y: calc(round(nearest, calc(var(--move-y, var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y)))))) * 4), 1) / 4); }
 .lab:has(#quant-half:checked) .sample { --quant-x: calc(round(nearest, calc(var(--move-x, var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x)))))) * 2), 1) / 2); --quant-y: calc(round(nearest, calc(var(--move-y, var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y)))))) * 2), 1) / 2); }
+@supports (opacity: hypot(3, 4)) {
+ .lab:has(#coord-bound:checked) .sample {
+ --bound-before-x: var(--quant-x, var(--move-x, var(--gain-x, var(--project-x, var(--fold-x, var(--swap-x, var(--x)))))));
+ --bound-before-y: var(--quant-y, var(--move-y, var(--gain-y, var(--project-y, var(--fold-y, var(--swap-y, var(--y)))))));
+ --bound-denominator: max(1, hypot(var(--bound-before-x), var(--bound-before-y)));
+ --bound-x: calc(var(--bound-before-x) / var(--bound-denominator));
+ --bound-y: calc(var(--bound-before-y) / var(--bound-denominator));
+ }
+}

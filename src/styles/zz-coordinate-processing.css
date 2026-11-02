@@ -4,3 +4,4 @@
  border: 0; border-radius: 50%; clip-path: none; opacity: 1; visibility: visible;
 }
 @supports not (opacity: abs(-1)) { .coordinate-controls:has(#fold-none) { display:none; } }
+@supports not (opacity: hypot(3,4)) { .coordinate-controls:has(#coord-bound) { display:none; } }
