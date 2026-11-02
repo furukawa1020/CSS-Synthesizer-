@@ -3,6 +3,7 @@ from html import escape
 
 # Each condition is a literal @supports condition used by the generated page.
 FEATURES = (
+    ('radius-color', '点の観察', 'hypot()の色相への適用', '(color:hsl(calc(hypot(1,1) * 180) 80% 75%))', '加工後座標の半径による配色', 'https://www.w3.org/TR/css-values-4/#trig-funcs'),
     ('has', '入力と状態', ':has()', 'selector(:has(*))', '入力状態による選択', 'https://www.w3.org/TR/selectors-4/#relational'),
     ('scroll-timeline', '入力と状態', 'scroll-timeline', '(scroll-timeline: --probe inline)', '横スクロールをタイムラインにする', 'https://www.w3.org/TR/scroll-animations-1/'),
     ('animation-timeline', '入力と状態', 'animation-timeline', '(animation-timeline: --probe)', '入力値をスクロール位置から計算する', 'https://www.w3.org/TR/scroll-animations-1/'),

@@ -38,7 +38,7 @@ def comparison_html(template, parameters, models, count=96):
     <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
   </div>
   {unavailable}
-  <figcaption>@@FRAGMENT:polar-legend@@@@FRAGMENT:order-legend@@<h2>{escape(model['name'])}</h2><p class="comparison-model-help">k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><details class="curve-formula"><summary>式と条件</summary><div class="equations">{model_equations_html(model)}</div><p>{escape(model['note'])}</p></details><a class="comparison-back" href="#comparison-index">図の索引へ戻る</a></figcaption>
+  <figcaption>@@FRAGMENT:polar-legend@@@@FRAGMENT:order-legend@@@@FRAGMENT:metric-legend@@<h2>{escape(model['name'])}</h2><p class="comparison-model-help">k：{escape(model['k_help'])}。φ：{escape(model['phase_help'])}。A：{escape(model['amplitude_help'])}。</p><details class="curve-formula"><summary>式と条件</summary><div class="equations">{model_equations_html(model)}</div><p>{escape(model['note'])}</p></details><a class="comparison-back" href="#comparison-index">図の索引へ戻る</a></figcaption>
 </figure>''')
     index = '<nav id="comparison-index" class="comparison-index" aria-label="選択した図への移動"><p>選択中の図へ</p><ul>' + ''.join(f'<li data-jump-model="{m["id"]}"><a href="#curve-{m["id"]}">{escape(m["name"])}</a></li>' for m in models) + '</ul><a href="#controls">共有入力へ</a></nav>'
     generic = {
