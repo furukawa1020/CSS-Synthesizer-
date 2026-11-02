@@ -10,6 +10,7 @@ def inspect_shared_batch(manifest, tolerance=.1):
     baseline = None
     models = set()
     required = ('k', 'phase_degrees', 'amplitude', 'clock_radians', 'count')
+    from .processing import DEFAULTS, processing_options
     defaults = {'mirror_x': False, 'mirror_y': False, 'rotation_degrees': 0, 'plot_scale': 1}
     def inspect(data, limit):
         nonlocal baseline
@@ -17,6 +18,8 @@ def inspect_shared_batch(manifest, tolerance=.1):
         if not result['ok']:
             return result
         conditions = tuple(data[key] for key in required) + tuple(data.get(key, value) for key, value in defaults.items())
+        options, _ = processing_options(data.get('processing', {}))
+        conditions += tuple(options[key] for key in DEFAULTS)
         if baseline is None:
             baseline = conditions
         elif conditions != baseline:

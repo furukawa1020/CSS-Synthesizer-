@@ -73,6 +73,11 @@ def inspect_tangent_snapshot(snapshot, tolerance_degrees=.1, *, require_all=Fals
         errors.append('方向の許容差は0以上の有限数にしてください')
     if not isinstance(snapshot, dict):
         return {'ok': False, 'errors': errors + ['snapshotはオブジェクトにしてください'], 'checked_points': 0, 'max_error_degrees': 0}
+    from .processing import DEFAULTS, processing_options
+    processing, processing_errors = processing_options(snapshot.get('processing', {}))
+    errors.extend(processing_errors)
+    if processing != DEFAULTS:
+        errors.append('座標加工中の接線観測は未対応です。UIでは丸点へ戻します')
     if not isinstance(snapshot.get('model'), str) or snapshot['model'] not in MODELS:
         errors.append('modelが未対応です')
     values = {}
