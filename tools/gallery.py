@@ -43,6 +43,7 @@ def gallery_html(presets, models, count=96):
     <p>96点・時計 t = 0・停止</p><details class="curve-formula"><summary>この形の式</summary><div class="equations">{model_equations_html(definitions[preset['model']])}</div></details><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a>
   </section>
 </li>''')
+    totals = '<p class="gallery-count">表示する形：<span data-count-all>' + str(len(presets)) + '</span>' + ''.join(f'<span data-count-model="{m["id"]}">{sum(p["model"] == m["id"] for p in presets)}</span>' for m in models) + '件</p>'
     filters = '<fieldset class="gallery-filter"><legend>モデルで絞る</legend><div class="view-choices"><label><input id="gallery-all" type="radio" name="gallery-model" checked><span>全件</span></label>' + ''.join(f'<label><input id="gallery-{m["id"]}" type="radio" name="gallery-model"><span>{escape(m["name"])}</span></label>' for m in models) + '</div></fieldset>'
     result = '''<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +52,7 @@ def gallery_html(presets, models, count=96):
 <body class="gallery-page"><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">標準の画面へ ↗</a></header>
 <main class="gallery-main"><h1>形の一覧</h1><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p>
-''' + filters + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div><p>図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
+''' + filters + totals + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div><p>図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''
     result = result.replace('図は96点', f'図は{count}点').replace('<p>96点・', f'<p>{count}点・')
     navigation = '<nav class="gallery-density" aria-label="一覧の図ごとの点数">各図の点数 ' + ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{gallery_filename(n)}">{n}点</a>' for n in GALLERY_COUNTS) + '</nav>'
@@ -62,4 +63,4 @@ def gallery_styles(models):
     """Generate filter bindings from the same IDs that produce radio choices."""
     return '@supports selector(:has(*)) {\n' + '\n'.join(
         f'.gallery-main:has(#gallery-{m["id"]}:checked) .gallery-list > li:not([data-gallery-model="{m["id"]}"]) {{ display:none; }}'
-        for m in models) + '\n}'
+        for m in models) + '\n' + '\n'.join(f'.gallery-main:has(#gallery-{m["id"]}:checked) .gallery-count [data-count-all] {{ display:none; }} .gallery-main:has(#gallery-{m["id"]}:checked) .gallery-count [data-count-model="{m["id"]}"] {{ display:inline; }}' for m in models) + '\n}' 
