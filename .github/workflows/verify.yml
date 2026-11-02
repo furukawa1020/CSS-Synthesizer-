@@ -61,3 +61,5 @@ jobs:
           for shared_manifest in qa/evidence/batch120/shared-*.json; do
             python3 -m tools.shared_conditions "$shared_manifest" || exit 1
           done
+      - name: 開発検証と全バッチを一括確認する
+        run: python3 -m tools.validate --json

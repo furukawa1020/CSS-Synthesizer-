@@ -91,11 +91,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='HTML/CSSのローカル確認')
     parser.add_argument('--port', type=int, default=3000)
     parser.add_argument('--quiet', action='store_true', help='アクセスログを抑制する')
+    parser.add_argument('--directory', type=Path, default=ROOT / 'build', help='配信するHTML/CSSのフォルダー')
     args = parser.parse_args()
     if not 0 <= args.port <= 65535:
         parser.error('portは0〜65535です（0は空きポート）')
     try:
-        server = create_server(port=args.port, quiet=args.quiet)
+        server = create_server(args.directory, port=args.port, quiet=args.quiet)
     except (OSError, ValueError) as error:
         print(f'プレビューを開始できません: {error}', file=sys.stderr)
         sys.exit(1)

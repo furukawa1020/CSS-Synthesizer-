@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "折り返した花弁",
+  "model": "rose",
+  "k": 3.25,
+  "phase": 37,
+  "amplitude": 81,
+  "count": 192,
+  "clock_radians": 1.2,
+  "view": {
+    "point-shape": "shape-ring",
+    "palette": "palette-paper",
+    "grid-spacing": "grid-step-tenth"
+  },
+  "processing": {
+    "fold": "both",
+    "gain_x": 0.5,
+    "quantum": 0.1
+  }
+}
