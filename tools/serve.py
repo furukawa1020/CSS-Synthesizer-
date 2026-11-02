@@ -79,10 +79,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='HTML/CSSのローカル確認')
     parser.add_argument('--port', type=int, default=3000)
     args = parser.parse_args()
-    if not 1 <= args.port <= 65535:
-        parser.error('portは1〜65535です')
+    if not 0 <= args.port <= 65535:
+        parser.error('portは0〜65535です（0は空きポート）')
     server = create_server(port=args.port)
-    print(f'Local: http://127.0.0.1:{args.port}', flush=True)
+    print(f'Local: http://127.0.0.1:{server.server_port}', flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
