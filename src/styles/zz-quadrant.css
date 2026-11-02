@@ -1,0 +1,7 @@
+@supports (opacity: sign(1)) {
+ @media screen and (forced-colors:none) {
+ .lab:has(#color-quadrant:checked) .sample { --quadrant-hue:calc(30 + 90 * max(0,sign(var(--draw-x))) + 180 * max(0,sign(var(--draw-y)))); color:hsl(var(--quadrant-hue) 80% 75%); }
+ .lab:has(#color-quadrant:checked):has(#palette-paper:checked) .sample { color:hsl(var(--quadrant-hue) 75% 30%); }
+ }
+}
+@supports not (opacity:sign(1)) { .quadrant-choice { display:none !important; } }
