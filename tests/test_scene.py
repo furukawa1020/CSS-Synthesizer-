@@ -17,3 +17,8 @@ class SceneTests(unittest.TestCase):
             for raw in ('{"version":1,"version":1,"model":"rose"}', '{"version":1,"model":"rose","k":NaN}', ' '*16385):
                 path.write_text(raw)
                 with self.assertRaises(ValueError): load_scene(path)
+
+    def test_inputs_use_the_displayed_precision(self):
+        for key, bad in [('k',True),('k',0),('k',8.01),('k',1.001),('phase',90.1),('amplitude',24),('amplitude',80.1),('k',float('inf'))]:
+            with self.subTest(key=key,bad=bad), self.assertRaises(ValueError): validate_scene(self.data(**{key:bad}))
+        self.assertEqual(validate_scene(self.data(k=1.01, phase=359, amplitude=26))['k'],1.01)
