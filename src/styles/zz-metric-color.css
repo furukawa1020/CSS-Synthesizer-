@@ -1,0 +1,10 @@
+.radius-color-legend { display:none; font-size:.8125rem; }
+.lab:has(#color-radius:checked) .radius-color-legend { display:block; }
+@supports (color:hsl(calc(hypot(1,1) * 180) 80% 75%)) {
+ @media screen and (forced-colors:none) {
+  .lab:has(#color-radius:checked) .sample { --metric-hue:calc(30 + 180 * clamp(0,hypot(var(--draw-x),var(--draw-y)),1)); color:hsl(var(--metric-hue) 85% 75%); }
+  .lab:has(#color-radius:checked):has(#palette-paper:checked) .sample { color:hsl(var(--metric-hue) 75% 28%); }
+ }
+}
+@supports not (color:hsl(calc(hypot(1,1) * 180) 80% 75%)) { .radius-color-choice { display:none !important; } .lab .radius-color-legend { display:none; } }
+@media print, (forced-colors:active) { .lab .radius-color-legend { display:none !important; } }
