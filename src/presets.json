@@ -254,5 +254,13 @@
     "k": 6,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-spiral-eight.html",
+    "name": "8巻きの渦巻き",
+    "model": "spiral",
+    "k": 8,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
