@@ -12,3 +12,7 @@ HTML/CSSのみ、開発もPython標準ライブラリのみ。JS/TS/Node、Canva
 - #12：HTML-in-Canvas現行APIのJS描画とJSゼロ指定の衝突。描画本体は未実装。
 
 保存JSON再照合とライブ操作、iframeと実端末、印刷CSSと実印刷を区別する。前回の[第5回](batch100/README.md)、[第4回](batch80/README.md)、[第3回](batch60/README.md)、[第2回](batch40/README.md)、[第1回](batch20/README.md)は履歴として保持する。
+
+## 第9回（2026-11-03 JST）
+
+Issue #337〜#350、#352〜#356、#358で停止例8件と登録上限を追加し、回転・倍率・不透明度・格子・点形状・合成の表示設定を拡張する。
