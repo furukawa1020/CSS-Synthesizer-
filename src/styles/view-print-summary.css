@@ -8,3 +8,4 @@
 .lab:has(#rotation-22-5:checked) .summary-rotation::after { content: "22.5°"; }
 .lab:has(#rotation-67-5:checked) .summary-rotation::after { content: "67.5°"; }
 .lab:has(#rotation-112-5:checked) .summary-rotation::after { content: "112.5°"; }
+.lab:has(#rotation-157-5:checked) .summary-rotation::after { content: "157.5°"; }
