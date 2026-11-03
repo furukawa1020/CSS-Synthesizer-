@@ -174,5 +174,13 @@
     "k": 3,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-circle-ellipse.html",
+    "name": "半径比1の真円",
+    "model": "ellipse",
+    "k": 1,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
