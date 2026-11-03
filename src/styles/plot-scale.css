@@ -8,3 +8,4 @@
 .lab:has(#scale-150:checked) { --plot-scale:1.5; }
 .lab:has(#scale-25:checked) { --plot-scale: 0.25; }
 .lab:has(#scale-200:checked) { --plot-scale: 2; }
+.lab:has(#scale-175:checked) { --plot-scale: 1.75; }
