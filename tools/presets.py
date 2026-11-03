@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from .json_data import load_json
 
-MAX_PRESETS = 32
+MAX_PRESETS = 40
 
 
 def validate_presets(presets, model_ids=None):
