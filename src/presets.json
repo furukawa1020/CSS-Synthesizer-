@@ -222,5 +222,13 @@
     "k": 8,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-standing-wave-four.html",
+    "name": "節を保つ4周期",
+    "model": "standing-wave",
+    "k": 4,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
