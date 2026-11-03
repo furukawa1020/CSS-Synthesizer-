@@ -278,5 +278,13 @@
     "k": 5,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-standing-wave-phase.html",
+    "name": "位相180度の定在波",
+    "model": "standing-wave",
+    "k": 2,
+    "phase": 180,
+    "amplitude": 85
   }
 ]
