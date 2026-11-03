@@ -246,5 +246,13 @@
     "k": 5,
     "phase": 90,
     "amplitude": 90
+  },
+  {
+    "file": "preset-rose-six.html",
+    "name": "6反復の花弁",
+    "model": "rose",
+    "k": 6,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
