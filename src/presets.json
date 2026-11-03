@@ -262,5 +262,13 @@
     "k": 8,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-wave-low.html",
+    "name": "低振幅の波形",
+    "model": "wave",
+    "k": 3,
+    "phase": 0,
+    "amplitude": 25
   }
 ]
