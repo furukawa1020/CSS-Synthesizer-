@@ -6,3 +6,4 @@
 .lab:has(#scale-125:checked) { --plot-scale:1.25; }
 
 .lab:has(#scale-150:checked) { --plot-scale:1.5; }
+.lab:has(#scale-25:checked) { --plot-scale: 0.25; }
