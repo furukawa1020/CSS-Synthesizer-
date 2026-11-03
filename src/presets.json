@@ -206,5 +206,13 @@
     "k": 7,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-fermat-two.html",
+    "name": "平方根で広がる2巻き",
+    "model": "fermat",
+    "k": 2,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
