@@ -214,5 +214,13 @@
     "k": 2,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-damped-wave-eight.html",
+    "name": "右へ減衰する8周期",
+    "model": "damped-wave",
+    "k": 8,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
