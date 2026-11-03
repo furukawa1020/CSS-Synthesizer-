@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from .json_data import load_json
 
-MAX_PRESETS = 24
+MAX_PRESETS = 32
 
 
 def validate_presets(presets, model_ids=None):
@@ -13,7 +13,7 @@ def validate_presets(presets, model_ids=None):
         source = Path(__file__).resolve().parents[1] / 'src'
         model_ids = {model['id'] for model in load_models(source)}
     if not isinstance(presets, list) or not 1 <= len(presets) <= MAX_PRESETS:
-        raise ValueError('プリセットは1〜24ページの配列にしてください')
+        raise ValueError(f'プリセットは1〜{MAX_PRESETS}ページの配列にしてください')
     seen = set()
     names = set()
     for preset in presets:
