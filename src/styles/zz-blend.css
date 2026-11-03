@@ -3,3 +3,9 @@
 .lab:has(#blend-multiply:checked) .sample { mix-blend-mode:multiply; }
 .lab:has(#blend-difference:checked) .sample { mix-blend-mode:difference; }
 @media print, (forced-colors:active) { .lab .sample { mix-blend-mode:normal !important; } }
+@supports (mix-blend-mode: plus-lighter) {
+  .lab:has(#blend-add:checked) .sample { mix-blend-mode: plus-lighter; }
+}
+@supports not (mix-blend-mode: plus-lighter) {
+  .lab label:has(#blend-add) { display: none; }
+}
