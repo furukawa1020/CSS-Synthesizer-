@@ -270,5 +270,13 @@
     "k": 3,
     "phase": 0,
     "amplitude": 25
+  },
+  {
+    "file": "preset-epitrochoid-five.html",
+    "name": "外側を転がる5比の軌跡",
+    "model": "epitrochoid",
+    "k": 5,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
