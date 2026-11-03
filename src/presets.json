@@ -230,5 +230,13 @@
     "k": 4,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-hypotrochoid-five.html",
+    "name": "内側を転がる5比の軌跡",
+    "model": "hypotrochoid",
+    "k": 5,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
