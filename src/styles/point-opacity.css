@@ -5,3 +5,4 @@
 .lab:has(#opacity-75:checked) .sample { --point-opacity: 0.75; }
 .lab:has(#opacity-10:checked) .sample { --point-opacity: 0.1; }
 .lab:has(#opacity-90:checked) .sample { --point-opacity: 0.9; }
+.lab:has(#opacity-35:checked) .sample { --point-opacity: 0.35; }
