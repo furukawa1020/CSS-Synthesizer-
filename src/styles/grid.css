@@ -23,3 +23,4 @@
 .lab:has(#sectors-24:checked) .axes { --polar-sector-angle:15deg; }
 .lab:has(#grid-step-fifth:checked) .axes { --grid-spacing: 8.8cqmin; }
 .lab:has(#grid-step-whole:checked) .axes { --grid-spacing: 44cqmin; }
+.lab:has(#grid-step-eighth:checked) .axes { --grid-spacing: 5.5cqmin; }
