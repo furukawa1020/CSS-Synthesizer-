@@ -5,3 +5,4 @@
 .summary-mirror-x,.summary-mirror-y,.summary-range-half,.summary-range-quarter,.summary-cadence-two,.summary-cadence-four { display:none; }
 .lab:has(#mirror-x:checked) .summary-mirror-x,.lab:has(#mirror-y:checked) .summary-mirror-y,.lab:has(#range-half:checked) .summary-range-half,.lab:has(#range-quarter:checked) .summary-range-quarter,.lab:has(#cadence-two:checked) .summary-cadence-two,.lab:has(#cadence-four:checked) .summary-cadence-four { display:inline; }
 .lab:has(#mirror-x:checked) .summary-mirror-none,.lab:has(#mirror-y:checked) .summary-mirror-none,.lab:has(#range-half:checked) .summary-range-full,.lab:has(#range-quarter:checked) .summary-range-full,.lab:has(#cadence-two:checked) .summary-cadence-all,.lab:has(#cadence-four:checked) .summary-cadence-all { display:none; }
+.lab:has(#rotation-22-5:checked) .summary-rotation::after { content: "22.5°"; }
