@@ -182,5 +182,13 @@
     "k": 1,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-rose-eight.html",
+    "name": "8反復の花弁",
+    "model": "rose",
+    "k": 8,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
