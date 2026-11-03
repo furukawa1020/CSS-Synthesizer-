@@ -2,3 +2,9 @@
  .lab:has(#shape-cross:checked) .sample::after { border-radius:0; rotate:none; clip-path:polygon(35% 0,65% 0,65% 35%,100% 35%,100% 65%,65% 65%,65% 100%,35% 100%,35% 65%,0 65%,0 35%,35% 35%); }
 }
 @supports not (clip-path:polygon(0 0,100% 0,100% 100%)) { .cross-choice { display:none !important; } }
+@supports (clip-path: polygon(50% 0, 100% 100%, 0 100%)) {
+  .lab:has(#shape-triangle:checked) .sample::after { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+}
+@supports not (clip-path: polygon(50% 0, 100% 100%, 0 100%)) {
+  .lab label:has(#shape-triangle) { display: none; }
+}
