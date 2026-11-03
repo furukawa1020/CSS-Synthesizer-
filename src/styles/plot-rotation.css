@@ -6,3 +6,4 @@
 .plot { rotate: calc(var(--plot-rotation) * -1deg); }
 
 .lab:has(#rotation-270:checked) { --plot-rotation:270; }
+.lab:has(#rotation-135:checked) { --plot-rotation: 135; }
