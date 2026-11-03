@@ -198,5 +198,13 @@
     "k": 1,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-orbit-seven.html",
+    "name": "副円7反復の合成軌道",
+    "model": "orbit",
+    "k": 7,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
