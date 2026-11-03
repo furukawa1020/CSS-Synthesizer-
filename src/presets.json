@@ -238,5 +238,13 @@
     "k": 5,
     "phase": 0,
     "amplitude": 90
+  },
+  {
+    "file": "preset-ellipse-vertical.html",
+    "name": "縦長の楕円",
+    "model": "ellipse",
+    "k": 5,
+    "phase": 90,
+    "amplitude": 90
   }
 ]
