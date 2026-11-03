@@ -9,3 +9,4 @@
 .lab:has(#rotation-135:checked) { --plot-rotation: 135; }
 .lab:has(#rotation-225:checked) { --plot-rotation: 225; }
 .lab:has(#rotation-315:checked) { --plot-rotation: 315; }
+.lab:has(#rotation-22-5:checked) { --plot-rotation: 22.5; }
