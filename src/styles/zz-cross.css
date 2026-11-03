@@ -8,3 +8,9 @@
 @supports not (clip-path: polygon(50% 0, 100% 100%, 0 100%)) {
   .lab label:has(#shape-triangle) { display: none; }
 }
+@supports (clip-path: polygon(0 0, 100% 0, 50% 100%)) {
+  .lab:has(#shape-triangle-down:checked) .sample::after { border-radius: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+}
+@supports not (clip-path: polygon(0 0, 100% 0, 50% 100%)) {
+  .lab label:has(#shape-triangle-down) { display: none; }
+}
