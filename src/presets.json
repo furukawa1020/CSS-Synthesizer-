@@ -294,5 +294,13 @@
     "k": 1,
     "phase": 90,
     "amplitude": 90
+  },
+  {
+    "file": "preset-exp-spiral-six.html",
+    "name": "中心へ収束する6巻き",
+    "model": "exp-spiral",
+    "k": 6,
+    "phase": 0,
+    "amplitude": 90
   }
 ]
