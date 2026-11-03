@@ -286,5 +286,13 @@
     "k": 2,
     "phase": 180,
     "amplitude": 85
+  },
+  {
+    "file": "preset-lemniscate-vertical.html",
+    "name": "縦に交差する8の字",
+    "model": "lemniscate",
+    "k": 1,
+    "phase": 90,
+    "amplitude": 90
   }
 ]
