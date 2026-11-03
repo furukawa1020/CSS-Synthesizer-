@@ -9,3 +9,4 @@
 @supports not (mix-blend-mode: plus-lighter) {
   .lab label:has(#blend-add) { display: none; }
 }
+.lab:has(#blend-lighten:checked) .sample { mix-blend-mode: lighten; }
