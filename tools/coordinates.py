@@ -43,7 +43,7 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
     照合にはクランプせず観測値を使う。座標の許容差は緩めない。
     mirror_x・mirror_yは任意の真偽値で、省略時はfalse。表示反転だけを検査する。
     rotation_degreesは数理座標で反時計回りを正とし、反転後に適用する。省略時0。
-    plot_scaleは表示倍率0.25・0.5・0.75・1・1.25・1.5・1.75・2。省略時1。数式Aとは別に適用する。
+    plot_scaleは表示倍率0.25・0.5・0.6・0.75・1・1.25・1.5・1.75・2。省略時1。数式Aとは別に適用する。
     不正な入力はok:falseと日本語errorsを返す。
     """
     errors: list[str] = []
@@ -87,8 +87,8 @@ def inspect_snapshot(snapshot: dict, tolerance: float = 0.1, *, require_all: boo
         errors.append("rotation_degreesは有限数で指定してください")
 
     plot_scale = _finite_number(snapshot.get("plot_scale", 1))
-    if plot_scale not in (.25, .5, .75, 1, 1.25, 1.5, 1.75, 2):
-        errors.append("plot_scaleは0.25・0.5・0.75・1・1.25・1.5・1.75・2で指定してください")
+    if plot_scale not in (.25, .5, .6, .75, 1, 1.25, 1.5, 1.75, 2):
+        errors.append("plot_scaleは0.25・0.5・0.6・0.75・1・1.25・1.5・1.75・2で指定してください")
 
     stage = snapshot.get("stage")
     dimensions = {}
