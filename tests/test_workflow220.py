@@ -99,3 +99,12 @@ class Workflow220Tests(unittest.TestCase):
         out=StringIO()
         with redirect_stdout(out): self.assertEqual(main(['/missing.json','--check','--json']),1)
         self.assertFalse(json.loads(out.getvalue())['ok'])
+
+    def test_collection_schema(self):
+        from tools.scene_collection import validate_collection
+        scene=dict(version=1,model='rose')
+        data=dict(version=1,title='作品集',scenes=[dict(id='rose',scene=scene)])
+        self.assertEqual(validate_collection(data)['scenes'][0]['scene']['count'],192)
+        for identifier in ('../escape','a/b','A','x'*49):
+            with self.assertRaises(ValueError):validate_collection(dict(data,scenes=[dict(id=identifier,scene=scene)]))
+        with self.assertRaises(ValueError):validate_collection(dict(data,scenes=data['scenes']*2))
