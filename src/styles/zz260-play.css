@@ -13,3 +13,11 @@
 .starter-art { position:relative; display:block; inline-size:64px; aspect-ratio:1; flex:none; color:var(--accent); }
 .starter-art i { position:absolute; display:block; inline-size:2px; block-size:2px; border-radius:50%; background:currentColor; translate:-50% -50%; }
 }
+
+@media screen {
+.play-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-block:0 10px; }
+.play-heading h2 { font-size:1rem; margin:0; font-weight:600; }
+.play-heading p { font-size:.8125rem; color:var(--muted); margin:2px 0 0; }
+.scene .scene-actions { position:static; inset:auto; margin:0; }
+.scene:has(.saved-scene-title) .play-heading { display:none; }
+}
