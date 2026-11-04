@@ -81,3 +81,12 @@ class Workflow220Tests(unittest.TestCase):
             values=field.get('choices',[True,False])
             for value in values:self.assertEqual(validate_view({key:value}),{key:value})
         self.assertTrue(schema['point-shape']['default'])
+
+    def test_model_list(self):
+        from tools.scene import main
+        from contextlib import redirect_stdout
+        from io import StringIO
+        import json
+        out=StringIO()
+        with redirect_stdout(out):self.assertEqual(main(['--list-models']),0)
+        self.assertIn('rose',json.loads(out.getvalue()))
