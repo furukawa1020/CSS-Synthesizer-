@@ -63,3 +63,13 @@ class Workflow220Tests(unittest.TestCase):
         from contextlib import redirect_stdout
         from io import StringIO
         with redirect_stdout(StringIO()): self.assertEqual(main([str(ROOT/'qa/scene-example.json'),'--check']),0)
+
+    def test_scene_canonical(self):
+        from tools.scene import main
+        from tools.build import ROOT
+        from contextlib import redirect_stdout
+        from io import StringIO
+        import json
+        out=StringIO()
+        with redirect_stdout(out): self.assertEqual(main([str(ROOT/'qa/scene-example.json'),'--canonical']),0)
+        self.assertEqual(json.loads(out.getvalue())['version'],1)

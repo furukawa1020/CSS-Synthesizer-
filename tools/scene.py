@@ -248,9 +248,13 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--output', type=Path, help='新規出力フォルダー')
     mode.add_argument('--check', action='store_true', help='検査だけ行い、ファイルを生成しない')
+    mode.add_argument('--canonical', action='store_true', help='正規化したJSONを標準出力へ出す')
     args = parser.parse_args(argv)
     try:
         data = load_scene(args.scene)
+        if args.canonical:
+            print(canonical_scene(data), end='')
+            return 0
         if args.check:
             print('保存シーンは有効です')
             return 0
