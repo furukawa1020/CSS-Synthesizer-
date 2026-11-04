@@ -138,3 +138,17 @@
 .view-reset { font-size:.8125rem; inline-size:100%; margin-block:0 12px; }
 .view-panel .view-option p:empty { display:none; }
 }
+
+@media screen {
+.explanation { margin-block-start:24px; }
+.explanation > summary { min-block-size:56px; font-size:.875rem; }
+.guide-body { display:block; max-inline-size:960px; padding:0 0 24px; }
+.guide-quick { padding-block:8px 16px; }
+.guide-section { border-block-start:1px solid var(--rule); }
+.guide-section > summary { min-block-size:52px; gap:16px; font-size:.9375rem; font-weight:500; }
+.guide-section > summary::after { content:'＋'; margin-inline-start:auto; }
+.guide-section[open] > summary::after { content:'−'; }
+.guide-section-body { padding:0 0 20px; max-inline-size:80ch; }
+.guide-section-body p { font-size:.875rem; line-height:1.8; }
+footer { font-size:.8125rem; }
+}
