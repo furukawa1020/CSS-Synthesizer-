@@ -108,3 +108,16 @@ class Workflow220Tests(unittest.TestCase):
         for identifier in ('../escape','a/b','A','x'*49):
             with self.assertRaises(ValueError):validate_collection(dict(data,scenes=[dict(id=identifier,scene=scene)]))
         with self.assertRaises(ValueError):validate_collection(dict(data,scenes=data['scenes']*2))
+
+    def test_collection_export(self):
+        from tools.scene_collection import export_collection
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as folder:
+            out=Path(folder)/'out'
+            data=dict(version=1,title='作品',scenes=[dict(id='rose',scene=dict(version=1,model='rose',count=96))])
+            export_collection(data,out)
+            self.assertTrue((out/'rose/index.html').is_file())
+            before=(out/'rose/index.html').read_bytes()
+            with self.assertRaises(ValueError):export_collection(data,out)
+            self.assertEqual(before,(out/'rose/index.html').read_bytes())

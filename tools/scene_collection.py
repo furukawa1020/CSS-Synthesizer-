@@ -31,3 +31,36 @@ def validate_collection(data):
 
 def load_collection(path):
     return validate_collection(load_bounded_json(path, MAX_COLLECTION_BYTES))
+
+
+def export_collection(data, destination):
+    """Validate all scenes first; reserve new output and roll back our moves on failure.
+
+    Installation is not a power-loss-safe atomic directory exchange.
+    """
+    import os
+    import shutil
+    import tempfile
+    from .scene import export_scene
+    data = validate_collection(data)
+    destination = Path(destination)
+    if destination.exists() or destination.is_symlink() or not destination.parent.is_dir():
+        raise ValueError('シーン集の出力先は既存の親内の新規フォルダーです')
+    with tempfile.TemporaryDirectory(prefix='.collection-candidate-', dir=destination.parent) as folder:
+        candidate = Path(folder) / 'output'
+        candidate.mkdir()
+        for entry in data['scenes']:
+            export_scene(entry['scene'], candidate / entry['id'])
+        destination.mkdir()
+        moved = []
+        try:
+            for path in candidate.iterdir():
+                os.replace(path, destination / path.name)
+                moved.append(destination / path.name)
+        except OSError:
+            for path in moved:
+                if path.is_dir(): shutil.rmtree(path)
+                else: path.unlink()
+            destination.rmdir()
+            raise
+    return destination
