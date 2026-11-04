@@ -152,3 +152,20 @@
 .guide-section-body p { font-size:.875rem; line-height:1.8; }
 footer { font-size:.8125rem; }
 }
+
+@media screen {
+.gallery-main { inline-size:min(1280px,100%); padding:24px; }
+.gallery-main > h1 { font-size:1.375rem; font-weight:500; }
+.gallery-intro { font-size:.875rem; line-height:1.7; margin-block:12px; }
+.gallery-list { margin-block-start:16px; }
+.gallery-list > li { grid-template-columns:minmax(260px,1fr) minmax(260px,1fr); gap:32px; padding-block:24px; }
+.gallery-list h2 { font-size:1.125rem; font-weight:500; }
+.gallery-list h2 a { text-decoration:none; }
+.gallery-list h2 a:hover { text-decoration:underline; }
+.gallery-list dl { gap:12px 24px; padding-block:12px; border-block:1px solid var(--rule); }
+.gallery-list dd { font-size:1rem; }
+.gallery-example .stage { block-size:clamp(260px,28vw,360px); }
+.gallery-open { font-size:.875rem; }
+.gallery-back { font-size:.8125rem; color:var(--muted); }
+.gallery-page .page-header h1 { font-size:1rem; }
+}
