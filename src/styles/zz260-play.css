@@ -1,0 +1,7 @@
+
+@media screen {
+.play-start { margin-block:0 16px; }
+.play-start h2 { font-size:1.375rem; line-height:1.3; margin:0 0 8px; font-weight:650; letter-spacing:.02em; }
+.play-steps { display:flex; flex-wrap:wrap; gap:8px 28px; padding:0; margin:0; list-style:none; font-size:.875rem; }
+.play-steps strong { font:600 .875rem ui-monospace,monospace; padding-inline-end:4px; }
+}
