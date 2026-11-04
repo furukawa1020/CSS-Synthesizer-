@@ -19,7 +19,7 @@
 .play-heading h2 { font-size:1rem; margin:0; font-weight:600; }
 .play-heading p { font-size:.8125rem; color:var(--muted); margin:2px 0 0; }
 .scene .scene-actions { position:static; inset:auto; margin:0; }
-.scene:has(.saved-scene-title) .play-heading { display:none; }
+.scene:has(.saved-scene-title) .play-heading > div { display:none; }
 }
 
 @media screen {
@@ -146,4 +146,26 @@
 .play-task { margin:0 0 8px; font-size:.875rem; line-height:1.6; max-inline-size:90ch; }
 .controls { scroll-margin-block:16px; }
 
+}
+
+@media print { .play-start, .play-heading, .play-transport, .play-next, .play-task { display:none !important; } .starter-links { display:none !important; } }
+
+@media screen {
+.play-start { margin-block-end:12px; }
+.play-start h2 { margin-block-end:4px; }
+.starter-links { margin-block-start:6px; }
+.starter-links a { min-block-size:64px; }
+.starter-art { inline-size:56px; }
+.workspace > .scene { position:sticky; inset-block-start:0; z-index:2; background:var(--paper); padding-block:8px; }
+.play-heading { margin-block-end:8px; }
+.tick[id] { scroll-margin-block-start:min(64svh,580px); }
+@media (min-width:901px) { .workspace > .scene > .stage { block-size:clamp(250px,30svh,310px); } }
+@media (max-height:700px) { .workspace > .scene { position:relative; } .tick[id] { scroll-margin-block-start:24px; } }
+.lab:has(#focus-view:checked) .workspace > .scene { position:relative; inset-block-start:auto; }
+}
+
+@media screen { .choose-again { display:inline-flex; align-items:center; min-block-size:44px; font-size:.875rem; } }
+@media screen {
+.comparison-controls .parameters { grid-template-columns:minmax(0,1fr); }
+@media (forced-colors:active) { .play-transport .time-controls .choices label:has(:checked) { background:Highlight; color:HighlightText; } }
 }
