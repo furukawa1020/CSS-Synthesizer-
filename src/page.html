@@ -38,13 +38,16 @@
         @@FRAGMENT:print-summary@@
       </figure>
       <aside class="controls" id="controls" aria-label="形と時間の調整">
-        <details class="model-picker"><summary><span>形</span><span class="model-current">@@MODEL_NAMES@@</span></summary><fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset></details>
+
 
         
         @@FRAGMENT:parameters@@
+        <details class="more-tools"><summary>もっと形や見た目を変える</summary>
+        <details class="model-picker"><summary><span>形</span><span class="model-current">@@MODEL_NAMES@@</span></summary><fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset></details>
         @@FRAGMENT:clock-options@@
         @@FRAGMENT:view-settings@@
         @@FRAGMENT:presets@@
+        </details>
         <p class="baseline-only">@@BASELINE_LABEL@@</p>
       </aside>
     </div>

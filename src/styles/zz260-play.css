@@ -64,3 +64,16 @@
 @supports (scroll-timeline: --k-input inline) and (animation-timeline: --k-input) and (timeline-scope: --k-input, --phase-input, --amplitude-input) and (scroll-initial-target: nearest) and (container-type: size) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) and (width: calc(sin(1rad) * 1px)) and selector(:has(*)) and selector(::scroll-button(inline-start)) { .parameters.continuous-controls { display:grid; } }
 
 }
+
+@media screen {
+.more-tools { border-block:1px solid var(--rule); margin-block:16px 0; }
+.more-tools > summary { min-block-size:52px; font-size:.875rem; justify-content:space-between; }
+.more-tools > summary::after { content:'＋'; }
+.more-tools[open] > summary::after { content:'−'; }
+.more-tools[open] { padding-block-end:16px; }
+.more-tools .model-picker { margin-block-end:8px; }
+.more-tools .model-controls .choices { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.more-tools .view-settings { max-inline-size:440px; }
+.more-tools .preset-picker nav { max-inline-size:720px; }
+.more-tools .clock-settings { max-inline-size:720px; }
+}
