@@ -63,3 +63,10 @@ jobs:
           done
       - name: 開発検証と全バッチを一括確認する
         run: python3 -m tools.validate --json
+      - name: 保存シーンとシーン集のCLIを検査する
+        run: |
+          python3 -m tools.scene qa/scene-example.json --check --json
+          python3 -m tools.scene_collection qa/scene-collection-example.json --check
+          mkdir -p tmp
+          python3 -m tools.scene_collection qa/scene-collection-example.json --output tmp/ci-collection
+          python3 -m tools.scene_collection tmp/ci-collection --verify

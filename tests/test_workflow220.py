@@ -166,3 +166,26 @@ class Workflow220Tests(unittest.TestCase):
         from tools.scene_collection import load_collection
         from tools.build import ROOT
         self.assertEqual(len(load_collection(ROOT/'qa/scene-collection-example.json')['scenes']),2)
+
+    def test_collection_rebuild_and_rollback(self):
+        from tools.scene_collection import export_collection,load_collection,verify_collection
+        from tools.build import ROOT
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from unittest.mock import patch
+        import os
+        with TemporaryDirectory() as folder:
+            root=Path(folder);data=load_collection(ROOT/'qa/scene-collection-example.json')
+            a=export_collection(data,root/'a');b=export_collection(load_collection(a/'collection.json'),root/'b')
+            snapshot=lambda d:{p.relative_to(d).as_posix():p.read_bytes() for p in d.rglob('*') if p.is_file()}
+            self.assertEqual(snapshot(a),snapshot(b))
+            self.assertTrue(verify_collection(a)['ok'])
+            original=os.replace
+            def fail_root(src,dst):
+                if Path(dst).parent==root/'bad': raise OSError('simulated install failure')
+                return original(src,dst)
+            with patch('os.replace',side_effect=fail_root),self.assertRaises(OSError):export_collection(data,root/'bad')
+            self.assertFalse((root/'bad').exists())
+            self.assertFalse(list(root.glob('.collection-candidate-*')))
+            (b/'extra.txt').write_text('extra')
+            self.assertFalse(verify_collection(b)['ok'])
