@@ -51,6 +51,7 @@ def export_collection(data, destination):
         candidate.mkdir()
         for entry in data['scenes']:
             export_scene(entry['scene'], candidate / entry['id'])
+        (candidate / 'index.html').write_text(collection_index(data), encoding='utf-8')
         destination.mkdir()
         moved = []
         try:
@@ -64,3 +65,13 @@ def export_collection(data, destination):
             destination.rmdir()
             raise
     return destination
+
+
+def collection_index(data):
+    from html import escape
+    title = escape(data['title'])
+    items = ''.join('<li><a href="' + entry['id'] + '/index.html">' + escape(entry['scene']['title']) + '</a> — ' + escape(entry['scene']['model']) + ' / ' + str(entry['scene']['count']) + '点</li>' for entry in data['scenes'])
+    return ('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width,initial-scale=1">'
+            "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'\">"
+            '<title>' + title + '</title><style>body{font:1rem/1.8 system-ui;margin:2rem auto;padding:0 1rem;max-width:60rem}li{margin:1rem 0}a:focus-visible{outline:3px solid;outline-offset:4px}</style></head><body><main><h1>' + title + '</h1><p>選んだ初期状態から始まる独立したシーン集です。画面内の変更は自動保存されません。各フォルダーのscene.jsonから再生成できます。</p><ol>' + items + '</ol></main></body></html>\n')
