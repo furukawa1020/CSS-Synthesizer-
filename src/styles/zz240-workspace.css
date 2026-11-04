@@ -66,3 +66,14 @@
 .input-band::scroll-button(*):hover { background:#e5e5e5; }
 .input-band::scroll-button(*):disabled { background:#fafafa; color:#777; }
 }
+
+@media screen {
+.parameter-jumps { margin-block-start:0; }
+.parameter-jumps > summary { font-size:.8125rem; color:var(--muted); padding:0; min-block-size:44px; text-decoration:none; gap:8px; }
+.parameter-jumps > summary::after { content:'＋'; font-size:.875rem; }
+.parameter-jumps[open] > summary::after { content:'−'; }
+.parameter-jumps nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; border-block:1px solid var(--rule); }
+.parameter-jumps a { min-inline-size:0; font-size:.8125rem; }
+.parameter-jumps a:hover { background:#eee; }
+.parameter-jumps p { font-size:.8125rem; line-height:1.6; margin-block:8px; }
+}
