@@ -38,3 +38,14 @@ def starter_links(presets, selected=None):
         current = ' aria-current="page"' if selected and selected['file'] == filename else ''
         links.append(f'<a href="{filename}"{current}><span class="starter-art" aria-hidden="true">{dots}</span><span>{label}</span></a>')
     return '<nav class="starter-links" aria-label="絵から遊び始める">' + ''.join(links) + '</nav>'
+
+
+def play_task(preset):
+    filename = preset['file'] if preset else ''
+    tasks = {
+        'preset-circle.html':'「まる」を開いた直後は、位相の0°と90°で線と円を行き来します。まずこの2つを押してみよう。',
+        'preset-rose.html':'「はな」は、位相の0°と90°を比べてみよう。花びらの向きが変わります。',
+        'preset-two-waves.html':'「なみ」は、大きさの25%と100%を比べてみよう。波の高さが変わります。',
+        'preset-spiral.html':'「うず」は、反復の1と8を比べてみよう。巻き数が変わります。',
+    }
+    return escape(tasks.get(filename,'ひとつ試すなら：とめたまま、下の数値をひとつ変えて見比べてみよう。'))
