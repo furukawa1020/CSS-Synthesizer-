@@ -121,3 +121,11 @@ class Workflow220Tests(unittest.TestCase):
             before=(out/'rose/index.html').read_bytes()
             with self.assertRaises(ValueError):export_collection(data,out)
             self.assertEqual(before,(out/'rose/index.html').read_bytes())
+
+    def test_collection_index_escape(self):
+        from tools.scene_collection import collection_index
+        html=collection_index(dict(title='<作品>',scenes=[dict(id='one',scene=dict(title='<試験>',model='rose',count=96))]))
+        self.assertIn('&lt;作品&gt;',html)
+        self.assertIn('&lt;試験&gt;',html)
+        self.assertIn('href="one/index.html"',html)
+        self.assertNotIn('<script',html)
