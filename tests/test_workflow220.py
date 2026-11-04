@@ -141,3 +141,14 @@ class Workflow220Tests(unittest.TestCase):
             entry=json.loads((p/'checksums.json').read_text())['files'][0]
             self.assertEqual(entry['sha256'],hashlib.sha256(b'abc').hexdigest())
             self.assertEqual(entry['bytes'],3)
+
+    def test_collection_verify(self):
+        from tools.scene_collection import export_collection,verify_collection
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        with TemporaryDirectory() as folder:
+            out=Path(folder)/'out'
+            export_collection(dict(version=1,title='作品',scenes=[dict(id='rose',scene=dict(version=1,model='rose',count=96))]),out)
+            self.assertTrue(verify_collection(out)['ok'])
+            (out/'rose/index.html').write_text('changed')
+            self.assertFalse(verify_collection(out)['ok'])
