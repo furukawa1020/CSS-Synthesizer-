@@ -122,6 +122,23 @@ def view_inputs(source=ROOT / 'src'):
     return parser.inputs
 
 
+def view_schema(source=ROOT / 'src'):
+    """Expose the actual accepted keys, choices, and default selections."""
+    result = {}
+    for identifier, attrs in view_inputs(source).items():
+        name = attrs.get('name', identifier)
+        if name.startswith(('coordinate-', 'gain-', 'offset-')):
+            continue
+        if attrs['type'] == 'checkbox':
+            result[identifier] = {'type': 'boolean', 'default': 'checked' in attrs}
+        else:
+            field = result.setdefault(name, {'type': 'choice', 'choices': [], 'default': None})
+            field['choices'].append(identifier)
+            if 'checked' in attrs:
+                field['default'] = identifier
+    return result
+
+
 def validate_view(value, source=ROOT / 'src'):
     if not isinstance(value, dict):
         raise ValueError('viewはオブジェクトです')
@@ -244,12 +261,21 @@ def main(argv=None):
     import argparse
     import sys
     parser = argparse.ArgumentParser(description='JSONの保存シーンからHTML/CSSを生成する')
-    parser.add_argument('scene', type=Path)
+    parser.add_argument('scene', nargs='?', type=Path)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--output', type=Path, help='新規出力フォルダー')
     mode.add_argument('--check', action='store_true', help='検査だけ行い、ファイルを生成しない')
     mode.add_argument('--canonical', action='store_true', help='正規化したJSONを標準出力へ出す')
+    mode.add_argument('--list-view', action='store_true', help='viewのキーと選択IDをJSONで列挙')
     args = parser.parse_args(argv)
+    if args.list_view:
+        if args.scene is not None:
+            parser.error('--list-viewにsceneは指定しません')
+        import json
+        print(json.dumps(view_schema(), ensure_ascii=False, indent=2))
+        return 0
+    if args.scene is None:
+        parser.error('sceneを指定してください')
     try:
         data = load_scene(args.scene)
         if args.canonical:
