@@ -18,3 +18,16 @@
 @media (min-width:1600px) { .workspace { grid-template-columns:minmax(0,1fr) 380px; } }
 @media (max-width:1100px) and (min-width:901px) { .workspace { grid-template-columns:minmax(0,1fr) 320px; gap:20px; } .scene { position:sticky; } }
 }
+
+@media screen {
+.model-picker { border-block:1px solid var(--rule); margin-block-end:12px; }
+.model-picker > summary { min-block-size:48px; gap:12px; font-size:.875rem; }
+.model-picker > summary::after { content:'＋'; margin-inline-start:auto; }
+.model-picker[open] > summary::after { content:'−'; }
+.model-current { font-weight:600; }
+.model-controls { padding-block:8px 12px; }
+.model-controls legend { position:absolute; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); }
+.model-controls .choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:0; gap:0; }
+.model-controls .choices label { justify-content:flex-start; text-align:start; padding:8px 4px; font-size:.8125rem; min-inline-size:0; overflow-wrap:anywhere; border:0; }
+.model-controls .choices label:has(:checked) { background:#eeeeee; text-decoration:underline; text-underline-offset:.25em; }
+}
