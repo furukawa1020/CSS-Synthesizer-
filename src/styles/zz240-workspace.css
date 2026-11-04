@@ -31,3 +31,16 @@
 .model-controls .choices label { justify-content:flex-start; text-align:start; padding:8px 4px; font-size:.8125rem; min-inline-size:0; overflow-wrap:anywhere; border:0; }
 .model-controls .choices label:has(:checked) { background:#eeeeee; text-decoration:underline; text-underline-offset:.25em; }
 }
+
+@media screen {
+.time-controls { margin:0 0 8px; padding:0; }
+.time-controls legend { position:absolute; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); }
+.time-controls .choices { border:1px solid var(--rule); gap:0; }
+.time-controls .choices label { min-block-size:44px; flex:1 1 0; border:0; padding:8px 4px; font-weight:400; }
+.time-controls .choices label + label { border-inline-start:1px solid var(--rule); }
+.time-controls .choices label:has(:checked) { background:var(--ink); color:var(--paper); }
+.time-controls .choices input { accent-color:currentColor; }
+.clock-settings { margin-block-start:0; }
+.clock-settings > summary { border-block-start:1px solid var(--rule); border-block-end:0; }
+.clock-settings[open] { padding-block-end:12px; }
+}
