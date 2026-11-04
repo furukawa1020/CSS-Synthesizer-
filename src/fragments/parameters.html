@@ -4,6 +4,7 @@
             <h2 id="k-label"><span>@@MODEL_K_LABELS@@</span><output class="readout readout-k" aria-label="kの有効値"></output></h2>
             <p id="k-help">1.00–8.00 @@MODEL_K_HELP@@</p>
             @@FRAGMENT:help-k@@
+            <p class="band-instruction" aria-hidden="true">← この帯を左右に動かす →</p>
             <div class="band-wrap"><div class="input-band input-k" tabindex="0" role="region" aria-labelledby="k-label" aria-describedby="k-help input-help"><div class="ticks" style="--tick-count:8">@@K_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
             <nav class="quick-values" aria-label="反復をすぐ選ぶ"><a href="#tick-k-0">1</a><a href="#tick-k-2">3</a><a href="#tick-k-4">5</a><a href="#tick-k-7">8</a></nav>
             @@FRAGMENT:jump-k@@
@@ -12,6 +13,7 @@
             <h2 id="phase-label"><span>位相</span><output class="readout readout-phase" aria-label="位相の有効値"></output></h2>
             <p id="phase-help">0–360° @@MODEL_PHASE_HELP@@</p>
             @@FRAGMENT:help-phase@@
+            <p class="band-instruction" aria-hidden="true">← この帯を左右に動かす →</p>
             <div class="band-wrap"><div class="input-band input-phase" tabindex="0" role="region" aria-labelledby="phase-label" aria-describedby="phase-help input-help"><div class="ticks" style="--tick-count:5">@@PHASE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
             <nav class="quick-values" aria-label="位相をすぐ選ぶ"><a href="#tick-phase-0">0°</a><a href="#tick-phase-1">90°</a><a href="#tick-phase-2">180°</a><a href="#tick-phase-3">270°</a></nav>
             @@FRAGMENT:jump-phase@@
@@ -21,9 +23,10 @@
             <h2 id="amplitude-label"><span>@@MODEL_AMPLITUDE_LABELS@@</span><output class="readout readout-amplitude" aria-label="振幅の有効値"></output></h2>
             <p id="amplitude-help">25–100% @@MODEL_AMPLITUDE_HELP@@</p>
             @@FRAGMENT:help-amplitude@@
+            <p class="band-instruction" aria-hidden="true">← この帯を左右に動かす →</p>
             <div class="band-wrap"><div class="input-band input-amplitude" tabindex="0" role="region" aria-labelledby="amplitude-label" aria-describedby="amplitude-help input-help"><div class="ticks" style="--tick-count:16">@@AMPLITUDE_STOPS@@</div></div><span class="band-cursor" aria-hidden="true"></span></div>
             <nav class="quick-values" aria-label="大きさをすぐ選ぶ"><a href="#tick-amplitude-0">25%</a><a href="#tick-amplitude-7">60%</a><a href="#tick-amplitude-15">100%</a></nav>
             @@FRAGMENT:jump-amplitude@@
           </section>
-          <p class="input-help" id="input-help">帯を横に動かすか、左右キーで調整。矢印は大きく送ります（一定刻みではありません）。</p>
+          <p class="input-help" id="input-help">帯を横に動かすか、下線の数値を押して調整します。キーボードでは帯を選んで左右キー。両端の矢印はページ送りで、一定の数値刻みではありません。</p>
         </div>
