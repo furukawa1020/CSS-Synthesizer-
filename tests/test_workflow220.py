@@ -73,3 +73,11 @@ class Workflow220Tests(unittest.TestCase):
         out=StringIO()
         with redirect_stdout(out): self.assertEqual(main([str(ROOT/'qa/scene-example.json'),'--canonical']),0)
         self.assertEqual(json.loads(out.getvalue())['version'],1)
+
+    def test_view_schema(self):
+        from tools.scene import view_schema,validate_view
+        schema=view_schema()
+        for key, field in schema.items():
+            values=field.get('choices',[True,False])
+            for value in values:self.assertEqual(validate_view({key:value}),{key:value})
+        self.assertTrue(schema['point-shape']['default'])
