@@ -31,10 +31,11 @@
         </div>
         <div class="play-transport"><fieldset class="time-controls"><legend>時間</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto"@@TIME_AUTO@@><span>自動</span></label><label><input id="time-play" type="radio" name="time" value="play"@@TIME_PLAY@@><span>動かす</span></label><label><input id="time-stop" type="radio" name="time" value="stop"@@TIME_STOP@@><span>とめる</span></label></div></fieldset><a class="edit-shape" href="#controls">形を変える ↓</a></div>
         @@FRAGMENT:play-next@@
-        <figcaption class="scene-caption"><span class="time-status"><span class="auto-moving">自動再生中</span><span class="auto-still">端末設定により停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span></span>@@FRAGMENT:clock-readout@@@@FRAGMENT:polar-legend@@</figcaption>
-        @@FRAGMENT:order-legend@@@@FRAGMENT:metric-legend@@
+        <figcaption class="scene-caption"><details class="scene-readouts"><summary>数値と時計を見る</summary><div><span class="time-status"><span class="auto-moving">自動再生中</span><span class="auto-still">端末設定により停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span></span>@@FRAGMENT:clock-readout@@@@FRAGMENT:polar-legend@@</div>
         @@FRAGMENT:coordinate-summary@@
         @@FRAGMENT:density-navigation@@
+        </details></figcaption>
+        @@FRAGMENT:order-legend@@@@FRAGMENT:metric-legend@@
         @@FRAGMENT:print-summary@@
       </figure>
       <aside class="controls" id="controls" aria-label="形と時間の調整">
