@@ -49,3 +49,17 @@ def loads_json(text):
 
 def load_json(path):
     return loads_json(Path(path).read_text(encoding='utf-8'))
+
+
+def load_bounded_json(path, max_bytes):
+    """Read at most limit+1 bytes from a regular file, without following symlinks."""
+    if type(max_bytes) is not int or max_bytes < 1:
+        raise ValueError('JSONのサイズ上限は正の整数です')
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        raise ValueError('JSONは通常ファイルで指定してください')
+    with path.open('rb') as stream:
+        raw = stream.read(max_bytes + 1)
+    if len(raw) > max_bytes:
+        raise ValueError('JSONのサイズ上限を超えています')
+    return loads_json(raw.decode('utf-8'))
