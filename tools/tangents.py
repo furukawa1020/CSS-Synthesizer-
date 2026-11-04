@@ -154,9 +154,10 @@ def main(argv=None):
         from .coordinate_batch import inspect_manifest
         result = inspect_manifest(args.batch, lambda data, limit: inspect_tangent_snapshot(data, limit, require_all=args.require_all), args.tolerance_degrees, error_key='max_error_degrees')
     else:
-        from .json_data import load_json
+        from .json_data import load_bounded_json
+        from .coordinate_batch import MAX_SNAPSHOT_BYTES
         try:
-            result = inspect_tangent_snapshot(load_json(args.snapshot), args.tolerance_degrees, require_all=args.require_all)
+            result = inspect_tangent_snapshot(load_bounded_json(args.snapshot, MAX_SNAPSHOT_BYTES), args.tolerance_degrees, require_all=args.require_all)
         except (OSError, UnicodeError, ValueError) as error:
             result = {'ok': False, 'errors': [str(error)], 'checked_points': 0, 'max_error_degrees': 0}
     print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))
