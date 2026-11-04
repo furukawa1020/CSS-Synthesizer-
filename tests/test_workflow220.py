@@ -41,3 +41,11 @@ class Workflow220Tests(unittest.TestCase):
             out=StringIO()
             with redirect_stdout(out): self.assertEqual(main([str(p)]),1)
             self.assertIn('サイズ上限',out.getvalue())
+
+    def test_large_rotation(self):
+        from tools.coordinates import inspect_snapshot
+        import math
+        rotation=1e308
+        angle=math.radians(rotation%360)
+        snapshot=dict(model='wave',k=1,phase_degrees=0,amplitude=1,clock_radians=0,count=2,stage=dict(x=0,y=0,width=100,height=100),rotation_degrees=rotation,points=[dict(index=0,x=50-44*math.cos(angle),y=50+44*math.sin(angle))])
+        self.assertTrue(inspect_snapshot(snapshot)['ok'])
