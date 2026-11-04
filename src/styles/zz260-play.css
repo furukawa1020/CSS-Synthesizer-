@@ -134,3 +134,10 @@
 .lab:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(320px,calc(100svh - 200px)); }
 
 }
+
+@media screen {
+.gallery-open { font-weight:600; color:var(--accent); min-block-size:48px; }
+.gallery-list h2 { font-size:1.125rem; }
+.gallery-main > h1 { font-weight:600; }
+
+}
