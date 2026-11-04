@@ -267,12 +267,13 @@ def main(argv=None):
     mode.add_argument('--check', action='store_true', help='検査だけ行い、ファイルを生成しない')
     mode.add_argument('--canonical', action='store_true', help='正規化したJSONを標準出力へ出す')
     mode.add_argument('--list-view', action='store_true', help='viewのキーと選択IDをJSONで列挙')
+    mode.add_argument('--list-models', action='store_true', help='利用できるモデルIDをJSONで列挙')
     args = parser.parse_args(argv)
-    if args.list_view:
+    if args.list_view or args.list_models:
         if args.scene is not None:
-            parser.error('--list-viewにsceneは指定しません')
+            parser.error('一覧取得にsceneは指定しません')
         import json
-        print(json.dumps(view_schema(), ensure_ascii=False, indent=2))
+        print(json.dumps(view_schema() if args.list_view else [m['id'] for m in load_models(ROOT / 'src')], ensure_ascii=False, indent=2))
         return 0
     if args.scene is None:
         parser.error('sceneを指定してください')
