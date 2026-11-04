@@ -88,3 +88,14 @@
 .lab:has(#focus-view:checked) .workspace > .scene > .scene-actions { position:relative; inset:auto; justify-content:flex-end; margin-block-end:8px; }
 .lab:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(320px,calc(100svh - 180px)); }
 }
+
+@media screen {
+.scene-caption { justify-content:flex-start; gap:4px 20px; padding-block:12px 0; font-size:.8125rem; align-items:baseline; }
+.time-status::before { inline-size:5px; block-size:5px; margin-inline-end:6px; }
+.coordinate-summary { margin-block:8px; }
+.density-picker { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 20px; margin-block-start:0; font-size:.8125rem; border-block-start:1px solid var(--rule); }
+.density-links { gap:8px; }
+.page-change-note summary { min-block-size:44px; font-size:.8125rem; text-decoration:underline; }
+.page-change-note[open] { flex-basis:100%; }
+.page-change-note p { font-size:.8125rem; margin-block-end:12px; max-inline-size:65ch; }
+}
