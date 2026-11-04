@@ -56,3 +56,10 @@ class Workflow220Tests(unittest.TestCase):
         self.assertFalse(result['ok'])
         self.assertEqual(result['checked_files'],0)
         self.assertIn('require_all',result['errors'][0])
+
+    def test_scene_check(self):
+        from tools.scene import main
+        from tools.build import ROOT
+        from contextlib import redirect_stdout
+        from io import StringIO
+        with redirect_stdout(StringIO()): self.assertEqual(main([str(ROOT/'qa/scene-example.json'),'--check']),0)

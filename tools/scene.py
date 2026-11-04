@@ -245,10 +245,16 @@ def main(argv=None):
     import sys
     parser = argparse.ArgumentParser(description='JSONの保存シーンからHTML/CSSを生成する')
     parser.add_argument('scene', type=Path)
-    parser.add_argument('--output', type=Path, required=True, help='新規出力フォルダー')
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--output', type=Path, help='新規出力フォルダー')
+    mode.add_argument('--check', action='store_true', help='検査だけ行い、ファイルを生成しない')
     args = parser.parse_args(argv)
     try:
-        output = export_scene(load_scene(args.scene), args.output)
+        data = load_scene(args.scene)
+        if args.check:
+            print('保存シーンは有効です')
+            return 0
+        output = export_scene(data, args.output)
     except (OSError, ValueError, UnicodeError) as error:
         print(f'保存シーンを生成できません: {error}', file=sys.stderr)
         return 1
