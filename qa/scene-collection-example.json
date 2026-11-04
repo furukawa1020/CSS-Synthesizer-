@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "title": "静止曲線の小さな作品集",
+  "scenes": [
+    {
+      "id": "rose",
+      "scene": {
+        "version": 1,
+        "model": "rose",
+        "title": "三葉の花",
+        "k": 3,
+        "phase": 90,
+        "amplitude": 80,
+        "count": 96
+      }
+    },
+    {
+      "id": "ellipse",
+      "scene": {
+        "version": 1,
+        "model": "ellipse",
+        "title": "傾けた楕円",
+        "k": 2,
+        "phase": 45,
+        "amplitude": 75,
+        "count": 96,
+        "view": {
+          "point-shape": "shape-ring"
+        }
+      }
+    }
+  ]
+}
