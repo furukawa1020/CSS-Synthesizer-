@@ -77,3 +77,14 @@
 .parameter-jumps a:hover { background:#eee; }
 .parameter-jumps p { font-size:.8125rem; line-height:1.6; margin-block:8px; }
 }
+
+@media screen {
+.workspace > .scene > .scene-actions { position:absolute; inset:8px 8px auto auto; margin:0; z-index:3; min-block-size:44px; }
+.focus-toggle { background:var(--paper); color:var(--ink); padding-inline:10px; font-size:.8125rem; }
+.stage-heading { inset:16px 16px auto; padding-inline-end:150px; font-size:.8125rem; letter-spacing:0; }
+.workspace > .scene .stage-heading > span:last-child { display:none; }
+.stage-footnote { inset:auto 16px 12px; font-size:.75rem; }
+.sample-count { inset:auto 16px 38px auto; font-size:.75rem; }
+.lab:has(#focus-view:checked) .workspace > .scene > .scene-actions { position:relative; inset:auto; justify-content:flex-end; margin-block-end:8px; }
+.lab:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(320px,calc(100svh - 180px)); }
+}
