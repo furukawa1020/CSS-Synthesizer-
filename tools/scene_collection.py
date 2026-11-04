@@ -91,3 +91,55 @@ def write_checksums(directory):
             raw = path.read_bytes()
             entries.append(dict(path=path.relative_to(directory).as_posix(), bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
     (directory / 'checksums.json').write_text(json.dumps(dict(version=1, files=entries), sort_keys=True, indent=2) + '\n', encoding='utf-8')
+
+
+def verify_collection(directory):
+    import hashlib
+    from pathlib import PurePosixPath
+    errors, checked, total = [], 0, 0
+    try:
+        directory = Path(directory)
+        if directory.is_symlink() or not directory.is_dir():
+            raise ValueError('シーン集は通常のディレクトリで指定してください')
+        data = load_collection(directory / 'collection.json')
+        expected = {'collection.json', 'index.html'} | {entry['id'] + '/' + name for entry in data['scenes'] for name in ('index.html', 'style.css', 'engine.css', 'scene.json')}
+        manifest = load_bounded_json(directory / 'checksums.json', MAX_COLLECTION_BYTES)
+        if not isinstance(manifest, dict) or set(manifest) != {'version', 'files'} or type(manifest['version']) is not int or manifest['version'] != 1 or not isinstance(manifest['files'], list) or len(manifest['files']) != len(expected):
+            raise ValueError('シーン集のチェックサム形式が不正です')
+        actual = set()
+        # Only inspect the bounded expected tree, never follow symlink directories.
+        for path in directory.iterdir():
+            if path.is_symlink(): raise ValueError('シーン集内のsymlinkは検査しません')
+            if path.is_dir():
+                if path.name not in {entry['id'] for entry in data['scenes']}: raise ValueError('シーン集に余分なディレクトリがあります')
+                for child in path.iterdir():
+                    if child.is_symlink() or not child.is_file(): raise ValueError('シーン集内に不正な項目があります')
+                    actual.add(child.relative_to(directory).as_posix())
+            elif path.is_file(): actual.add(path.name)
+            else: raise ValueError('シーン集内に通常ファイル以外があります')
+        if actual != expected | {'checksums.json'}:
+            raise ValueError('シーン集のファイル一覧が一致しません')
+        seen = set()
+        for entry in manifest['files']:
+            if not isinstance(entry, dict) or set(entry) != {'path', 'bytes', 'sha256'}:
+                raise ValueError('チェックサムのファイル記述が不正です')
+            name = entry['path']
+            if not isinstance(name, str) or name not in expected or name in seen or PurePosixPath(name).is_absolute():
+                raise ValueError('チェックサムのパスが不正です')
+            seen.add(name)
+            size, digest = entry['bytes'], entry['sha256']
+            if type(size) is not int or not 0 <= size <= 2*1024*1024 or not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest):
+                raise ValueError('チェックサムのサイズ・SHA-256が不正です')
+            with (directory / name).open('rb') as stream: raw = stream.read(2*1024*1024+1)
+            total += len(raw)
+            if total > 32*1024*1024: raise ValueError('シーン集の合計サイズ上限を超えています')
+            if len(raw) != size or hashlib.sha256(raw).hexdigest() != digest:
+                raise ValueError('内容のチェックサムが一致しません: ' + name)
+            checked += 1
+        for entry in data['scenes']:
+            from .scene import load_scene
+            if load_scene(directory / entry['id'] / 'scene.json') != entry['scene']:
+                raise ValueError('シーン集と各シーンの初期状態が一致しません')
+    except (OSError, ValueError, UnicodeError) as error:
+        errors.append(str(error))
+    return dict(ok=not errors, errors=errors, checked_files=checked)
