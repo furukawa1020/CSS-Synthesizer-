@@ -228,3 +228,45 @@ footer { font-size:.8125rem; }
 }
 
 @media screen { .comparison-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 24px; } }
+
+@media screen {
+@media (max-width:900px) {
+ .page-header { padding:8px 16px; }
+ .lab { padding:16px 16px 0; }
+ .workspace, .comparison-workspace { grid-template-columns:minmax(0,1fr); gap:20px; }
+ .workspace > .scene { position:relative; inset-block-start:auto; }
+ .workspace > .scene > .stage { block-size:clamp(340px,68vw,620px); }
+ .workspace > .controls, .comparison-controls.controls { border:0; padding:0; inline-size:100%; }
+ .controls .parameters { grid-row:auto; }
+ .gallery-main { padding:20px 16px; }
+ .gallery-filter .view-choices { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .gallery-index-toggle[open] .gallery-index ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .comparison-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+ .page-header { flex-wrap:wrap; gap:0 16px; }
+ .workspace-nav { gap:0 20px; }
+ .workspace-nav a { font-size:.8125rem; }
+ .page-header h1 { font-size:.9375rem; }
+ .lab { padding:12px 12px 0; }
+ .workspace > .scene > .stage { block-size:max(320px,90vw); }
+ .stage-heading { inset:12px 12px auto; padding-inline-end:140px; font-size:.75rem; }
+ .stage-footnote { inset:auto 12px 10px; }
+ .readout { font-size:1.5rem; }
+ .parameter { padding-block:12px 6px; }
+ .scene-caption { column-gap:12px; }
+ .gallery-list > li { grid-template-columns:minmax(0,1fr); gap:16px; }
+ .gallery-example .stage { block-size:max(250px,76vw); }
+ .gallery-filter .view-choices, .comparison-options { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .gallery-index-toggle[open] .gallery-index ul { grid-template-columns:minmax(0,1fr); }
+ .comparison-plots { grid-template-columns:minmax(0,1fr); }
+ .comparison-example .stage { block-size:max(280px,85vw); }
+ .preset-picker nav a { grid-template-columns:minmax(0,1fr); gap:2px; }
+ .preset-picker nav a span { text-align:start; }
+ .view-panel:popover-open { inline-size:100%; padding-inline:16px; }
+ .view-option .view-choices { gap:0 8px; }
+ .view-description, .view-option-note { overflow-wrap:anywhere; }
+ .density-picker { gap:0 12px; }
+}
+@media (prefers-reduced-motion:reduce) { .model-picker, .guide-section, .comparison-picker { scroll-behavior:auto; } }
+}
