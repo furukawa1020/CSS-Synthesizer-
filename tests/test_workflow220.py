@@ -129,3 +129,15 @@ class Workflow220Tests(unittest.TestCase):
         self.assertIn('&lt;試験&gt;',html)
         self.assertIn('href="one/index.html"',html)
         self.assertNotIn('<script',html)
+
+    def test_collection_hashes(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from tools.scene_collection import write_checksums
+        import json,hashlib
+        with TemporaryDirectory() as folder:
+            p=Path(folder); (p/'index.html').write_text('abc')
+            write_checksums(p)
+            entry=json.loads((p/'checksums.json').read_text())['files'][0]
+            self.assertEqual(entry['sha256'],hashlib.sha256(b'abc').hexdigest())
+            self.assertEqual(entry['bytes'],3)
