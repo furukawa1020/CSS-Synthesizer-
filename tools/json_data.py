@@ -26,8 +26,25 @@ def _float(value):
 
 def loads_json(text):
     """Reject duplicate object keys and non-finite numeric extensions."""
-    return json.loads(text, object_pairs_hook=_object,
-                      parse_constant=_constant, parse_float=_float)
+    try:
+        result = json.loads(text, object_pairs_hook=_object,
+                          parse_constant=_constant, parse_float=_float)
+    except RecursionError as error:
+        raise ValueError('JSONの入れ子が深すぎます') from error
+    # Newer Python JSON decoders can parse iteratively. Keep the same bound
+    # across Python versions instead of relying solely on RecursionError.
+    stack = [iter((result,))]
+    while stack:
+        try:
+            value = next(stack[-1])
+        except StopIteration:
+            stack.pop()
+            continue
+        if isinstance(value, (dict, list)):
+            if len(stack) > 128:
+                raise ValueError('JSONの入れ子が深すぎます')
+            stack.append(iter(value.values() if isinstance(value, dict) else value))
+    return result
 
 
 def load_json(path):
