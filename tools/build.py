@@ -45,6 +45,7 @@ def single_html(template, models, presets, count, preset=None):
         '@@PRESET_LINKS@@': preset_links(presets, preset),
         '@@STARTER_LINKS@@': starter_links(presets, preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
+        '@@PLAY_ORIGIN@@': escape(preset['name']) + ' から始めています' if preset else 'まず上の絵を選ぶか、そのまま下の操作を試せます',
         '@@COUNT@@': str(count),
         '@@SAMPLES@@': '\n'.join(
             f'<i class="sample" data-index="{index}" '
