@@ -109,3 +109,17 @@
 .preset-picker nav a:hover { background:#f5f5f5; }
 .preset-picker p { font-size:.8125rem; line-height:1.6; }
 }
+
+@media screen {
+.view-settings { margin-block-start:0; }
+.view-settings > .view-settings-open { inline-size:100%; justify-content:space-between; border:0; border-block-start:1px solid var(--rule); padding:10px 0; min-block-size:48px; }
+.view-settings-open::after { content:'↗'; }
+@supports selector(:popover-open) {
+ .view-panel:popover-open { inset:0 0 0 auto; margin:0; inline-size:420px; max-inline-size:100%; block-size:100dvh; max-block-size:100dvh; padding:20px 24px; border-block:0; border-inline:1px solid var(--rule); }
+ .view-panel::backdrop { background:rgb(0 0 0 / .2); }
+ .view-panel:popover-open .view-panel-header { inset-block-start:-20px; padding-block:12px; }
+}
+.view-panel-header h2 { font-size:1rem; font-weight:600; }
+.view-description { font-size:.8125rem; line-height:1.7; margin-block:16px; }
+.view-settings .view-settings-close { border:0; text-decoration:underline; padding-inline:8px; }
+}
