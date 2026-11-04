@@ -77,3 +77,15 @@
 .more-tools .preset-picker nav { max-inline-size:720px; }
 .more-tools .clock-settings { max-inline-size:720px; }
 }
+
+@media screen {
+:root { --paper:#faf8f3; --ink:#27231f; --muted:#655c52; --rule:#d7d0c5; --accent:#b83b20; background:var(--paper); color:var(--ink); }
+.page-header { background:var(--paper); }
+.starter-art { color:var(--accent); }
+
+}
+
+@media screen and (forced-colors:none) {
+.lab .stage { background:#f2eadb; color:#ba3d20; --grid-color:#49342310; --axis-color:#49342328; --circle-color:#49342318; }
+.lab .stage-heading, .lab .stage-footnote, .lab .axis-label { color:#675a4d; }
+}
