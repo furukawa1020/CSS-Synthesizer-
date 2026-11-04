@@ -29,3 +29,15 @@ class Workflow220Tests(unittest.TestCase):
             out=StringIO()
             with redirect_stdout(out): self.assertEqual(main([str(p)]),1)
             self.assertIn('サイズ上限',out.getvalue())
+
+    def test_tangent_cli_limit(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from contextlib import redirect_stdout
+        from io import StringIO
+        from tools.tangents import main
+        with TemporaryDirectory() as folder:
+            p=Path(folder)/'a.json'; p.write_text(' '*(2*1024*1024+1))
+            out=StringIO()
+            with redirect_stdout(out): self.assertEqual(main([str(p)]),1)
+            self.assertIn('サイズ上限',out.getvalue())
