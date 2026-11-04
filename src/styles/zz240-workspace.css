@@ -44,3 +44,14 @@
 .clock-settings > summary { border-block-start:1px solid var(--rule); border-block-end:0; }
 .clock-settings[open] { padding-block-end:12px; }
 }
+
+@media screen {
+.parameters { padding:0; }
+.parameter { padding:10px 0 6px; border-block-start:0; }
+.parameter + .parameter { border-block-start:1px solid var(--rule); }
+.parameter h2 { font-size:.875rem; font-weight:500; align-items:baseline; }
+.readout { font:1.5rem/1.3 ui-monospace,SFMono-Regular,Consolas,monospace; font-variant-numeric:tabular-nums; letter-spacing:-.035em; }
+.parameter > p { font-size:.8125rem; margin-block:0; line-height:1.5; }
+.parameter-help-trigger { font-family:inherit; font-size:.875rem; }
+.input-help { font-size:.8125rem; margin:10px 0 14px; line-height:1.6; }
+}
