@@ -242,6 +242,7 @@ def export_scene(data, destination, root=ROOT):
 
 def standalone_html(html):
     import re
+    html = re.sub(r'<section class="play-start"[^>]*>.*?</section>', '', html, flags=re.S)
     html = re.sub(r'<details class="preset-picker">.*?</details>', '', html, flags=re.S)
     html = re.sub(r'<nav class="density-picker"[^>]*>.*?</nav>', '', html, flags=re.S)
     html = re.sub(r'<p>描画点数：.*?</p>', '<p>点数は保存シーンJSONのcountで指定します。変更する場合は再生成してください。</p>', html, flags=re.S)
