@@ -8,3 +8,13 @@
 .guide-quick { grid-column:1/-1; }
 .guide-quick .operation-guide-trigger { margin:0; }
 }
+
+@media screen {
+.lab { max-inline-size:1800px; padding:20px 24px 0; }
+.workspace { grid-template-columns:minmax(0,1fr) 340px; gap:24px; align-items:start; }
+.scene { inset-block-start:16px; }
+.workspace > .scene > .stage { block-size:max(420px,calc(100svh - 236px)); }
+.workspace > .controls { display:flex; gap:0; padding-inline-start:24px; border-inline-start:1px solid var(--rule); }
+@media (min-width:1600px) { .workspace { grid-template-columns:minmax(0,1fr) 380px; } }
+@media (max-width:1100px) and (min-width:901px) { .workspace { grid-template-columns:minmax(0,1fr) 320px; gap:20px; } .scene { position:sticky; } }
+}
