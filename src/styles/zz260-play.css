@@ -21,3 +21,11 @@
 .scene .scene-actions { position:static; inset:auto; margin:0; }
 .scene:has(.saved-scene-title) .play-heading { display:none; }
 }
+
+@media screen {
+.play-transport { display:flex; flex-wrap:wrap; align-items:center; gap:8px 24px; margin-block-start:12px; }
+.play-transport .time-controls { margin:0; min-inline-size:min(100%,320px); }
+.play-transport .choices label { min-block-size:48px; font-size:.9375rem; }
+.edit-shape { display:inline-flex; align-items:center; min-block-size:44px; font-size:.875rem; }
+.play-transport .time-controls .choices label:has(:checked) { background:var(--accent); color:white; }
+}
