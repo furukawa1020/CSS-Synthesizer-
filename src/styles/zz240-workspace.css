@@ -55,3 +55,14 @@
 .parameter-help-trigger { font-family:inherit; font-size:.875rem; }
 .input-help { font-size:.8125rem; margin:10px 0 14px; line-height:1.6; }
 }
+
+@media screen {
+.input-band { min-block-size:56px; background:#f5f5f5; border-block:1px solid var(--rule); scrollbar-color:#777 #e2e2e2; }
+.band-wrap { padding-inline:44px; }
+.tick { color:#444; padding-block-start:3px; }
+.tick::after { background:#888; block-size:10px; }
+.band-cursor { inline-size:1px; block-size:12px; inset-inline-start:50%; inset-block-end:18px; clip-path:none; background:var(--ink); }
+.input-band::scroll-button(*) { background:#f5f5f5; border-block:1px solid var(--rule); font-size:1.25rem; }
+.input-band::scroll-button(*):hover { background:#e5e5e5; }
+.input-band::scroll-button(*):disabled { background:#fafafa; color:#777; }
+}
