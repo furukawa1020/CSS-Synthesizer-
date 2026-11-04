@@ -10,6 +10,7 @@ import sys
 from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
+from .starters import starter_links
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors, gallery_styles, GALLERY_COUNTS, gallery_filename
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
@@ -42,6 +43,7 @@ def single_html(template, models, presets, count, preset=None):
         '@@TIME_STOP@@': ' checked' if preset else '',
         '@@BASELINE_LABEL@@': f"基準値：k={state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
         '@@PRESET_LINKS@@': preset_links(presets, preset),
+        '@@STARTER_LINKS@@': starter_links(presets, preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
         '@@COUNT@@': str(count),
         '@@SAMPLES@@': '\n'.join(
