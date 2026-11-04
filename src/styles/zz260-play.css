@@ -49,3 +49,18 @@
 .band-cursor { background:var(--accent); inline-size:2px; }
 .input-help { grid-column:1/-1; margin-block:8px; max-inline-size:90ch; }
 }
+
+@media screen {
+.lab { max-inline-size:1160px; padding:16px 24px 0; }
+.workspace { grid-template-columns:minmax(0,1fr); gap:16px; }
+.workspace > .scene { position:relative; inset-block-start:auto; }
+.workspace > .scene > .stage { block-size:clamp(300px,36svh,380px); }
+.workspace > .controls { border:0; padding:0; display:block; }
+.parameters { grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 28px; }
+.parameter { padding-block:12px 0; border-block-start:1px solid var(--rule); }
+.parameter h2 { font-size:.9375rem; }
+.parameter + .parameter { border-block-start:1px solid var(--rule); }
+.quick-values { gap:0 4px; }
+@supports (scroll-timeline: --k-input inline) and (animation-timeline: --k-input) and (timeline-scope: --k-input, --phase-input, --amplitude-input) and (scroll-initial-target: nearest) and (container-type: size) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) and (width: calc(sin(1rad) * 1px)) and selector(:has(*)) and selector(::scroll-button(inline-start)) { .parameters.continuous-controls { display:grid; } }
+
+}
