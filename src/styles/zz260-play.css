@@ -5,3 +5,11 @@
 .play-steps { display:flex; flex-wrap:wrap; gap:8px 28px; padding:0; margin:0; list-style:none; font-size:.875rem; }
 .play-steps strong { font:600 .875rem ui-monospace,monospace; padding-inline-end:4px; }
 }
+
+@media screen {
+.starter-links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-block-start:10px; }
+.starter-links a { display:flex; align-items:center; gap:18px; text-decoration:none; padding:4px 8px 4px 0; border-block-end:2px solid transparent; min-block-size:72px; font-weight:550; }
+.starter-links a:hover, .starter-links a[aria-current] { border-block-end-color:var(--accent); }
+.starter-art { position:relative; display:block; inline-size:64px; aspect-ratio:1; flex:none; color:var(--accent); }
+.starter-art i { position:absolute; display:block; inline-size:2px; block-size:2px; border-radius:50%; background:currentColor; translate:-50% -50%; }
+}
