@@ -161,3 +161,8 @@ class Workflow220Tests(unittest.TestCase):
         out=StringIO()
         with redirect_stdout(out):self.assertEqual(main(['/missing','--verify']),1)
         self.assertFalse(json.loads(out.getvalue())['ok'])
+
+    def test_example_collection(self):
+        from tools.scene_collection import load_collection
+        from tools.build import ROOT
+        self.assertEqual(len(load_collection(ROOT/'qa/scene-collection-example.json')['scenes']),2)

@@ -45,6 +45,8 @@ HTMLのDialog・PopoverとMathMLによる説明を参照できます。開閉の
 
 `python3 -m tools.scene qa/scene-example.json --output tmp/my-scene`で、記入したモデル・入力・点数・停止時計・表示設定・座標加工から独立HTML/CSSと再生成用JSONを作れます。先に`tmp`を作成し、新規の出力先を指定します。ブラウザー内の変更を読み取る自動保存ではありません。[使い方と制限](docs/batch140/scenes.md)。
 
+保存シーンは`--check --json`で生成前に検査、`--canonical`で正規JSONを取得できます。`--list-models`・`--list-view`で対応するIDを調べられます。複数の状態は`python3 -m tools.scene_collection qa/scene-collection-example.json --output tmp/my-collection`で索引付きのシーン集にできます。生成後は`python3 -m tools.scene_collection tmp/my-collection --verify`で内容ハッシュを検査できます。[手順と制限](docs/batch220/scenes.md)。
+
 `python3 -m tools.validate --json`で生成鮮度・ソース・HTML/CSS・保存した全観測バッチをまとめて検査できます。
 
 ## 配布する・検査する
