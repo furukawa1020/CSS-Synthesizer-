@@ -90,3 +90,12 @@ class Workflow220Tests(unittest.TestCase):
         out=StringIO()
         with redirect_stdout(out):self.assertEqual(main(['--list-models']),0)
         self.assertIn('rose',json.loads(out.getvalue()))
+
+    def test_scene_json_error(self):
+        from tools.scene import main
+        from contextlib import redirect_stdout
+        from io import StringIO
+        import json
+        out=StringIO()
+        with redirect_stdout(out): self.assertEqual(main(['/missing.json','--check','--json']),1)
+        self.assertFalse(json.loads(out.getvalue())['ok'])
