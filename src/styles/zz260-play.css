@@ -141,3 +141,9 @@
 .gallery-main > h1 { font-weight:600; }
 
 }
+
+@media screen {
+.play-task { margin:0 0 8px; font-size:.875rem; line-height:1.6; max-inline-size:90ch; }
+.controls { scroll-margin-block:16px; }
+
+}
