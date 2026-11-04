@@ -89,3 +89,13 @@
 .lab .stage { background:#f2eadb; color:#ba3d20; --grid-color:#49342310; --axis-color:#49342328; --circle-color:#49342318; }
 .lab .stage-heading, .lab .stage-footnote, .lab .axis-label { color:#675a4d; }
 }
+
+@media screen {
+.scene-caption { display:block; padding:0; }
+.scene-readouts > summary { min-block-size:44px; font-size:.8125rem; color:var(--muted); }
+.scene-readouts[open] { padding-block-end:12px; }
+.scene-readouts .density-picker { margin-block-start:8px; }
+.scene-readouts .time-status { margin-inline-end:20px; }
+.more-tools .view-settings-open { font-size:.875rem; }
+.explanation { margin-block-start:20px; }
+}
