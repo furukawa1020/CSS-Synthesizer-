@@ -123,3 +123,18 @@
 .view-description { font-size:.8125rem; line-height:1.7; margin-block:16px; }
 .view-settings .view-settings-close { border:0; text-decoration:underline; padding-inline:8px; }
 }
+
+@media screen {
+.view-group { margin:0; }
+.view-group > summary { font-size:.875rem; min-block-size:52px; justify-content:space-between; }
+.view-group > summary::after { content:'＋'; }
+.view-group[open] > summary::after { content:'−'; }
+.view-group[open] { padding-block-end:16px; }
+.view-option legend { font-size:.8125rem; font-weight:600; }
+.view-option .view-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 12px; }
+.view-option label { font-size:.8125rem; min-inline-size:0; }
+.view-option .view-choices label:has(:checked) { font-weight:650; text-decoration:underline; text-underline-offset:.25em; }
+.view-option-note { font-size:.8125rem; line-height:1.7; color:var(--muted); }
+.view-reset { font-size:.8125rem; inline-size:100%; margin-block:0 12px; }
+.view-panel .view-option p:empty { display:none; }
+}
