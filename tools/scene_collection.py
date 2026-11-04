@@ -52,6 +52,9 @@ def export_collection(data, destination):
         for entry in data['scenes']:
             export_scene(entry['scene'], candidate / entry['id'])
         (candidate / 'index.html').write_text(collection_index(data), encoding='utf-8')
+        import json
+        (candidate / 'collection.json').write_text(json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2) + '\n', encoding='utf-8')
+        write_checksums(candidate)
         destination.mkdir()
         moved = []
         try:
@@ -75,3 +78,16 @@ def collection_index(data):
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'\">"
             '<title>' + title + '</title><style>body{font:1rem/1.8 system-ui;margin:2rem auto;padding:0 1rem;max-width:60rem}li{margin:1rem 0}a:focus-visible{outline:3px solid;outline-offset:4px}</style></head><body><main><h1>' + title + '</h1><p>選んだ初期状態から始まる独立したシーン集です。画面内の変更は自動保存されません。各フォルダーのscene.jsonから再生成できます。</p><ol>' + items + '</ol></main></body></html>\n')
+
+
+def write_checksums(directory):
+    """Content checksums detect corruption; they do not authenticate an author."""
+    import hashlib
+    import json
+    directory = Path(directory)
+    entries = []
+    for path in sorted(directory.rglob('*')):
+        if path.is_file() and path.name != 'checksums.json':
+            raw = path.read_bytes()
+            entries.append(dict(path=path.relative_to(directory).as_posix(), bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
+    (directory / 'checksums.json').write_text(json.dumps(dict(version=1, files=entries), sort_keys=True, indent=2) + '\n', encoding='utf-8')
