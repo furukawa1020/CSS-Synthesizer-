@@ -270,3 +270,16 @@ footer { font-size:.8125rem; }
 }
 @media (prefers-reduced-motion:reduce) { .model-picker, .guide-section, .comparison-picker { scroll-behavior:auto; } }
 }
+
+@media screen {
+summary:focus-visible, button:focus-visible, a:focus-visible, .input-band:focus-visible { outline:3px solid #005fcc; outline-offset:3px; }
+@media (forced-colors:active) {
+ .time-controls .choices label:has(:checked), .model-controls .choices label:has(:checked) { background:Highlight; color:HighlightText; }
+ .focus-toggle { background:Canvas; color:CanvasText; border:1px solid CanvasText; }
+ .input-band::scroll-button(*) { background:ButtonFace; color:ButtonText; border-color:ButtonText; }
+ summary:focus-visible, button:focus-visible, a:focus-visible, .input-band:focus-visible { outline-color:Highlight; }
+}
+
+}
+
+@media print { .gallery-tools, .gallery-index-toggle, .comparison-picker, .guide-quick { display:none !important; } }
