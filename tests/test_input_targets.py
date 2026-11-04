@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from decimal import Decimal
 
 from tools.build import ROOT, build, stops
 
@@ -13,6 +14,7 @@ class Targets(HTMLParser):
         super().__init__()
         self.targets = {}
         self.links = {}
+        self.all_links = []
         self.current = None
 
     def handle_starttag(self, tag, attrs):
@@ -23,11 +25,13 @@ class Targets(HTMLParser):
         elif tag == 'a' and attrs.get('href', '').startswith('#tick-'):
             self.current = ('link', attrs['href'][1:])
             self.links[attrs['href'][1:]] = ''
+            self.all_links.append([attrs['href'][1:], ''])
 
     def handle_data(self, data):
         if self.current:
             kind, key = self.current
             (self.targets if kind == 'target' else self.links)[key] += data
+            if kind == 'link': self.all_links[-1][1] += data
 
     def handle_endtag(self, tag):
         if self.current and tag == ('span' if self.current[0] == 'target' else 'a'):
@@ -48,9 +52,16 @@ class InputTargetTests(unittest.TestCase):
             parser = Targets()
             parser.feed((self.directory / page).read_text())
             actual = {key: value for key, value in parser.links.items() if key.startswith(prefix)}
-            self.assertEqual(list(actual.values()), labels)
+            self.assertCountEqual(list(actual.values()), labels)
             for key, value in actual.items():
                 self.assertEqual(parser.targets[key], value)
+            for key, value in parser.all_links:
+                if not key.startswith(prefix): continue
+                target = parser.targets[key]
+                unit = target[-1] if target[-1] in '%°' else ''
+                label_unit = value[-1] if value[-1] in '%°' else ''
+                self.assertEqual(label_unit, unit)
+                self.assertEqual(Decimal(value.removesuffix(unit)), Decimal(target.removesuffix(unit)))
 
     def test_k_links_have_existing_targets_with_matching_integer_values(self):
         self.check_group('tick-k-', [f'{value:.2f}' for value in range(1, 9)])
@@ -58,8 +69,8 @@ class InputTargetTests(unittest.TestCase):
     def test_phase_links_have_existing_targets_with_matching_degree_values(self):
         self.check_group('tick-phase-', [f'{value}°' for value in range(0, 361, 90)])
 
-    def test_amplitude_links_target_the_four_existing_reference_ticks(self):
-        self.check_group('tick-amplitude-', [f'{value}%' for value in (25, 50, 75, 100)])
+    def test_amplitude_links_include_the_visible_sixty_percent_target(self):
+        self.check_group('tick-amplitude-', [f'{value}%' for value in (25, 50, 60, 75, 100)])
 
     def test_target_prefix_is_optional_and_cannot_inject_attributes(self):
         self.assertNotIn('id=', stops([1, 2], 1, str))
