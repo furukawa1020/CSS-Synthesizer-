@@ -1,4 +1,4 @@
-.axis-label { position: absolute; z-index: 1; font: .75rem/1.5 ui-monospace, monospace; color: #a9b6ac; pointer-events: none; white-space: nowrap; }
+.axis-label { position: absolute; z-index: 1; font: .75rem/1.5 ui-monospace, monospace; color: #b6b6b6; pointer-events: none; white-space: nowrap; }
 .axis-x-negative { inset-inline-start: calc(50% - 44cqmin); inset-block-start: 50%; translate: -50% 6px; }
 .axis-x-positive { inset-inline-start: calc(50% + 44cqmin); inset-block-start: 50%; translate: -50% 6px; }
 .axis-y-positive { inset-inline-start: 50%; inset-block-start: calc(50% - 44cqmin); translate: 6px -50%; }
