@@ -29,3 +29,7 @@
 .edit-shape { display:inline-flex; align-items:center; min-block-size:44px; font-size:.875rem; }
 .play-transport .time-controls .choices label:has(:checked) { background:var(--accent); color:white; }
 }
+
+@media screen {
+.play-next { margin:8px 0; font-size:.875rem; line-height:1.6; color:var(--ink); }
+}
