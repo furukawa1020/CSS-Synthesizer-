@@ -268,7 +268,13 @@ def main(argv=None):
     mode.add_argument('--canonical', action='store_true', help='正規化したJSONを標準出力へ出す')
     mode.add_argument('--list-view', action='store_true', help='viewのキーと選択IDをJSONで列挙')
     mode.add_argument('--list-models', action='store_true', help='利用できるモデルIDをJSONで列挙')
+    parser.add_argument('--json', action='store_true', help='検査・出力の結果をJSONで返す')
     args = parser.parse_args(argv)
+    import json
+    def report(ok, **fields):
+        print(json.dumps(dict(ok=ok, **fields), ensure_ascii=False))
+    if args.json and (args.canonical or args.list_view or args.list_models):
+        parser.error('--jsonは--checkまたは--outputと組み合わせます')
     if args.list_view or args.list_models:
         if args.scene is not None:
             parser.error('一覧取得にsceneは指定しません')
@@ -283,13 +289,16 @@ def main(argv=None):
             print(canonical_scene(data), end='')
             return 0
         if args.check:
-            print('保存シーンは有効です')
+            if args.json: report(True, scene=data)
+            else: print('保存シーンは有効です')
             return 0
         output = export_scene(data, args.output)
     except (OSError, ValueError, UnicodeError) as error:
-        print(f'保存シーンを生成できません: {error}', file=sys.stderr)
+        if args.json: report(False, errors=[str(error)])
+        else: print(f'保存シーンを生成できません: {error}', file=sys.stderr)
         return 1
-    print(f'保存シーンを生成しました: {output / "index.html"}')
+    if args.json: report(True, output=str(output), index=str(output / 'index.html'))
+    else: print(f'保存シーンを生成しました: {output / "index.html"}')
     return 0
 
 
