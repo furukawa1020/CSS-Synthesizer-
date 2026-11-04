@@ -242,9 +242,10 @@ def main(argv: list[str] | None = None) -> int:
         from .coordinate_batch import inspect_batch
         result = inspect_batch(args.batch, args.tolerance, require_all=args.require_all)
     else:
-        from .json_data import load_json
+        from .json_data import load_bounded_json
+        from .coordinate_batch import MAX_SNAPSHOT_BYTES
         try:
-            data = load_json(args.snapshot)
+            data = load_bounded_json(args.snapshot, MAX_SNAPSHOT_BYTES)
         except (OSError, UnicodeError, ValueError) as error:
             result = _result([f"観測JSONを読み取れません: {error}"])
         else:
