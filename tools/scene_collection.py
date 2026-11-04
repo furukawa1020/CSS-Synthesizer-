@@ -143,3 +143,33 @@ def verify_collection(directory):
     except (OSError, ValueError, UnicodeError) as error:
         errors.append(str(error))
     return dict(ok=not errors, errors=errors, checked_files=checked)
+
+
+def main(argv=None):
+    import argparse
+    import json
+    parser = argparse.ArgumentParser(description='明示JSONから独立シーン集を生成・検査する')
+    parser.add_argument('source', type=Path)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--output', type=Path, help='新規出力フォルダー')
+    mode.add_argument('--check', action='store_true', help='入力manifestだけを検査')
+    mode.add_argument('--verify', action='store_true', help='生成済みディレクトリの内容を検査')
+    args = parser.parse_args(argv)
+    try:
+        if args.verify:
+            result = verify_collection(args.source)
+        else:
+            data = load_collection(args.source)
+            if args.check:
+                result = dict(ok=True, scenes=len(data['scenes']))
+            else:
+                output = export_collection(data, args.output)
+                result = dict(ok=True, output=str(output), scenes=len(data['scenes']))
+    except (OSError, ValueError, UnicodeError) as error:
+        result = dict(ok=False, errors=[str(error)])
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result['ok'] else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

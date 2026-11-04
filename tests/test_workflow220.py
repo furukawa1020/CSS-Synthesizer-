@@ -152,3 +152,12 @@ class Workflow220Tests(unittest.TestCase):
             self.assertTrue(verify_collection(out)['ok'])
             (out/'rose/index.html').write_text('changed')
             self.assertFalse(verify_collection(out)['ok'])
+
+    def test_collection_cli_error(self):
+        from tools.scene_collection import main
+        from contextlib import redirect_stdout
+        from io import StringIO
+        import json
+        out=StringIO()
+        with redirect_stdout(out):self.assertEqual(main(['/missing','--verify']),1)
+        self.assertFalse(json.loads(out.getvalue())['ok'])
