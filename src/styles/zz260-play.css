@@ -33,3 +33,11 @@
 @media screen {
 .play-next { margin:8px 0; font-size:.875rem; line-height:1.6; color:var(--ink); }
 }
+
+@media screen {
+.quick-values { display:flex; flex-wrap:wrap; gap:0 8px; grid-column:1/-1; margin-block-start:4px; }
+.quick-values a { display:inline-flex; align-items:center; justify-content:center; min-inline-size:44px; min-block-size:44px; padding-inline:8px; font-size:.875rem; }
+.quick-values a:hover { background:#efece5; }
+.parameter-jumps { margin-block-start:0; }
+.parameter-jumps > summary { font-size:.75rem; }
+}
