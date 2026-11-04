@@ -40,7 +40,7 @@ def gallery_html(presets, models, count=96):
   <section><h2><a href="{preset['file']}">{escape(preset['name'])}<span aria-hidden="true"> ↗</span></a></h2>
     <p>{escape(names[preset['model']])}</p>
     <dl><div><dt>k</dt><dd>{preset['k']:.2f}</dd></div><div><dt>位相 φ</dt><dd>{preset['phase']}°</dd></div><div><dt>振幅 A</dt><dd>{preset['amplitude']}%</dd></div></dl>
-    <p>96点・時計 t = 0・停止</p><details class="curve-formula"><summary>この形の式</summary><div class="equations">{model_equations_html(definitions[preset['model']])}</div></details><a class="gallery-open" href="{preset['file']}">この形を開いて調整する</a><br><a class="gallery-back" href="#gallery-index">形の索引へ戻る</a>
+    <p>96点・時計 t = 0・停止</p><details class="curve-formula"><summary>この形の式</summary><div class="equations">{model_equations_html(definitions[preset['model']])}</div></details><a class="gallery-open" href="{preset['file']}">この形で遊ぶ</a><br><a class="gallery-back" href="#gallery-index">形の索引へ戻る</a>
   </section>
 </li>''')
     index = '<details class="gallery-index-toggle"><summary>形の索引</summary><nav class="gallery-index" id="gallery-index" aria-label="各形への移動"><p>形へ移動</p><ul>' + ''.join(f'<li data-index-model="{p["model"]}"><a href="#gallery-item-{p["file"].removesuffix(".html")}">{escape(p["name"])}</a></li>' for p in presets) + '</ul></nav></details>'
@@ -51,7 +51,7 @@ def gallery_html(presets, models, count=96):
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
 <title>形の一覧 — CSS 視覚シンセサイザー</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="engine.css"></head>
 <body class="gallery-page"><a class="skip-link" href="#gallery-index">形の索引へ進む</a><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">標準の画面へ ↗</a></header>
-<main class="gallery-main"><h1>形の一覧</h1><details class="gallery-about"><summary>この一覧について</summary><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
+<main class="gallery-main"><h1>遊ぶ形を選ぶ</h1><details class="gallery-about"><summary>この一覧について</summary><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p><p class="gallery-intro">図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></details>
 ''' + filters + totals + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
 '''
