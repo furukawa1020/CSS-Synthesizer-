@@ -77,4 +77,7 @@ def inspect_manifest(manifest, inspector, tolerance=.1, *, error_key="max_error"
 def inspect_batch(manifest, tolerance=.1, *, require_all=False):
     """Coordinate adapter; the bounded reader is shared with tangent evidence."""
     from .coordinates import inspect_snapshot
+    if type(require_all) is not bool:
+        return {'ok': False, 'checked_files': 0, 'checked_points': 0,
+                'max_error': 0.0, 'errors': ['require_allは真偽値で指定してください'], 'files': []}
     return inspect_manifest(manifest, lambda data, limit: inspect_snapshot(data, limit, require_all=require_all), tolerance)
