@@ -78,3 +78,9 @@
 .lab[data-home] .play-start { margin-block:24px 0; padding-block-start:16px; border-block-start:1px solid var(--rule); }
 .play-index-note { margin:0; font-size:.875rem; color:var(--muted); }
 }
+
+@media screen {
+.lab[data-home]:has(#focus-view:checked) .workspace { grid-template-columns:minmax(0,1fr); }
+.lab[data-home]:has(#focus-view:checked) .first-try { display:none; }
+.lab[data-home]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 220px)); }
+}
