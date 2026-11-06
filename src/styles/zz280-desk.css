@@ -28,3 +28,9 @@
   }
 }
 }
+
+@media screen {
+.lab[data-home] .play-heading { min-block-size:48px; }
+.lab[data-home] .play-heading h2 { font-size:1.25rem; font-weight:650; }
+.lab[data-home] .stage-heading, .lab[data-home] .stage-footnote { display:none; }
+}

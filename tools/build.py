@@ -49,6 +49,7 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
     tokens = {
         '@@FIRST_TRY@@': first_try() if home else '',
+        '@@DRAWING_TITLE@@': '円を線にする' if home else 'いまの模様',
         '@@HOME_ATTRIBUTE@@': ' data-home' if home else '',
         **model_tokens(models, selected=state['model']),
         '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}",
