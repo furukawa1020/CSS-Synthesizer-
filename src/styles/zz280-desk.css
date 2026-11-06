@@ -84,3 +84,18 @@
 .lab[data-home]:has(#focus-view:checked) .first-try { display:none; }
 .lab[data-home]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 220px)); }
 }
+
+@media screen and (forced-colors:active) {
+  .lab[data-home] .tick[id]:target { color:Highlight; }
+  .trial-steps a:focus-visible { outline-color:Highlight; }
+}
+@media print { .first-try { display:none !important; } }
+
+@media screen {
+@media (max-width:380px) {
+  .lab[data-home] .play-transport .choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .lab[data-home] .play-transport .choices label { gap:4px; padding-inline:3px; }
+  .lab[data-home] .quick-values { gap:0; }
+  .lab[data-home] .quick-values a { min-inline-size:44px; padding-inline:4px; }
+}
+}
