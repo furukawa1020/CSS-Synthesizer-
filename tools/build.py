@@ -35,7 +35,7 @@ def stops(values, initial, formatter, target_prefix=None):
 def first_try():
     return (
         '<div class="first-try continuous-controls">'
-        '<div class="trial-steps"><strong>位相を変えてみる</strong>'
+        '<div class="trial-steps"><strong>円を線にする</strong>'
         '<a href="#tick-phase-0" aria-label="位相を0度にする">0°</a>'
         '<a href="#tick-phase-1" aria-label="位相を90度にする">90°</a></div>'
         '<p>初期状態のまま0°で線、90°で円。続けて「動かす」で変化を見られます。</p></div>'
@@ -49,7 +49,7 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
     tokens = {
         '@@FIRST_TRY@@': first_try() if home else '',
-        '@@DRAWING_TITLE@@': '円を線にする' if home else 'いまの模様',
+        '@@DRAWING_TITLE@@': '描画' if home else 'いまの模様',
         '@@HOME_ATTRIBUTE@@': ' data-home' if home else '',
         **model_tokens(models, selected=state['model']),
         '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}",
@@ -58,10 +58,16 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         '@@TIME_STOP@@': ' checked' if preset or home else '',
         '@@BASELINE_LABEL@@': f"基準値：k={state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
         '@@PRESET_LINKS@@': preset_links(presets, preset),
+        '@@STARTER_TITLE@@': '別の模様を開く' if home else 'もようで遊ぶ',
+        '@@STARTER_STEPS@@': (
+            '<p class="play-index-note">見本を押すと、別ページでその模様の初期値から始まります。</p>' if home else
+            '<ol class="play-steps"><li><strong>1</strong> 好きな形を選ぶ</li>'
+            '<li><strong>2</strong> 動かす・とめる</li><li><strong>3</strong> 帯や数値で形を変える</li></ol>'
+        ),
         '@@STARTER_LINKS@@': starter_links(presets, preset),
         '@@PLAY_TASK@@': '円と線を比べるときは、リサージュ・反復2・初期の停止位置で試します。' if home else play_task(preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
-        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else '下の0°と90°を押す' if home else '上の絵を選ぶか、下の操作を試せます',
+        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else 'リサージュから開始' if home else '上の絵を選ぶか、下の操作を試せます',
         '@@COUNT@@': str(count),
         '@@SAMPLES@@': '\n'.join(
             f'<i class="sample" data-index="{index}" '
@@ -77,15 +83,12 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
             for value in COUNTS
         ),
     }
-    starter = re.search(r'<!-- starter-source -->(.*?)<!-- /starter-source -->', template, flags=re.S)
     html = template
+    starter = re.search(r'<!-- starter-source -->(.*?)<!-- /starter-source -->', template, flags=re.S)
     if starter:
         html = html.replace(starter[0], '')
         html = html.replace('@@STARTER_TOP@@', '' if home else starter[1])
-        html = html.replace('@@STARTER_BOTTOM@@', starter[1].replace('もようで遊ぶ', '別の模様を開く').replace(
-            '<ol class="play-steps"><li><strong>1</strong> 好きな形を選ぶ</li><li><strong>2</strong> 動かす・とめる</li><li><strong>3</strong> 帯や数値で形を変える</li></ol>',
-            '<p class="play-index-note">見本を押すと、別ページでその模様の初期値から始まります。</p>',
-        ) if home else '')
+        html = html.replace('@@STARTER_BOTTOM@@', starter[1] if home else '')
     for token, replacement in tokens.items():
         html = html.replace(token, replacement)
     if re.search(r'@@[A-Z_]+@@', html):
