@@ -82,7 +82,10 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
     if starter:
         html = html.replace(starter[0], '')
         html = html.replace('@@STARTER_TOP@@', '' if home else starter[1])
-        html = html.replace('@@STARTER_BOTTOM@@', starter[1] if home else '')
+        html = html.replace('@@STARTER_BOTTOM@@', starter[1].replace('もようで遊ぶ', '別の模様を開く').replace(
+            '<ol class="play-steps"><li><strong>1</strong> 好きな形を選ぶ</li><li><strong>2</strong> 動かす・とめる</li><li><strong>3</strong> 帯や数値で形を変える</li></ol>',
+            '<p class="play-index-note">見本を押すと、別ページでその模様の初期値から始まります。</p>',
+        ) if home else '')
     for token, replacement in tokens.items():
         html = html.replace(token, replacement)
     if re.search(r'@@[A-Z_]+@@', html):

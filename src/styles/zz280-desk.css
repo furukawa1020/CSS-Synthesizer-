@@ -73,3 +73,8 @@
 .lab[data-home] .tick[id]:target { color:var(--accent); font-weight:700; }
 .lab[data-home] .tick[id]:target::after { background:currentColor; inline-size:2px; }
 }
+
+@media screen {
+.lab[data-home] .play-start { margin-block:24px 0; padding-block-start:16px; border-block-start:1px solid var(--rule); }
+.play-index-note { margin:0; font-size:.875rem; color:var(--muted); }
+}
