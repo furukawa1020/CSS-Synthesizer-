@@ -43,3 +43,14 @@
   .lab[data-home] .parameters { grid-template-columns:minmax(0,1fr); gap:0; }
 }
 }
+
+@media screen {
+@media (max-width:900px) {
+  .lab[data-home] .workspace { gap:12px; }
+  .lab[data-home] .workspace > .scene > .stage { block-size:clamp(180px,37svh,310px); }
+  .lab[data-home] .play-heading h2 { font-size:1.125rem; }
+}
+@media (max-width:360px) {
+  .lab[data-home] .play-transport .choices label { font-size:.8125rem; padding-inline:6px; }
+}
+}
