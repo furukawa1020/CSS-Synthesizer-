@@ -34,3 +34,12 @@
 .lab[data-home] .play-heading h2 { font-size:1.25rem; font-weight:650; }
 .lab[data-home] .stage-heading, .lab[data-home] .stage-footnote { display:none; }
 }
+
+@media screen {
+@media (min-width:901px) {
+  .lab[data-home] .workspace { grid-template-columns:minmax(0,1fr) minmax(300px,360px); column-gap:32px; align-items:start; }
+  .lab[data-home] .workspace > .scene > .stage { block-size:clamp(270px,43svh,470px); }
+  .lab[data-home] .workspace > .controls { border-inline-start:1px solid var(--rule); padding-inline-start:24px; }
+  .lab[data-home] .parameters { grid-template-columns:minmax(0,1fr); gap:0; }
+}
+}
