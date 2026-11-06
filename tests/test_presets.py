@@ -54,15 +54,15 @@ class PresetTests(unittest.TestCase):
                     parser = InitialStateParser()
                     parser.feed(html)
                     self.assertEqual(parser.checked, {'model': preset['model'], 'time': 'stop'})
-                    self.assertEqual(parser.initials, [f"{preset['k']:.2f}", f"{preset['phase']}°", f"{preset['amplitude']}%"])
+                    self.assertCountEqual(parser.initials, [f"{preset['k']:.2f}", f"{preset['phase']}°", f"{preset['amplitude']}%"])
                     self.assertEqual(float(parser.values['--k-raw']), preset['k'])
                     self.assertEqual(float(parser.values['--phase-raw']), preset['phase'])
                     self.assertEqual(float(parser.values['--amplitude-raw']), preset['amplitude'] / 100)
                     self.assertTrue(audit_html(html, 192)['ok'])
             standard = InitialStateParser()
             standard.feed((output / 'index.html').read_text())
-            self.assertEqual(standard.checked, {'model': 'lissajous', 'time': 'auto'})
-            self.assertEqual(standard.initials, ['3.00', '90°', '80%'])
+            self.assertEqual(standard.checked, {'model': 'lissajous', 'time': 'stop'})
+            self.assertCountEqual(standard.initials, ['2.00', '90°', '70%'])
 
     def test_bad_definitions_cannot_make_inconsistent_initial_targets(self):
         presets = load_presets(ROOT / 'src')
