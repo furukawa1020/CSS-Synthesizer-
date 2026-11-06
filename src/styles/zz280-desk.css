@@ -17,3 +17,14 @@
 .lab[data-home] .play-transport legend { margin-block-end:2px; }
 .lab[data-home] .play-transport .choices label { min-block-size:44px; }
 }
+
+@media screen {
+.lab[data-home] { --paper:#f8f8f5; --ink:#202522; --rule:#c9cdc6; --muted:#505a51; --accent:#244d39; }
+.lab[data-home] .workspace > .scene > .stage { border:1px solid var(--rule); }
+@media (forced-colors:none) {
+  .lab[data-home] .workspace > .scene > .stage {
+    background:#fff; color:#244d39;
+    --grid-color:#294e3518; --axis-color:#294e3540; --circle-color:#294e3526;
+  }
+}
+}
