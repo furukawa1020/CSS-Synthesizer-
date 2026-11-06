@@ -32,15 +32,18 @@ def stops(values, initial, formatter, target_prefix=None):
     )
 
 
-def single_html(template, models, presets, count, preset=None):
+def single_html(template, models, presets, count, preset=None, *, home=False):
     """Render one page through the same template and model definitions."""
     state = preset or {'model': 'lissajous', 'k': 3, 'phase': 90, 'amplitude': 80}
+    if home:
+        state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
     tokens = {
+        '@@HOME_ATTRIBUTE@@': ' data-home' if home else '',
         **model_tokens(models, selected=state['model']),
         '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}",
-        '@@TIME_AUTO@@': '' if preset else ' checked',
+        '@@TIME_AUTO@@': '' if preset or home else ' checked',
         '@@TIME_PLAY@@': '',
-        '@@TIME_STOP@@': ' checked' if preset else '',
+        '@@TIME_STOP@@': ' checked' if preset or home else '',
         '@@BASELINE_LABEL@@': f"基準値：k={state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
         '@@PRESET_LINKS@@': preset_links(presets, preset),
         '@@STARTER_LINKS@@': starter_links(presets, preset),
@@ -78,7 +81,7 @@ def _populate(root, destination):
     pages = [('index.html' if count == 192 else f'samples-{count}.html', count, None) for count in COUNTS]
     pages += [(preset['file'], 192, preset) for preset in presets]
     for filename, count, preset in pages:
-        html = single_html(template, models, presets, count, preset)
+        html = single_html(template, models, presets, count, preset, home=filename == 'index.html')
         (destination / filename).write_text(html, encoding='utf-8')
     for count in GALLERY_COUNTS:
         (destination / gallery_filename(count)).write_text(gallery_html(presets, models, count), encoding='utf-8')
