@@ -65,7 +65,12 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
             for value in COUNTS
         ),
     }
+    starter = re.search(r'<!-- starter-source -->(.*?)<!-- /starter-source -->', template, flags=re.S)
     html = template
+    if starter:
+        html = html.replace(starter[0], '')
+        html = html.replace('@@STARTER_TOP@@', '' if home else starter[1])
+        html = html.replace('@@STARTER_BOTTOM@@', starter[1] if home else '')
     for token, replacement in tokens.items():
         html = html.replace(token, replacement)
     if re.search(r'@@[A-Z_]+@@', html):
