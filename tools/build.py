@@ -32,12 +32,23 @@ def stops(values, initial, formatter, target_prefix=None):
     )
 
 
+def first_try():
+    return (
+        '<div class="first-try continuous-controls">'
+        '<div class="trial-steps"><strong>円を線にする</strong>'
+        '<a href="#tick-phase-0" aria-label="位相を0度にする">0°</a>'
+        '<a href="#tick-phase-1" aria-label="位相を90度にする">90°</a></div>'
+        '</div>'
+    )
+
+
 def single_html(template, models, presets, count, preset=None, *, home=False):
     """Render one page through the same template and model definitions."""
     state = preset or {'model': 'lissajous', 'k': 3, 'phase': 90, 'amplitude': 80}
     if home:
         state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
     tokens = {
+        '@@FIRST_TRY@@': first_try() if home else '',
         '@@HOME_ATTRIBUTE@@': ' data-home' if home else '',
         **model_tokens(models, selected=state['model']),
         '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}",
