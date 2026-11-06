@@ -3,8 +3,8 @@
 .first-try { border-block-end:1px solid var(--rule); }
 .trial-steps { display:flex; flex-wrap:wrap; align-items:center; gap:0 8px; }
 .trial-steps strong { margin-inline-end:auto; font-size:.875rem; font-weight:600; }
-.trial-steps a { display:inline-grid; place-items:center; min-inline-size:56px; min-block-size:44px; font:600 .9375rem ui-monospace,monospace; }
-.trial-steps a:hover { background:var(--paper); }
+.trial-steps a { display:inline-grid; place-items:center; min-inline-size:60px; min-block-size:44px; border:1px solid var(--rule); text-decoration:none; font:600 .9375rem ui-monospace,monospace; }
+.trial-steps a:hover { border-color:var(--ink); background:#fff; }
 }
 
 @media screen {
@@ -61,7 +61,7 @@
 }
 .lab[data-home] .tick[id] { scroll-margin-block-start:min(75svh,640px); }
 @media (min-width:901px) {
-  .lab[data-home] .tick[id] { scroll-margin-block-start:36px; }
+  .lab[data-home] .tick[id] { scroll-margin-block-start:min(65svh,560px); }
 }
 }
 
@@ -99,3 +99,5 @@
   .lab[data-home] .quick-values a { min-inline-size:44px; padding-inline:4px; }
 }
 }
+
+@media screen and (min-width:901px) { .lab[data-home] .edit-shape { display:none; } }

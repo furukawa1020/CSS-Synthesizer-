@@ -2,8 +2,10 @@
 from html.parser import HTMLParser
 import math
 import unittest
-from tools.build import ROOT
+from tools.build import ROOT, single_html
+from tools.models import load_models
 from tools.presets import load_presets
+from tools.source import expand_fragments
 from tools.scene import render_scene, standalone_html
 from tools.starters import starter_links, starter_points
 
@@ -43,3 +45,22 @@ class PlayTests(unittest.TestCase):
         self.assertIn('class="play-transport"',html)
         p=Links();p.feed(html)
         for href in p.hrefs:self.assertTrue(href.startswith(('#','https://')))
+
+    def test_home_starts_still_with_a_reachable_trial_before_examples(self):
+        source = ROOT / 'src'
+        template = expand_fragments((source / 'page.html').read_text(), source)
+        models = load_models(source)
+        presets = load_presets(source)
+        html = single_html(template, models, presets, 192, home=True)
+        self.assertIn('--k-raw:2;--phase-raw:90;--amplitude-raw:0.7', html)
+        self.assertIn('name="time" value="stop" checked', html)
+        trial = html.split('class="first-try continuous-controls"', 1)[1].split('class="play-transport"', 1)[0]
+        self.assertLess(html.index('class="stage"'), html.index('class="first-try'))
+        self.assertLess(html.index('class="first-try'), html.index('class="play-start"'))
+        parser = Links()
+        parser.feed(html)
+        self.assertIn('href="#tick-phase-0"', trial)
+        self.assertIn('href="#tick-phase-1"', trial)
+        for target in ('tick-phase-0', 'tick-phase-1', 'tick-k-1'):
+            self.assertIn(target, parser.ids)
+        self.assertNotIn('class="first-try', single_html(template, models, presets, 192, presets[0]))
