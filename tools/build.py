@@ -35,10 +35,10 @@ def stops(values, initial, formatter, target_prefix=None):
 def first_try():
     return (
         '<div class="first-try continuous-controls">'
-        '<div class="trial-steps"><strong>円を線にする</strong>'
+        '<div class="trial-steps"><strong>位相を変えてみる</strong>'
         '<a href="#tick-phase-0" aria-label="位相を0度にする">0°</a>'
         '<a href="#tick-phase-1" aria-label="位相を90度にする">90°</a></div>'
-        '</div>'
+        '<p>初期状態のまま0°で線、90°で円。続けて「動かす」で変化を見られます。</p></div>'
     )
 
 
@@ -58,9 +58,9 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         '@@BASELINE_LABEL@@': f"基準値：k={state['k']:.2f}、位相{state['phase']}°、振幅{state['amplitude']}%。",
         '@@PRESET_LINKS@@': preset_links(presets, preset),
         '@@STARTER_LINKS@@': starter_links(presets, preset),
-        '@@PLAY_TASK@@': play_task(preset),
+        '@@PLAY_TASK@@': '円と線を比べるときは、リサージュ・反復2・初期の停止位置で試します。' if home else play_task(preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
-        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else 'まず上の絵を選ぶか、そのまま下の操作を試せます',
+        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else '下の0°と90°を押す' if home else '上の絵を選ぶか、下の操作を試せます',
         '@@COUNT@@': str(count),
         '@@SAMPLES@@': '\n'.join(
             f'<i class="sample" data-index="{index}" '

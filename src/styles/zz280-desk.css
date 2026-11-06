@@ -6,3 +6,7 @@
 .trial-steps a { display:inline-grid; place-items:center; min-inline-size:56px; min-block-size:44px; font:600 .9375rem ui-monospace,monospace; }
 .trial-steps a:hover { background:var(--paper); }
 }
+
+@media screen {
+.first-try p { margin:0 0 8px; font-size:.8125rem; color:var(--muted); }
+}
