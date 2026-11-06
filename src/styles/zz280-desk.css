@@ -68,3 +68,8 @@
 @media screen {
 .lab[data-home] .input-help { margin:0 0 8px; }
 }
+
+@media screen {
+.lab[data-home] .tick[id]:target { color:var(--accent); font-weight:700; }
+.lab[data-home] .tick[id]:target::after { background:currentColor; inline-size:2px; }
+}
