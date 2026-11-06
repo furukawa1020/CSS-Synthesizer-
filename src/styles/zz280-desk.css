@@ -10,3 +10,10 @@
 @media screen {
 .first-try p { margin:0 0 8px; font-size:.8125rem; color:var(--muted); }
 }
+
+@media screen {
+.lab[data-home] .play-transport { margin-block-start:8px; }
+.lab[data-home] .play-transport .time-controls { min-inline-size:0; flex:1 1 100%; }
+.lab[data-home] .play-transport legend { margin-block-end:2px; }
+.lab[data-home] .play-transport .choices label { min-block-size:44px; }
+}
