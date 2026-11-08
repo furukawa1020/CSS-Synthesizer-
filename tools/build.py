@@ -59,6 +59,7 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         '@@QUICK_K@@': quick_controls(state, 'k') if quick_enabled else '',
         '@@QUICK_AMPLITUDE@@': quick_controls(state, 'amplitude') if quick_enabled else '',
         '@@INPUT_MODES@@': input_modes() if quick_enabled else '',
+        '@@TIME_ZERO@@': '<label><input id="time-zero" type="radio" name="time" value="zero"><span>先頭へ</span></label>' if quick_enabled else '',
         '@@QUICK_ATTRIBUTE@@': ' data-quick' if quick_enabled else '',
 
         '@@FIRST_TRY@@': first_try() if home else '',

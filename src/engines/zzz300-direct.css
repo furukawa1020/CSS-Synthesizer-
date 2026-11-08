@@ -19,3 +19,10 @@
 .lab:has(#quick-amplitude-50:checked) { --quick-amplitude:0.5; }
 .lab:has(#quick-amplitude-70:checked) { --quick-amplitude:0.7; }
 .lab:has(#quick-amplitude-100:checked) { --quick-amplitude:1; }
+
+@keyframes clock-zero { from { --clock-progress:0; } to { --clock-progress:0; } }
+.lab:has(#time-zero:checked) {
+  --clock-state:paused;
+  --clock:0 !important;
+  animation-name:k-input,phase-input,amplitude-input,clock-zero;
+}
