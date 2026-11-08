@@ -71,3 +71,15 @@
   .lab[data-quick] .workspace > .controls { border-inline-start:1px solid var(--rule); padding-inline-start:24px; }
 }
 }
+
+@media screen {
+@media (max-width:900px) {
+  .lab[data-quick] .workspace > .scene { position:relative; inset-block-start:auto; }
+  .lab[data-quick] .workspace > .scene > .stage { block-size:clamp(190px,36svh,320px); }
+  .lab[data-quick] .play-transport .choices { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .lab[data-quick] .play-transport .choices label { min-inline-size:0; padding:6px 2px; gap:4px; font-size:.75rem; }
+  .lab[data-quick] .play-next { margin-block:4px; }
+}
+.lab[data-quick]:has(#focus-view:checked) .workspace { grid-template-columns:minmax(0,1fr); }
+.lab[data-quick]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 220px)); }
+}
