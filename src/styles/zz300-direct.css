@@ -37,3 +37,7 @@
 .lab:has(#time-zero:checked) .zero-state { display:block; }
 .lab[data-quick] .play-transport .time-controls { min-inline-size:100%; }
 }
+
+@media screen {
+.lab[data-quick] .parameter .readout { font-size:1.375rem; }
+}
