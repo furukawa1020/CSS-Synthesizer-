@@ -34,5 +34,5 @@ def input_modes():
         '<label><input id="input-basic" type="radio" name="input-mode" value="basic" checked>'
         '<span>数値を選ぶ</span></label>'
         '<label><input id="input-scroll" type="radio" name="input-mode" value="scroll">'
-        '<span>帯で細かく</span></label></div></fieldset>'
+        '<span>帯で細かく</span></label></div><p class="mode-note">方式を切り替えると、それぞれで最後に使った値に戻ります。</p></fieldset>'
     )

@@ -26,3 +26,7 @@
 .lab:has(#input-basic:checked) .first-try,
 .lab:has(#input-basic:checked) .play-task { display:none; }
 }
+
+@media screen {
+.mode-note { font-size:.75rem; color:var(--muted); margin:6px 0 0; }
+}
