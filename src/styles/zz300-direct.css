@@ -56,7 +56,7 @@
 }
 
 @media screen {
-@supports not ((scroll-timeline: --k-input inline) and (scroll-initial-target: nearest) and selector(::scroll-button(inline-start))) {
+@supports not ((scroll-timeline: --k-input inline) and (animation-timeline: --k-input) and (timeline-scope: --k-input, --phase-input, --amplitude-input) and (scroll-initial-target: nearest) and (container-type: size) and (width: 1cqmin) and (opacity: round(nearest, .5, .1)) and (counter-reset: probe round(down, 1.5, 1) remainder mod(3, 2)) and (width: calc(sin(1rad) * 1px)) and selector(:has(*)) and selector(::scroll-button(inline-start))) {
   .input-modes label:has(#input-scroll) { display:none; }
   .mode-note { display:none; }
 }
@@ -91,3 +91,22 @@
 @media print {
   .input-modes, .quick-values-form, .zero-state { visibility:hidden !important; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .parameter { padding-block:8px; }
+.lab:has(#input-basic:checked) .parameter > p { margin-block:4px; }
+.lab:has(#input-basic:checked) .edit-shape { display:none; }
+@media (max-width:900px) and (min-height:640px) {
+  .lab[data-quick] .workspace > .scene { position:sticky; inset-block-start:0; }
+  .lab[data-quick] .workspace > .scene > .stage { block-size:180px; }
+  .lab[data-quick] .play-heading { min-block-size:36px; }
+  .lab[data-quick] .play-heading p { display:none; }
+  .lab[data-quick] .play-transport { margin-block-start:4px; }
+  .lab[data-quick] .play-transport .time-controls legend { margin-block-end:2px; }
+  .lab[data-quick] .play-next { font-size:.75rem; }
+}
+}
+
+@media screen { .quick-choices { grid-column:1/-1; } .lab:has(#input-basic:checked) .parameters { padding-block-start:0; } }
+
+@media screen and (max-width:900px) and (min-height:640px) { .lab[data-quick] .workspace > .scene { padding-block-end:0; } }
