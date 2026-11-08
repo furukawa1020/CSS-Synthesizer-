@@ -54,3 +54,10 @@
   .quick-choices label:has(:focus-visible) { outline-color:Highlight; }
 }
 }
+
+@media screen {
+@supports not ((scroll-timeline: --k-input inline) and (scroll-initial-target: nearest) and selector(::scroll-button(inline-start))) {
+  .input-modes label:has(#input-scroll) { display:none; }
+  .mode-note { display:none; }
+}
+}
