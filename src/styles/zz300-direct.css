@@ -83,3 +83,7 @@
 .lab[data-quick]:has(#focus-view:checked) .workspace { grid-template-columns:minmax(0,1fr); }
 .lab[data-quick]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 220px)); }
 }
+
+@media screen {
+.quick-help { font-size:.8125rem; color:var(--muted); margin:8px 0; }
+}

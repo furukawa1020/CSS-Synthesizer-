@@ -30,9 +30,9 @@ def quick_controls(state, selected=None):
 
 def input_modes():
     return (
-        '<fieldset class="input-modes"><legend>値の変え方</legend><div class="choices">'
+        '<fieldset class="input-modes" aria-describedby="quick-help"><legend>値の変え方</legend><div class="choices">'
         '<label><input id="input-basic" type="radio" name="input-mode" value="basic" checked>'
         '<span>数値を選ぶ</span></label>'
         '<label><input id="input-scroll" type="radio" name="input-mode" value="scroll">'
-        '<span>帯で細かく</span></label></div><p class="mode-note">方式を切り替えると、それぞれで最後に使った値に戻ります。</p></fieldset>'
+        '<span>帯で細かく</span></label></div><p id="quick-help" class="quick-help">数値を選ぶとその場で変化。キーボードでは各組で矢印キー。</p><p class="mode-note">方式を切り替えると、それぞれで最後に使った値に戻ります。</p></fieldset>'
     )
