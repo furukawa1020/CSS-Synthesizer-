@@ -25,7 +25,7 @@ def quick_controls(state, selected=None):
             + (' checked' if checked else '')
             + f'><span>{number}{unit}</span></label>'
         )
-    return f'<div class="quick-choices" role="group" aria-labelledby="{key}-label">' + ''.join(labels) + '</div>'
+    return f'<div class="quick-choices" role="group" aria-labelledby="{key}-label" aria-describedby="{key}-help">' + ''.join(labels) + '</div>'
 
 
 def input_modes():
