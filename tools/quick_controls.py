@@ -1,18 +1,18 @@
 """Native discrete controls share the existing labels, readouts, and engine."""
-GROUPS = (
-    ('phase', '@@MODEL_PHASE_HELP@@', '位相', '°', (0, 45, 90, 180, 270)),
-    ('k', '@@MODEL_K_HELP@@', '@@MODEL_K_LABELS@@', '', (1, 2, 3, 4, 6, 8)),
-    ('amplitude', '@@MODEL_AMPLITUDE_HELP@@', '@@MODEL_AMPLITUDE_LABELS@@', '%', (25, 50, 70, 100)),
-)
+CHOICES = {
+    'phase': ('°', (0, 45, 90, 180, 270)),
+    'k': ('', (1, 2, 3, 4, 6, 8)),
+    'amplitude': ('%', (25, 50, 70, 100)),
+}
 
 
 def quick_controls(state, selected=None):
     if selected is None:
         return '<form id="quick-values" class="quick-values-form" aria-label="開始値へ戻す"><button type="reset" class="quick-reset">3つの数値を戻す</button></form>'
-    group = next((group for group in GROUPS if group[0] == selected), None)
-    if group is None:
+    if selected not in CHOICES:
         return ''
-    key, hint, title, unit, values = group
+    key = selected
+    unit, values = CHOICES[key]
     initial = state[key]
     choices = [(f'quick-{key}-initial', initial, True)]
     choices.extend((f'quick-{key}-{value}', value, False) for value in values if value != initial)
