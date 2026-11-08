@@ -80,9 +80,9 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
             '<li><strong>2</strong> 動かす・とめる</li><li><strong>3</strong> 帯や数値で形を変える</li></ol>'
         ),
         '@@STARTER_LINKS@@': starter_links(presets, preset),
-        '@@PLAY_TASK@@': '円と線を比べるときは、リサージュ・反復2・初期の停止位置で試します。' if home else play_task(preset),
+        '@@PLAY_TASK@@': '帯を左右に動かして微調整。円と線を比べるときは、リサージュ・反復2・時計の先頭で試します。' if home else play_task(preset),
         '@@PRESET_SUMMARY@@': f"{escape(preset['name'])}から開始します。" if preset else '標準の値から開始します。',
-        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else 'リサージュから開始' if home else '上の絵を選ぶか、下の操作を試せます',
+        '@@PLAY_ORIGIN@@': '開始例：' + escape(dict(STARTERS).get(preset['file'],preset['name'])) if preset else '位相を選んで円と線を比べる' if home else '上の絵を選ぶか、下の操作を試せます',
         '@@COUNT@@': str(count),
         '@@SAMPLES@@': '\n'.join(
             f'<i class="sample" data-index="{index}" '
