@@ -1,5 +1,6 @@
 """Native discrete controls share the existing labels, readouts, and engine."""
 GROUPS = (
+    ('amplitude', '@@MODEL_AMPLITUDE_HELP@@', '@@MODEL_AMPLITUDE_LABELS@@', '%', (25, 50, 70, 100)),
     ('k', '@@MODEL_K_HELP@@', '@@MODEL_K_LABELS@@', '', (1, 2, 3, 4, 6, 8)),
     ('phase', '@@MODEL_PHASE_HELP@@', '位相', '°', (0, 45, 90, 180, 270)),
 )
