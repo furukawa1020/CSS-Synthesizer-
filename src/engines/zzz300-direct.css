@@ -1,0 +1,7 @@
+.lab:has(#input-basic:checked) { --phase-raw:var(--quick-phase,var(--initial-quick-phase)) !important; }
+.lab:has(#quick-phase-initial:checked) { --quick-phase:var(--initial-quick-phase); }
+.lab:has(#quick-phase-0:checked) { --quick-phase:0; }
+.lab:has(#quick-phase-45:checked) { --quick-phase:45; }
+.lab:has(#quick-phase-90:checked) { --quick-phase:90; }
+.lab:has(#quick-phase-180:checked) { --quick-phase:180; }
+.lab:has(#quick-phase-270:checked) { --quick-phase:270; }

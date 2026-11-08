@@ -15,7 +15,7 @@
     <h1>CSS Synthesizer</h1>
     <nav class="workspace-nav" aria-label="画面の移動"><a href="gallery.html">ほかの形</a><a href="compare.html">比較</a><a href="#guide">使い方</a></nav>
   </header>
-  <main class="lab" style="@@INITIAL_VALUES@@"@@HOME_ATTRIBUTE@@>
+  <main class="lab" style="@@INITIAL_VALUES@@"@@HOME_ATTRIBUTE@@@@QUICK_ATTRIBUTE@@>
     <p class="unsupported">このブラウザではこの操作画面に必要なCSS機能が不足しています。調整帯は利用できません。描画機能が使える場合は、基準値の形を表示します。現行Chrome / Edgeが検証対象です。</p>
     <p class="render-unsupported">このブラウザではCSSによる座標描画を利用できません。下の「使い方と仕組み」で数式と対応環境を確認できます。</p>
     @@STARTER_TOP@@
@@ -37,11 +37,13 @@
         @@FRAGMENT:print-summary@@
       </figure>
       <aside class="controls" id="controls" aria-label="模様の形を変える調整">
+        @@INPUT_MODES@@
         <p class="play-task">@@PLAY_TASK@@</p>
 
 
         
         @@FRAGMENT:parameters@@
+        @@QUICK_CONTROLS@@
         <details class="more-tools"><summary>もっと形や見た目を変える</summary>
         <details class="model-picker"><summary><span>形</span><span class="model-current">@@MODEL_NAMES@@</span></summary><fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset></details>
         @@FRAGMENT:clock-options@@

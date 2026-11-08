@@ -1,0 +1,9 @@
+
+@media screen {
+.quick-choices { display:flex; flex-wrap:wrap; gap:4px; margin-block:10px; }
+.quick-choices label { display:inline-flex; align-items:center; gap:6px; padding:8px; min-block-size:44px; border:1px solid var(--rule); cursor:pointer; }
+.quick-choices span { font-variant-numeric:tabular-nums; }
+.input-modes { margin-block-end:12px; }
+.lab:has(#input-scroll:checked) .quick-values-form,
+.lab:has(#input-scroll:checked) .quick-choices { display:none; }
+}
