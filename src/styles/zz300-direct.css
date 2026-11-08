@@ -21,3 +21,8 @@
 @media screen {
 .quick-reset { min-block-size:44px; padding:8px 12px; background:var(--paper); border:1px solid var(--rule); color:var(--ink); font:inherit; font-size:.875rem; cursor:pointer; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .first-try,
+.lab:has(#input-basic:checked) .play-task { display:none; }
+}
