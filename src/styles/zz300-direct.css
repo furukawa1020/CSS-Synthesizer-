@@ -30,3 +30,10 @@
 @media screen {
 .mode-note { font-size:.75rem; color:var(--muted); margin:6px 0 0; }
 }
+
+@media screen {
+.zero-state { display:none; margin:8px 0; font-size:.875rem; }
+.lab:has(#time-zero:checked) .play-next { display:none; }
+.lab:has(#time-zero:checked) .zero-state { display:block; }
+.lab[data-quick] .play-transport .time-controls { min-inline-size:100%; }
+}
