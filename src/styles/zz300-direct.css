@@ -45,3 +45,12 @@
 @media screen {
 .lab[data-quick] .controls > .model-picker { margin-block:16px 0; border-block-start:1px solid var(--rule); }
 }
+
+@media screen {
+.quick-choices label:has(:checked) { background:var(--accent); border-color:var(--accent); color:white; }
+.quick-choices label:has(:focus-visible) { outline:3px solid #005fcc; outline-offset:2px; }
+@media (forced-colors:active) {
+  .quick-choices label:has(:checked) { background:Highlight; border-color:Highlight; color:HighlightText; }
+  .quick-choices label:has(:focus-visible) { outline-color:Highlight; }
+}
+}
