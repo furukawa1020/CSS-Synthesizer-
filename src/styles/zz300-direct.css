@@ -7,3 +7,13 @@
 .lab:has(#input-scroll:checked) .quick-values-form,
 .lab:has(#input-scroll:checked) .quick-choices { display:none; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .parameters { display:block; }
+.lab:has(#input-basic:checked) .parameter .band-wrap,
+.lab:has(#input-basic:checked) .parameter .quick-values,
+.lab:has(#input-basic:checked) .parameter .parameter-jumps,
+.lab:has(#input-basic:checked) .parameter .band-instruction,
+.lab:has(#input-basic:checked) .input-help,
+.lab:has(#input-basic:checked) .baseline-only { display:none; }
+}
