@@ -61,3 +61,13 @@
   .mode-note { display:none; }
 }
 }
+
+@media screen {
+.lab[data-quick] .play-heading p { max-inline-size:60ch; }
+@media (min-width:901px) {
+  .lab[data-quick] .workspace { grid-template-columns:minmax(0,1fr) 340px; gap:32px; align-items:start; }
+  .lab[data-quick] .workspace > .scene > .stage { block-size:clamp(300px,49svh,520px); }
+  .lab[data-quick] .parameters { grid-template-columns:minmax(0,1fr); }
+  .lab[data-quick] .workspace > .controls { border-inline-start:1px solid var(--rule); padding-inline-start:24px; }
+}
+}
