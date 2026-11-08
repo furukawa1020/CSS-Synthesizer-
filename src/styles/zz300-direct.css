@@ -41,3 +41,7 @@
 @media screen {
 .lab[data-quick] .parameter .readout { font-size:1.375rem; }
 }
+
+@media screen {
+.lab[data-quick] .controls > .model-picker { margin-block:16px 0; border-block-start:1px solid var(--rule); }
+}
