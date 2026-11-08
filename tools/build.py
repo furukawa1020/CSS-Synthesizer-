@@ -48,7 +48,7 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
     state = preset or {'model': 'lissajous', 'k': 3, 'phase': 90, 'amplitude': 80}
     if home:
         state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
-    quick_enabled = home
+    quick_enabled = home or bool(preset and preset['file'].startswith('preset-'))
     quick_initials = ''.join(
         f';--initial-quick-{key}:{state[key] / (100 if key == "amplitude" else 1):g}'
         for key in ('k', 'phase', 'amplitude')
