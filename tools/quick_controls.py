@@ -8,7 +8,7 @@ GROUPS = (
 
 def quick_controls(state, selected=None):
     if selected is None:
-        return '<form id="quick-values" class="quick-values-form" aria-label="開始値へ戻す"></form>'
+        return '<form id="quick-values" class="quick-values-form" aria-label="開始値へ戻す"><button type="reset" class="quick-reset">3つの数値を戻す</button></form>'
     group = next((group for group in GROUPS if group[0] == selected), None)
     if group is None:
         return ''
