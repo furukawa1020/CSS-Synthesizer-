@@ -13,3 +13,9 @@
 .lab:has(#quick-k-4:checked) { --quick-k:4; }
 .lab:has(#quick-k-6:checked) { --quick-k:6; }
 .lab:has(#quick-k-8:checked) { --quick-k:8; }
+.lab:has(#input-basic:checked) { --amplitude-raw:var(--quick-amplitude,var(--initial-quick-amplitude)) !important; }
+.lab:has(#quick-amplitude-initial:checked) { --quick-amplitude:var(--initial-quick-amplitude); }
+.lab:has(#quick-amplitude-25:checked) { --quick-amplitude:0.25; }
+.lab:has(#quick-amplitude-50:checked) { --quick-amplitude:0.5; }
+.lab:has(#quick-amplitude-70:checked) { --quick-amplitude:0.7; }
+.lab:has(#quick-amplitude-100:checked) { --quick-amplitude:1; }
