@@ -10,6 +10,7 @@ import sys
 from .source import expand_fragments, compose_css
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
+from .quick_controls import quick_controls, input_modes
 from .starters import STARTERS, starter_links, play_task
 from .assets import asset_specs
 from .gallery import gallery_html, static_model_selectors, gallery_styles, GALLERY_COUNTS, gallery_filename
@@ -47,12 +48,24 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
     state = preset or {'model': 'lissajous', 'k': 3, 'phase': 90, 'amplitude': 80}
     if home:
         state = {'model': 'lissajous', 'k': 2, 'phase': 90, 'amplitude': 70}
+    quick_enabled = home
+    quick_initials = ''.join(
+        f';--initial-quick-{key}:{state[key] / (100 if key == "amplitude" else 1):g}'
+        for key in ('k', 'phase', 'amplitude')
+    ) if quick_enabled else ''
     tokens = {
+        '@@QUICK_CONTROLS@@': quick_controls(state) if quick_enabled else '',
+        '@@QUICK_PHASE@@': quick_controls(state, 'phase') if quick_enabled else '',
+        '@@QUICK_K@@': quick_controls(state, 'k') if quick_enabled else '',
+        '@@QUICK_AMPLITUDE@@': quick_controls(state, 'amplitude') if quick_enabled else '',
+        '@@INPUT_MODES@@': input_modes() if quick_enabled else '',
+        '@@QUICK_ATTRIBUTE@@': ' data-quick' if quick_enabled else '',
+
         '@@FIRST_TRY@@': first_try() if home else '',
         '@@DRAWING_TITLE@@': '描画' if home else 'いまの模様',
         '@@HOME_ATTRIBUTE@@': ' data-home' if home else '',
         **model_tokens(models, selected=state['model']),
-        '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}",
+        '@@INITIAL_VALUES@@': f"--k-raw:{state['k']};--phase-raw:{state['phase']};--amplitude-raw:{state['amplitude'] / 100:g}" + quick_initials,
         '@@TIME_AUTO@@': '' if preset or home else ' checked',
         '@@TIME_PLAY@@': '',
         '@@TIME_STOP@@': ' checked' if preset or home else '',
@@ -110,6 +123,8 @@ def _populate(root, destination):
         (destination / gallery_filename(count)).write_text(gallery_html(presets, models, count), encoding='utf-8')
     comparison = expand_fragments((root / 'src/compare.html').read_text(encoding='utf-8'), root / 'src')
     parameters = expand_fragments((root / 'src/fragments/parameters.html').read_text(encoding='utf-8'), root / 'src')
+    for key in ('PHASE', 'K', 'AMPLITUDE'):
+        parameters = parameters.replace('@@QUICK_' + key + '@@', '')
     comparison_stops = {
         '@@K_STOPS@@': stops(range(1, 9), 3, lambda value: f'{value:.2f}', target_prefix='tick-k'),
         '@@PHASE_STOPS@@': stops(range(0, 361, 90), 90, lambda value: f'{value}°', target_prefix='tick-phase'),
