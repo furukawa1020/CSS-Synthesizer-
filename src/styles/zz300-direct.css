@@ -87,3 +87,7 @@
 @media screen {
 .quick-help { font-size:.8125rem; color:var(--muted); margin:8px 0; }
 }
+
+@media print {
+  .input-modes, .quick-values-form, .zero-state { visibility:hidden !important; }
+}
