@@ -1,5 +1,6 @@
 """Native discrete controls share the existing labels, readouts, and engine."""
 GROUPS = (
+    ('k', '@@MODEL_K_HELP@@', '@@MODEL_K_LABELS@@', '', (1, 2, 3, 4, 6, 8)),
     ('phase', '@@MODEL_PHASE_HELP@@', '位相', '°', (0, 45, 90, 180, 270)),
 )
 

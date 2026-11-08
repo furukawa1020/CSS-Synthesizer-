@@ -5,3 +5,11 @@
 .lab:has(#quick-phase-90:checked) { --quick-phase:90; }
 .lab:has(#quick-phase-180:checked) { --quick-phase:180; }
 .lab:has(#quick-phase-270:checked) { --quick-phase:270; }
+.lab:has(#input-basic:checked) { --k-raw:var(--quick-k,var(--initial-quick-k)) !important; }
+.lab:has(#quick-k-initial:checked) { --quick-k:var(--initial-quick-k); }
+.lab:has(#quick-k-1:checked) { --quick-k:1; }
+.lab:has(#quick-k-2:checked) { --quick-k:2; }
+.lab:has(#quick-k-3:checked) { --quick-k:3; }
+.lab:has(#quick-k-4:checked) { --quick-k:4; }
+.lab:has(#quick-k-6:checked) { --quick-k:6; }
+.lab:has(#quick-k-8:checked) { --quick-k:8; }
