@@ -17,3 +17,7 @@
 .lab:has(#input-basic:checked) .input-help,
 .lab:has(#input-basic:checked) .baseline-only { display:none; }
 }
+
+@media screen {
+.quick-reset { min-block-size:44px; padding:8px 12px; background:var(--paper); border:1px solid var(--rule); color:var(--ink); font:inherit; font-size:.875rem; cursor:pointer; }
+}
