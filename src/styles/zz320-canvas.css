@@ -12,3 +12,7 @@
 .lab[data-quick] .controls > .parameters { flex:1 1 auto; }
 .lab[data-quick] .quick-values-form { flex:0 0 auto; margin:0; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .parameter .readout { display:none; }
+}
