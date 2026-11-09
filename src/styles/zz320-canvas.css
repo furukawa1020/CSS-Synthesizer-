@@ -2,3 +2,13 @@
 @media screen {
 .quick-choices select { min-block-size:44px; min-inline-size:100px; max-inline-size:100%; padding:8px 30px 8px 10px; color:var(--ink); background:var(--paper); border:1px solid var(--rule); border-radius:0; font:inherit; font-variant-numeric:tabular-nums; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .parameters { display:flex; flex-wrap:wrap; gap:12px 24px; padding:0; }
+.lab:has(#input-basic:checked) .parameter { flex:0 1 auto; border:0; padding:0; display:block; min-inline-size:110px; }
+.lab:has(#input-basic:checked) .parameter h2 { display:block; font-size:.8125rem; font-weight:500; margin:0 0 4px; }
+.lab:has(#input-basic:checked) .quick-choices { margin:0; }
+.lab[data-quick] .controls { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:flex-end; }
+.lab[data-quick] .controls > .parameters { flex:1 1 auto; }
+.lab[data-quick] .quick-values-form { flex:0 0 auto; margin:0; }
+}
