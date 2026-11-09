@@ -15,16 +15,28 @@ class Inputs(HTMLParser):
         self.ids = []
         self.forms = []
         self.buttons = []
+        self.select = None
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if 'id' in a:
             self.ids.append(a['id'])
         if tag == 'input':
             self.inputs.append(a)
+        if tag == 'select':
+            self.select = a
+        if tag == 'option' and self.select:
+            option = dict(a, name=self.select['name'], form=self.select.get('form'))
+            if 'selected' in a:
+                option['checked'] = ''
+            self.inputs.append(option)
         if tag == 'form':
             self.forms.append(a.get('id'))
         if tag == 'button':
             self.buttons.append(a)
+
+    def handle_endtag(self, tag):
+        if tag == 'select':
+            self.select = None
 
 
 class QuickControlTests(unittest.TestCase):
