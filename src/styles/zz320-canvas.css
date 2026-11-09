@@ -1,0 +1,4 @@
+
+@media screen {
+.quick-choices select { min-block-size:44px; min-inline-size:100px; max-inline-size:100%; padding:8px 30px 8px 10px; color:var(--ink); background:var(--paper); border:1px solid var(--rule); border-radius:0; font:inherit; font-variant-numeric:tabular-nums; }
+}
