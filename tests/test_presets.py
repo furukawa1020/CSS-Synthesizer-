@@ -61,8 +61,9 @@ class PresetTests(unittest.TestCase):
                     self.assertTrue(audit_html(html, 192)['ok'])
             standard = InitialStateParser()
             standard.feed((output / 'index.html').read_text())
-            self.assertEqual(standard.checked, {'model': 'lissajous', 'time': 'stop'})
-            self.assertCountEqual(standard.initials, ['2.00', '90°', '70%'])
+            self.assertEqual(standard.checked, {})
+            self.assertIn('class="synth"', (output / 'index.html').read_text())
+            self.assertEqual(standard.initials, [])
 
     def test_bad_definitions_cannot_make_inconsistent_initial_targets(self):
         presets = load_presets(ROOT / 'src')

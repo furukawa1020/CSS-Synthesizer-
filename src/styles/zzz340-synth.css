@@ -1,0 +1,32 @@
+/* A single working surface, with ordinary controls beneath the drawing. */
+.s-body{margin:0;background:#f6f3eb;color:#202820;font-family:ui-sans-serif,system-ui,sans-serif;}
+.s-header,.synth{width:min(100% - 64px,1400px);margin-inline:auto;}
+.s-header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid #b5b9ab;}
+.s-header h1{font-size:18px;letter-spacing:-.5px;font-weight:650;margin:0;}
+.s-header nav{display:flex;gap:24px;font-size:13px;}
+.s-body a{color:inherit;text-underline-offset:4px;}
+.s-figure{margin:0;}
+.s-figure figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:24px 0 18px;}
+.s-figure h2{font-size:clamp(22px,3vw,38px);font-weight:500;letter-spacing:-1px;margin:0;}
+.s-figure figcaption p{font-size:13px;margin:0;color:#586153;}
+.s-stage{position:relative;container-type:size;height:clamp(300px,54vh,660px);overflow:hidden;background:#e4e9da;isolation:isolate;}
+.s-grid{position:absolute;inset:0;background:linear-gradient(transparent calc(50% - .5px),#a9b29e 50%,transparent calc(50% + .5px)),linear-gradient(90deg,transparent calc(50% - .5px),#a9b29e 50%,transparent calc(50% + .5px));}
+.s-mark{position:absolute;left:18px;bottom:14px;font:11px ui-monospace,monospace;letter-spacing:1px;}
+.s-controls{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;border-top:1px solid #b5b9ab;padding:22px 0;}
+.s-group{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:14px;flex:1 1 230px;min-width:0;}
+.s-group legend{padding:0;margin-bottom:14px;font-size:12px;letter-spacing:1px;font-weight:700;}
+.s-group p{margin:0;font-size:14px;}
+.s-control{display:flex;flex-direction:column;gap:8px;font-size:12px;color:#4f584b;}
+.s-control select{font:inherit;font-size:15px;color:#202820;background:transparent;border:0;border-bottom:1px solid #868f7d;border-radius:0;padding:8px 22px 8px 0;min-height:44px;max-width:100%;}
+.s-transport{display:flex;gap:16px;align-items:center;min-height:50px;padding:10px 0;}
+.s-extra{flex-basis:100%;font-size:13px;}
+.s-extra-fields{display:flex;flex-wrap:wrap;gap:24px;padding:18px 0;}
+.s-guide{font-size:14px;border-top:1px solid #b5b9ab;padding:18px 0;line-height:1.8;}
+.s-guide summary{cursor:pointer;}
+.s-guide p{max-width:75ch;}
+.s-footer{display:flex;flex-wrap:wrap;gap:20px;font-size:12px;border-top:1px solid #b5b9ab;padding:20px 0 32px;}
+.s-footer span{margin-right:auto;}
+.s-body :is(a,button,select,input,summary):focus-visible{outline:2px solid #183d2b;outline-offset:4px;}
+.s-unsupported{display:none;}
+@supports not (transform:translate(calc(sin(1deg)*1px))) {.s-unsupported{display:block;}.s-points{display:none;}}
+@supports not selector(:has(input:checked)) {.s-unsupported{display:block;}.s-points{display:none;}}
