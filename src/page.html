@@ -13,7 +13,7 @@
   <a class="skip-link" href="#controls">調整へ進む</a>
   <header class="page-header">
     <h1>CSS Synthesizer</h1>
-    <nav class="workspace-nav" aria-label="画面の移動"><a href="gallery.html">ほかの形</a><a href="compare.html">比較</a><a href="#guide">使い方</a></nav>
+    <nav class="workspace-nav" aria-label="画面の移動"><a href="gallery.html">ほかの形</a><a href="compare.html">比較</a><a href="#guide-start">使い方</a></nav>
   </header>
   <main class="lab" style="@@INITIAL_VALUES@@"@@HOME_ATTRIBUTE@@@@QUICK_ATTRIBUTE@@>
     <p class="unsupported">このブラウザではこの操作画面に必要なCSS機能が不足しています。調整帯は利用できません。「数値を選ぶ」が表示されている場合は、そちらを使えます。描画機能が使える場合は、現在の有効値の形を表示します。現行Chrome / Edgeが検証対象です。</p>
@@ -62,7 +62,7 @@
       <summary><span>使い方と仕組み</span><span class="summary-note">操作・数式・対応環境</span><span class="disclosure" aria-hidden="true">+</span></summary>
       <div class="guide-body">
         <div class="guide-quick">@@FRAGMENT:guide-actions@@</div>
-        <details class="guide-section"><summary>形を見つけて、止める。</summary><div class="guide-section-body"><p>描画の下の「動かす」「とめる」を選べます。描画の下の3つの選択欄で形が変わり、「数値を戻す」で開始値へ戻ります。「細かな調整」から方式・形・見た目を変更できます。「先頭へ」は時計を0に戻します。「帯で細かく」では横スクロールで調整します。マウスではスクロールバーか両端の矢印、トラックパッドでは横スクロール、キーボードでは帯にフォーカスして左右キーを使います。</p><p>気に入った形で「とめる」を選んでください。時間だけが止まるので、続けて形を調整できます。「動かす」で止めた時刻から動き出します。「端末に従う」は、動きを減らす設定のとき自動再生を止めます。</p><p>入力位置の履歴復元はブラウザが行います。再読み込みは値を戻す操作ではありません。値を保存する機能はありません。</p></div></details>
+        <details class="guide-section"><summary>形を見つけて、止める。</summary><div class="guide-section-body"><p id="guide-start">「動かす」「とめる」で時間を操作できます。3つの選択欄で形が変わり、「数値を戻す」で開始値へ戻ります。「細かな調整」から方式・形・見た目を変更できます。「先頭へ」は時計を0に戻します。「帯で細かく」では横スクロールで調整します。マウスではスクロールバーか両端の矢印、トラックパッドでは横スクロール、キーボードでは帯にフォーカスして左右キーを使います。</p><p>気に入った形で「とめる」を選んでください。時間だけが止まるので、続けて形を調整できます。「動かす」で止めた時刻から動き出します。「端末に従う」は、動きを減らす設定のとき自動再生を止めます。</p><p>入力位置の履歴復元はブラウザが行います。再読み込みは値を戻す操作ではありません。値を保存する機能はありません。</p></div></details>
         <details class="guide-section"><summary>形をつくる数式</summary><div class="guide-section-body"><div class="equations">@@MODEL_EQUATIONS@@</div><p>uは点の位置を0〜1で表した値、θ=2πu。kは反復、φは位相、Aは振幅、tは自動で進む時間です。kは再生速度ではありません。図の下の「時計の位置」は既定で1周24秒の自動時計（6/12/24/48/96秒から選択）を角度で示した値で、入力の位相φとは別です。時計の停止中はこの値も止まります。@@MODEL_NOTES@@</p><p>縦横を同じ倍率で描きます。波形も短辺を基準にするため、横長の画面いっぱいには引き伸ばしません。表示と描画は同じ丸め済みの値を使い、kは小数2桁、位相は1°、振幅は1%です。</p></div></details>
         <details class="guide-section model-reference" aria-labelledby="model-reference-title"><summary id="model-reference-title">モデル別の入力と式</summary><div class="guide-section-body"><p>描画の選択を変えずに、各モデルの入力の意味と式を読めます。u=i/(N−1)、θ=2πu、tは自動時計のラジアン値です。kは1.00〜8.00、位相の入力は0〜360°、振幅は25〜100%。</p>@@MODEL_REFERENCE@@</div></details>
         <details class="guide-section"><summary>CSSがしていること</summary><div class="guide-section-body"><p>HTMLのラジオボタンと<code>:has()</code>で状態を選び、scroll timelineで帯の位置を数値へ変えます。<code>@property</code>と三角関数が各点の座標を計算します。対応環境では<code>sibling-index()</code> / <code>sibling-count()</code>から点の順番を取得します。</p><p>アプリケーションの実行時コードはHTML / CSSのみ。音声・通信・外部フォントは使いません。開発用ツールはPython標準ライブラリのみです。</p><p>描画点数：@@DENSITIES@@。切り替えると別ページを開きます。入力と時間の保持は保証しません。</p></div></details>

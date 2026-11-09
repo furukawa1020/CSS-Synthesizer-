@@ -1,6 +1,4 @@
 """Native discrete controls share the existing labels, readouts, and engine."""
-SELECT_GROUPS = {"amplitude", "k", "phase"}
-
 CHOICES = {
     'phase': ('°', (0, 45, 90, 180, 270)),
     'k': ('', (1, 2, 3, 4, 6, 8)),
@@ -19,29 +17,19 @@ def quick_controls(state, selected=None):
     choices = [(f'quick-{key}-initial', initial, True)]
     choices.extend((f'quick-{key}-{value}', value, False) for value in values if value != initial)
     choices.sort(key=lambda choice: choice[1])
-    if key in SELECT_GROUPS:
-        options = []
-        for identifier, value, is_initial in choices:
-            label = f'{value:.2f}' if key == 'k' else f'{value:g}'
-            options.append(
-                f'<option id="{identifier}" value="{value:g}"'
-                + (' selected' if is_initial else '')
-                + f'>{label}{unit}</option>'
-            )
-        return (
-            f'<div class="quick-choices"><select id="quick-{key}-control" name="quick-{key}"'
-            f' form="quick-values" aria-labelledby="{key}-label" aria-describedby="{key}-help">'
-            + ''.join(options) + '</select></div>'
+    options = []
+    for identifier, value, is_initial in choices:
+        label = f'{value:.2f}' if key == 'k' else f'{value:g}'
+        options.append(
+            f'<option id="{identifier}" value="{value:g}"'
+            + (' selected' if is_initial else '')
+            + f'>{label}{unit}</option>'
         )
-    labels = []
-    for identifier, value, checked in choices:
-        number = f'{value:g}'
-        labels.append(
-            f'<label><input id="{identifier}" type="radio" form="quick-values" name="quick-{key}" value="{number}"'
-            + (' checked' if checked else '')
-            + f'><span>{number}{unit}</span></label>'
-        )
-    return f'<div class="quick-choices" role="group" aria-labelledby="{key}-label" aria-describedby="{key}-help">' + ''.join(labels) + '</div>'
+    return (
+        f'<div class="quick-choices"><select id="quick-{key}-control" name="quick-{key}"'
+        f' form="quick-values" aria-labelledby="{key}-label" aria-describedby="{key}-help">'
+        + ''.join(options) + '</select></div>'
+    )
 
 
 def input_modes():

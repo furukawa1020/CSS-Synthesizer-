@@ -103,3 +103,23 @@
 .lab[data-quick] .quick-reset { border:0; padding:6px 0; min-block-size:44px; text-decoration:underline; text-underline-offset:.25em; background:transparent; }
 @media (forced-colors:active) { .quick-choices select { background:Field; color:FieldText; border-color:ButtonText; } .quick-choices select:focus-visible { outline-color:Highlight; } }
 }
+
+@media screen {
+.work-options .explanation { border:0; margin-block-start:12px; }
+}
+
+@media screen {
+.lab[data-quick] .controls { flex-direction:row; }
+.lab:has(#input-basic:checked) .controls > .parameters { flex:0 1 auto; }
+.work-options { flex:0 1 auto; }
+.work-options[open] { flex-basis:100%; }
+}
+
+@media screen {
+.lab[data-quick] .first-try { display:none; }
+@media (min-height:700px) {
+ .lab[data-quick]:has(#input-scroll:checked) .workspace > .scene { position:sticky; inset-block-start:0; z-index:2; background:var(--paper); }
+ .lab[data-quick]:has(#input-scroll:checked) .workspace > .scene > .stage { block-size:200px; }
+ .lab[data-quick]:has(#input-scroll:checked) .play-next { margin-block:4px; }
+}
+}
