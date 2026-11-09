@@ -1,5 +1,5 @@
 """Native discrete controls share the existing labels, readouts, and engine."""
-SELECT_GROUPS = {"k", "phase"}
+SELECT_GROUPS = {"amplitude", "k", "phase"}
 
 CHOICES = {
     'phase': ('°', (0, 45, 90, 180, 270)),
