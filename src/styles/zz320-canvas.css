@@ -80,3 +80,20 @@
 .lab[data-quick]:has(#focus-view:checked) .drawing-model { display:none; }
 .lab[data-quick]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 150px)); }
 }
+
+@media screen {
+@media (max-width:900px) {
+ .lab[data-quick] .workspace > .scene { position:relative; inset:auto; padding:0; }
+ .lab[data-quick] .workspace > .scene > .stage { block-size:clamp(200px,40svh,380px); }
+ .lab[data-quick] .controls { gap:12px 16px; }
+ .lab:has(#input-basic:checked) .parameters { gap:12px 16px; }
+ .lab:has(#input-basic:checked) .parameter { min-inline-size:90px; }
+ .quick-choices select { min-inline-size:90px; }
+}
+@media (max-width:380px) {
+ .lab[data-quick] { padding-inline:12px; }
+ .lab:has(#input-basic:checked) .parameters { gap:12px; }
+ .lab:has(#input-basic:checked) .parameter { min-inline-size:80px; }
+ .quick-choices select { min-inline-size:80px; padding-inline:6px 20px; font-size:.875rem; }
+}
+}
