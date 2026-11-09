@@ -72,3 +72,11 @@
 .lab[data-quick] .play-heading { display:none; }
 .drawing-model { margin:8px 0 0; font-size:.8125rem; color:var(--muted); }
 }
+
+@media screen {
+.lab[data-quick] .scene-actions { min-block-size:44px; margin:0; display:inline-flex; }
+.lab[data-quick] .focus-toggle { min-block-size:44px; padding:0; font-size:.8125rem; }
+.lab[data-quick] .play-transport { justify-content:flex-start; }
+.lab[data-quick]:has(#focus-view:checked) .drawing-model { display:none; }
+.lab[data-quick]:has(#focus-view:checked) .workspace > .scene > .stage { block-size:max(240px,calc(100svh - 150px)); }
+}
