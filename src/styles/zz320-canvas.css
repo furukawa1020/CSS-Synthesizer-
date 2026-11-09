@@ -97,3 +97,9 @@
  .quick-choices select { min-inline-size:80px; padding-inline:6px 20px; font-size:.875rem; }
 }
 }
+
+@media screen {
+.quick-choices select:focus-visible { outline:3px solid #005fcc; outline-offset:3px; }
+.lab[data-quick] .quick-reset { border:0; padding:6px 0; min-block-size:44px; text-decoration:underline; text-underline-offset:.25em; background:transparent; }
+@media (forced-colors:active) { .quick-choices select { background:Field; color:FieldText; border-color:ButtonText; } .quick-choices select:focus-visible { outline-color:Highlight; } }
+}
