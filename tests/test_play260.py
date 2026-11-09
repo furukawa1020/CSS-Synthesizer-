@@ -56,7 +56,7 @@ class PlayTests(unittest.TestCase):
         self.assertIn('name="time" value="stop" checked', html)
         trial = html.split('class="first-try continuous-controls"', 1)[1].split('class="play-transport"', 1)[0]
         self.assertLess(html.index('class="stage"'), html.index('class="first-try'))
-        self.assertLess(html.index('class="first-try'), html.index('class="play-start"'))
+        self.assertLess(html.index('class="play-start"'), html.index('class="stage"'))
         parser = Links()
         parser.feed(html)
         self.assertIn('href="#tick-phase-0"', trial)
