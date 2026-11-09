@@ -16,8 +16,20 @@ class Inputs(HTMLParser):
         self.forms = []
         self.buttons = []
         self.select = None
+        self.details = []
+        self.band_parents = []
+        self.work_default = None
+        self.guide_parents = ()
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if tag == 'details':
+            self.details.append(a.get('class', ''))
+            if a.get('class') == 'work-options':
+                self.work_default = 'open' in a
+        if 'input-band' in a.get('class', '').split():
+            self.band_parents.append(tuple(self.details))
+        if a.get('id') == 'guide-start':
+            self.guide_parents = tuple(self.details)
         if 'id' in a:
             self.ids.append(a['id'])
         if tag == 'input':
@@ -35,6 +47,8 @@ class Inputs(HTMLParser):
             self.buttons.append(a)
 
     def handle_endtag(self, tag):
+        if tag == 'details':
+            self.details.pop()
         if tag == 'select':
             self.select = None
 
@@ -80,3 +94,26 @@ class QuickControlTests(unittest.TestCase):
         self.assertNotIn('checked', states['input-scroll'])
         self.assertEqual(states['time-zero']['name'], 'time')
         self.assertEqual(states['time-zero']['value'], 'zero')
+
+    def test_home_has_three_selects_with_one_default_option_each(self):
+        html = single_html(self.template, self.models, self.presets, 192, home=True)
+        self.assertEqual(html.count('<select '), 3)
+        self.assertNotIn('type="radio" form="quick-values"', html)
+        for key, value in (('k', 2), ('phase', 90), ('amplitude', 70)):
+            parser = Inputs()
+            parser.feed(html)
+            options = [a for a in parser.inputs if a.get('name') == 'quick-' + key]
+            defaults = [a for a in options if 'selected' in a]
+            self.assertEqual(len(defaults), 1)
+            self.assertEqual(float(defaults[0]['value']), value)
+
+    def test_home_keeps_bands_outside_the_single_settings_entry(self):
+        html = single_html(self.template, self.models, self.presets, 192, home=True)
+        parser = Inputs()
+        parser.feed(html)
+        self.assertEqual(parser.band_parents, [(), (), ()])
+        self.assertIs(parser.work_default, False)
+        self.assertIn('work-options', parser.guide_parents)
+        self.assertIn('explanation', parser.guide_parents)
+        self.assertIn('guide-section', parser.guide_parents)
+        self.assertIn('href="#guide-start"', html)
