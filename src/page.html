@@ -38,13 +38,14 @@
         @@FRAGMENT:print-summary@@
       </figure>
       <aside class="controls" id="controls" aria-label="模様の形を変える調整">
-        @@INPUT_MODES@@
         <p class="play-task">@@PLAY_TASK@@</p>
 
 
         
         @@FRAGMENT:parameters@@
         @@QUICK_CONTROLS@@
+        <details class="work-options" id="work-options"><summary>細かな調整</summary>
+        @@INPUT_MODES@@
         <details class="model-picker"><summary><span>形</span><span class="model-current">@@MODEL_NAMES@@</span></summary><fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset></details>
         <details class="more-tools"><summary>もっと形や見た目を変える</summary>
 
@@ -56,12 +57,6 @@
         @@FRAGMENT:view-settings@@
         @@FRAGMENT:presets@@
         </details>
-        <p class="baseline-only">@@BASELINE_LABEL@@</p>
-      </aside>
-    </div>
-    @@STARTER_BOTTOM@@
-    <!-- starter-source -->@@FRAGMENT:play-start@@<!-- /starter-source -->
-    @@FRAGMENT:dialog@@
     <details class="explanation" id="guide">
       <summary><span>使い方と仕組み</span><span class="summary-note">操作・数式・対応環境</span><span class="disclosure" aria-hidden="true">+</span></summary>
       <div class="guide-body">
@@ -74,6 +69,13 @@
         <details class="guide-section"><summary>対応環境と検証</summary><div class="guide-section-body"><p>現行Chrome / Edge向けです。必要なCSS構文を検出し、不足する場合は調整帯や描画を表示しません。構文への対応だけで動作を保証するものではありません。</p><p>数値はCSS生成テキストです。読み上げによる更新通知、実機タッチ、他ブラウザ、実OSの動きを減らす設定、一般端末での描画性能は検証が残っています。</p><p><a href="features.html">CSS機能の構文診断を見る</a></p><nav aria-label="実装と検証の参照"><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/src/engine.css">描画のソース ↗</a><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/batch40/README.md">数式の仕様 ↗</a><a href="https://github.com/furukawa1020/CSS-Synthesizer-/blob/main/docs/acceptance.md">検証状況 ↗</a></nav></div></details>
       </div>
     </details>
+        </details>
+        <p class="baseline-only">@@BASELINE_LABEL@@</p>
+      </aside>
+    </div>
+    @@STARTER_BOTTOM@@
+    <!-- starter-source -->@@FRAGMENT:play-start@@<!-- /starter-source -->
+    @@FRAGMENT:dialog@@
     <footer><span>HTML + CSS · 視覚の実験</span><a href="https://github.com/furukawa1020/CSS-Synthesizer-">ソースコード ↗</a></footer>
   </main>
 </body>

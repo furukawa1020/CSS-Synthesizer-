@@ -21,3 +21,10 @@
 .lab:has(#input-basic:checked) .parameter > p,
 .lab:has(#input-basic:checked) .parameter-help-trigger { display:none; }
 }
+
+@media screen {
+.work-options { flex:1 1 auto; min-inline-size:0; border:0; }
+.work-options > summary { min-block-size:44px; font-size:.875rem; text-decoration:underline; text-underline-offset:.25em; }
+.work-options[open] { flex-basis:100%; padding-block:12px; border-block-start:1px solid var(--rule); }
+.work-options .input-modes, .work-options .model-picker, .work-options .more-tools, .work-options .explanation { max-inline-size:760px; }
+}
