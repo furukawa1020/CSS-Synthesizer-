@@ -1,7 +1,7 @@
 """Finite two-signal visual synthesizer; Python only generates static HTML/CSS."""
 from html import escape
 
-GROUPS = {'a': [], 'b': [], 'output': [], 'extra': []}
+GROUPS = {'a': [('fa', 'A 周波数', [('1', '1 周期'), ('2', '2 周期'), ('3', '3 周期'), ('4', '4 周期'), ('6', '6 周期'), ('8', '8 周期')], '2', '--fa'), ], 'b': [], 'output': [], 'extra': []}
 MODES = [('sum', '重ねる')]
 TRANSPORT = ''
 RESET = ''
@@ -14,7 +14,7 @@ def control(key, title, choices, default, variable):
         f'{" selected" if value == default else ""}>{escape(label)}</option>'
         for i, (value, label) in enumerate(choices)
     )
-    return f'<label class="s-control">{escape(title)}<select name="{key}" aria-label="{escape(title)}">{options}</select></label>'
+    return f'<label class="s-control s-{key}">{escape(title)}<select name="{key}" aria-label="{escape(title)}">{options}</select></label>'
 
 
 def bindings():
