@@ -16,3 +16,8 @@
 @media screen {
 .lab:has(#input-basic:checked) .parameter .readout { display:none; }
 }
+
+@media screen {
+.lab:has(#input-basic:checked) .parameter > p,
+.lab:has(#input-basic:checked) .parameter-help-trigger { display:none; }
+}
