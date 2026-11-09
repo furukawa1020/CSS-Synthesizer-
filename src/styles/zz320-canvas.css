@@ -67,3 +67,8 @@
 .lab[data-quick] .workspace > .controls { border:0; padding:16px 0 0; }
 @media (forced-colors:none) { .lab[data-quick] .workspace > .scene > .stage { background:var(--paper); } }
 }
+
+@media screen {
+.lab[data-quick] .play-heading { display:none; }
+.drawing-model { margin:8px 0 0; font-size:.8125rem; color:var(--muted); }
+}
