@@ -48,3 +48,13 @@
 .lab[data-quick] .play-transport .choices label:hover { background:transparent; }
 .lab[data-quick] .choose-again { display:none; }
 }
+
+@media screen {
+.lab[data-quick] .play-start h2,
+.lab[data-quick] .play-steps,
+.lab[data-quick] .play-index-note,
+.lab[data-quick] .starter-art { display:none; }
+.lab[data-quick] .play-start { margin:0 0 12px; padding:0; border:0; }
+.lab[data-quick] .starter-links { display:flex; flex-wrap:wrap; gap:0 24px; margin:0; }
+.lab[data-quick] .starter-links a { display:inline-flex; flex-direction:row; min-block-size:44px; padding:6px 0; gap:0; border-block-end-width:1px; font-size:.875rem; font-weight:400; }
+}
