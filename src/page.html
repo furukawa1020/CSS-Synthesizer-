@@ -30,7 +30,7 @@
           <div class="stage-footnote" aria-hidden="true"><span>原点は中央</span><span>縦横等倍率</span></div>
         </div>
         @@FIRST_TRY@@
-        <div class="play-transport"><fieldset class="time-controls" aria-describedby="play-state"><legend>再生</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto"@@TIME_AUTO@@><span>端末に従う</span></label><label><input id="time-play" type="radio" name="time" value="play"@@TIME_PLAY@@><span>動かす</span></label><label><input id="time-stop" type="radio" name="time" value="stop"@@TIME_STOP@@><span>とめる</span></label>@@TIME_ZERO@@</div></fieldset><a class="edit-shape" href="#controls">形を変える ↓</a><a class="choose-again" href="#start">見本を選ぶ</a></div>
+        <div class="play-transport"><fieldset class="time-controls" aria-describedby="play-state"><legend>再生</legend><div class="choices"><label><input id="time-play" type="radio" name="time" value="play"@@TIME_PLAY@@><span>動かす</span></label><label><input id="time-stop" type="radio" name="time" value="stop"@@TIME_STOP@@><span>とめる</span></label>@@TIME_ZERO@@</div></fieldset><a class="edit-shape" href="#controls">形を変える ↓</a><a class="choose-again" href="#start">見本を選ぶ</a></div>
         @@FRAGMENT:play-next@@
         @@ZERO_STATUS@@
 
@@ -49,6 +49,7 @@
         <details class="model-picker"><summary><span>形</span><span class="model-current">@@MODEL_NAMES@@</span></summary><fieldset class="model-controls"><legend>形を選ぶ</legend><div class="choices">@@MODEL_CHOICES@@</div></fieldset></details>
         <details class="more-tools"><summary>もっと形や見た目を変える</summary>
 
+<fieldset class="device-time"><legend>端末の動きの設定</legend><div class="choices"><label><input id="time-auto" type="radio" name="time" value="auto"@@TIME_AUTO@@><span>端末に従う</span></label></div></fieldset>
         @@FRAGMENT:clock-options@@
         <div class="extra-readouts"><details class="scene-readouts"><summary>数値と時計を見る</summary><div><span class="time-status"><span class="auto-moving">自動再生中</span><span class="auto-still">端末設定により停止中</span><span class="explicit-moving">再生中</span><span class="explicit-still">時間停止中</span></span>@@FRAGMENT:clock-readout@@@@FRAGMENT:polar-legend@@</div>
         @@FRAGMENT:coordinate-summary@@

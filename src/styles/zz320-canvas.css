@@ -33,3 +33,7 @@
 .lab:has(#input-scroll:checked) .parameters { flex-basis:100%; }
 .lab[data-quick] .work-options .input-modes { margin-block-end:16px; }
 }
+
+@media screen {
+.device-time { margin-block:12px; max-inline-size:320px; }
+}
