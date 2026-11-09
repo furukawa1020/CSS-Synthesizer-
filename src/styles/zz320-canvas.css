@@ -28,3 +28,8 @@
 .work-options[open] { flex-basis:100%; padding-block:12px; border-block-start:1px solid var(--rule); }
 .work-options .input-modes, .work-options .model-picker, .work-options .more-tools, .work-options .explanation { max-inline-size:760px; }
 }
+
+@media screen {
+.lab:has(#input-scroll:checked) .parameters { flex-basis:100%; }
+.lab[data-quick] .work-options .input-modes { margin-block-end:16px; }
+}
