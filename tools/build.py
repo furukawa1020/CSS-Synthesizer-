@@ -8,6 +8,7 @@ import tempfile
 import uuid
 import sys
 from .source import expand_fragments, compose_css
+from .synth import synthesis_html, bindings
 from .models import load_models, model_tokens, model_styles
 from .presets import load_presets, preset_links
 from .quick_controls import quick_controls, input_modes
@@ -119,7 +120,7 @@ def _populate(root, destination):
     pages = [('index.html' if count == 192 else f'samples-{count}.html', count, None) for count in COUNTS]
     pages += [(preset['file'], 192, preset) for preset in presets]
     for filename, count, preset in pages:
-        html = single_html(template, models, presets, count, preset, home=filename == 'index.html')
+        html = synthesis_html() if filename == 'index.html' else single_html(template, models, presets, count, preset)
         (destination / filename).write_text(html, encoding='utf-8')
     for count in GALLERY_COUNTS:
         (destination / gallery_filename(count)).write_text(gallery_html(presets, models, count), encoding='utf-8')
@@ -143,6 +144,7 @@ def _populate(root, destination):
             css += '\n' + gallery_styles(models) + '\n' + model_styles(models) + '\n' + comparison_styles(models)
         else:
             validate_engine_models(models, css)
+            css += "\n" + bindings()
         (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')
 
 

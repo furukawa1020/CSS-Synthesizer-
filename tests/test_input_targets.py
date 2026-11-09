@@ -48,7 +48,7 @@ class InputTargetTests(unittest.TestCase):
         cls.directory = build(root)
 
     def check_group(self, prefix, labels):
-        for page in ('index.html', 'samples-96.html', 'preset-weave.html'):
+        for page in ('samples-96.html', 'preset-weave.html'):
             parser = Targets()
             parser.feed((self.directory / page).read_text())
             actual = {key: value for key, value in parser.links.items() if key.startswith(prefix)}
