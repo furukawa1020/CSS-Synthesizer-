@@ -37,3 +37,14 @@
 @media screen {
 .device-time { margin-block:12px; max-inline-size:320px; }
 }
+
+@media screen {
+.lab[data-quick] .play-transport { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; margin-block-start:12px; }
+.lab[data-quick] .play-transport .time-controls { min-inline-size:0; flex:0 1 auto; }
+.lab[data-quick] .play-transport .time-controls legend { display:none; }
+.lab[data-quick] .play-transport .choices { display:flex; gap:0 16px; border:0; }
+.lab[data-quick] .play-transport .choices label { flex:none; padding:6px 0; min-block-size:44px; border:0; font-size:.875rem; }
+.lab[data-quick] .play-transport .choices label:has(:checked) { background:transparent; color:var(--ink); text-decoration:underline; text-underline-offset:.35em; }
+.lab[data-quick] .play-transport .choices label:hover { background:transparent; }
+.lab[data-quick] .choose-again { display:none; }
+}
