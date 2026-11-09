@@ -62,6 +62,7 @@ class QuickControlTests(unittest.TestCase):
                     self.assertEqual(float(selected[0]['value']), preset[key])
                     self.assertEqual(len({a['value'] for a in group}), len(group))
                 self.assertTrue(any(a.get('type') == 'reset' for a in parser.buttons))
+                self.assertTrue(all(a.get('form') == 'quick-values' for a in parser.inputs if a.get('name', '').startswith('quick-')))
     def test_legacy_exports_keep_exact_inputs_and_three_time_options(self):
         html = render_scene(dict(version=1, model='rose', k=2.37, phase=17, amplitude=73))
         self.assertNotIn('id="quick-values"', html)

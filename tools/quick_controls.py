@@ -10,7 +10,7 @@ CHOICES = {
 
 def quick_controls(state, selected=None):
     if selected is None:
-        return '<form id="quick-values" class="quick-values-form" aria-label="開始値へ戻す"><button type="reset" class="quick-reset">3つの数値を戻す</button></form>'
+        return '<form id="quick-values" class="quick-values-form" aria-label="開始値へ戻す"><button type="reset" class="quick-reset">数値を戻す</button></form>'
     if selected not in CHOICES:
         return ''
     key = selected
