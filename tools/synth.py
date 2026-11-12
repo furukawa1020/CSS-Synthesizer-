@@ -13,9 +13,17 @@ PATCHES = {
 }
 
 WAVES = (('sine', 'サイン波'), ('triangle', '三角波'), ('square', '矩形波'), ('saw', 'のこぎり波'))
-CYCLES = tuple((str(n), f'{n}周期') for n in range(1, 9))
-PHASES = tuple((f'{n}deg', f'{n}°') for n in (0, 90, 180, 270))
-LEVELS = tuple((str(n / 100), f'{n}%') for n in (0, 25, 50, 75, 100))
+CYCLES = tuple((f'{n / 2:g}', f'{n / 2:g}周期') for n in range(2, 17))
+PHASES = tuple((f'{n}deg', f'{n}°') for n in range(0, 360, 15))
+LEVELS = tuple((str(n / 8), f'{n * 12.5:g}%') for n in range(9))
+DUTIES = (('90deg', '25%'), ('180deg', '50%'), ('270deg', '75%'))
+POLARITIES = (('1', '正'), ('-1', '反転'))
+
+WAVE_FIELDS = (
+    ('wave', '波の種類', WAVES), ('cycles', '周期数', CYCLES),
+    ('phase', '位相', PHASES), ('level', '振幅', LEVELS),
+    ('polarity', '極性', POLARITIES), ('duty', 'パルス幅', DUTIES),
+)
 MIX = (
     ('sum', '平均', '(A + B) / 2'),
     ('difference', '差分', '(A − B) / 2'),
@@ -30,7 +38,8 @@ VIEWS = (
 )
 DEFAULTS = {'a-cycles': '2', 'b-cycles': '3', 'mix': 'sum', 'view': 'wave',
             'a-phase': '0deg', 'b-phase': '0deg', 'a-level': '1.0', 'b-level': '1.0',
-            'a-wave': 'sine', 'b-wave': 'sine'}
+            'a-wave': 'sine', 'b-wave': 'sine',
+            'a-polarity': '1', 'b-polarity': '1', 'a-duty': '180deg', 'b-duty': '180deg'}
 
 
 def select(key, label, options, values, *, prefix=''):
@@ -45,18 +54,20 @@ def select(key, label, options, values, *, prefix=''):
 
 def wave_controls(key, values):
     title = f'波{key.upper()}'
-    controls = ''.join(select(f'{key}-{name}', label, options, values, prefix=f'{title}の')
-                       for name, label, options in (
-                           ('wave', '波の種類', WAVES), ('cycles', '周期数', CYCLES),
-                           ('phase', '位相', PHASES), ('level', '振幅', LEVELS),
-                       ))
-    return f'<fieldset class="s-wave s-wave-{key}"><legend>{title}</legend>{controls}</fieldset>'
+    core = ''.join(select(f'{key}-{name}', label, options, values, prefix=f'{title}の')
+                   for name, label, options in WAVE_FIELDS[:4])
+    polarity = select(f'{key}-polarity', '極性', POLARITIES, values, prefix=f'{title}の')
+    duty = select(f'{key}-duty', 'パルス幅', DUTIES, values, prefix=f'{title}の')
+    details = (f'<details class="s-advanced"><summary>{title}の詳細</summary>'
+               f'{polarity}<div class="s-pulse-control">{duty}</div></details>')
+    return f'<fieldset class="s-wave s-wave-{key}"><legend>{title}</legend>{core}{details}</fieldset>'
+
 
 
 def synth_bindings():
     lines = []
     for key in ('a', 'b'):
-        for name, options in (('cycles', CYCLES), ('phase', PHASES), ('level', LEVELS)):
+        for name, _, options in WAVE_FIELDS[1:]:
             for value, _ in options:
                 lines.append(f'.synth:has(#s-{key}-{name} option[value="{value}"]:checked)'
                              f' {{--s-{key}-{name}: {value};}}')
