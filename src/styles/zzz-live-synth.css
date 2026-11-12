@@ -177,3 +177,15 @@
 .s-pulse-control { display: none; }
 .s-wave-a:has(#s-a-wave option[value="square"]:checked) .s-pulse-control,
 .s-wave-b:has(#s-b-wave option[value="square"]:checked) .s-pulse-control { display: block; }
+
+.s-equations [data-shape],
+.s-equations [data-shape="clip"],
+.s-balance-control,
+.s-depth-control,
+.s-radius-control { display: none; }
+.s-equations .s-shape-note { color: var(--s-out-ink); }
+.synth:has(#s-shape option[value="clip"]:checked) .s-equations [data-shape="clip"],
+.synth:has(#s-view option[value="xy"]:checked) .s-shape-note { display: none; }
+.synth:has(#s-mix option[value="sum"]:checked) .s-balance-control,
+.synth:has(#s-mix option:is([value="amplitude"], [value="phase"]):checked) .s-depth-control,
+.synth:has(#s-view option[value="polar"]:checked) .s-radius-control { display: block; }

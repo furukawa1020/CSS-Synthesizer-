@@ -23,7 +23,7 @@
       <figure class="s-figure" aria-labelledby="s-result">
         <figcaption class="s-caption">
           <h2 id="s-result">描画結果</h2>
-          <div class="s-equations"><span class="s-mix-equation">@@MIX_EQUATION@@</span> @@VIEW_EQUATION@@</div>
+          <div class="s-equations"><span class="s-mix-equation">@@MIX_EQUATION@@</span> @@VIEW_EQUATION@@ <span class="s-shape-note">@@SHAPE_EQUATION@@</span></div>
         </figcaption>
         <div class="s-stage" aria-hidden="true"><div class="s-plot" style="--s-intervals:@@SAMPLE_INTERVALS@@">@@TRACES@@</div></div>
       </figure>
@@ -45,7 +45,17 @@
         <fieldset class="s-output">
           <legend>出力</legend>
           @@VIEW@@
-          <div class="s-mix-control">@@MIX@@</div>
+          <div class="s-mix-control">
+            @@MIX@@
+            <div class="s-balance-control">@@BALANCE@@</div>
+            <div class="s-depth-control">@@DEPTH@@</div>
+            <details class="s-advanced">
+              <summary>出力の詳細</summary>
+              @@GAIN@@
+              @@SHAPE@@
+              <div class="s-radius-control">@@RADIUS@@</div>
+            </details>
+          </div>
           <p class="s-xy-note">XYでは波Aと波Bをそのまま縦横へ送ります。</p>
         </fieldset>
         @@WAVE_A@@
@@ -56,7 +66,9 @@
       <summary>波と合成の仕組み</summary>
       <p>周期数は画面左から右までに波が何回繰り返すか、位相は波の開始位置、振幅は波の大きさです。元の波を表示すると、合成波と同じ横位置で比べられます。</p>
       <p>「再生」で波Aと波Bの位相が12秒かけてそれぞれ1周、2周します。「一時停止」中も波を編集できます。「先頭」は波の設定を保ったまま時刻だけを戻します。</p>
-      <p>輪郭では半径を「0.63 + 0.29 × 合成波」とし、円に沿って描きます。描画は192点です。見本を開くと、その見本の開始値になります。</p>
+      <p>加算ミックスの b はBの比率、変調の d は深さです。矩形波のパルス幅は一周期のうち正になる割合です。極性を反転すると波全体の正負が入れ替わります。</p>
+      <p>出力ゲインは合成後に掛かります。飽和は±1で頭打ちにし、全波整流は飽和後に負の値を正に移します。折り返しでは±1を越えた部分を内側へ戻します。XYでは二つの入力を直接描きます。</p>
+      <p>輪郭は基準半径に加工後の出力を足し引きして描きます。半周期刻みなど、始点と終点の波の値が異なる設定では輪郭が開きます。見本を開くと、その見本の開始値になります。</p>
     </details>
     <footer class="s-footer">
       <a href="gallery.html">曲線ギャラリー</a>

@@ -26,7 +26,10 @@
   --s-a-render-angle: var(--s-a-angle);
   --s-a-unit: sin(var(--s-a-render-angle));
   --s-a: calc(var(--s-a-unit) * var(--s-a-level) * var(--s-a-polarity));
-  --s-result: calc((var(--s-a) + var(--s-b)) / 2);
+  --s-mixed: calc((1 - var(--s-balance)) * var(--s-a) + var(--s-balance) * var(--s-b));
+  --s-driven: calc(var(--s-mixed) * var(--s-gain));
+  --s-clipped: clamp(-1, var(--s-driven), 1);
+  --s-result: var(--s-clipped);
   --s-x: calc(2 * var(--s-u) - 1);
   --s-y: var(--s-result);
   left: calc(50% + var(--s-x) * 46%);
@@ -55,17 +58,31 @@
 }
 
 .synth:has(#s-mix option[value="difference"]:checked) .s-trace-out .s-dot {
-  --s-result: calc((var(--s-a) - var(--s-b)) / 2);
+  --s-mixed: calc((var(--s-a) - var(--s-b)) / 2);
 }
 .synth:has(#s-mix option[value="product"]:checked) .s-trace-out .s-dot {
-  --s-result: calc(var(--s-a) * var(--s-b));
+  --s-mixed: calc(var(--s-a) * var(--s-b));
 }
 .synth:has(#s-mix option[value="amplitude"]:checked) .s-trace-out .s-dot {
-  --s-result: calc(var(--s-a) * (1 + var(--s-b)) / 2);
+  --s-mixed: calc(var(--s-a) * (1 + var(--s-depth) * var(--s-b)) / (1 + var(--s-depth)));
 }
 .synth:has(#s-mix option[value="phase"]:checked):not(:has(#s-view option[value="xy"]:checked)) .s-trace-out .s-dot {
-  --s-a-render-angle: calc(var(--s-a-angle) + 90deg * var(--s-b));
-  --s-result: var(--s-a);
+  --s-a-render-angle: calc(var(--s-a-angle) + 90deg * var(--s-depth) * var(--s-b));
+  --s-mixed: var(--s-a);
+}
+
+.synth:has(#s-mix option[value="solo-a"]:checked) .s-trace-out .s-dot {
+  --s-mixed: var(--s-a);
+}
+.synth:has(#s-mix option[value="solo-b"]:checked) .s-trace-out .s-dot {
+  --s-mixed: var(--s-b);
+}
+
+.synth:has(#s-shape option[value="rectify"]:checked) .s-trace-out .s-dot {
+  --s-result: abs(var(--s-clipped));
+}
+.synth:has(#s-shape option[value="fold"]:checked) .s-trace-out .s-dot {
+  --s-result: calc(1 - abs(mod(var(--s-driven) + 1, 4) - 2));
 }
 
 .synth .s-trace-a .s-dot { --s-y: var(--s-a); }
@@ -76,7 +93,7 @@
   --s-y: var(--s-b);
 }
 .synth:has(#s-view option[value="polar"]:checked) .s-trace-out .s-dot {
-  --s-radius: calc(0.63 + 0.29 * var(--s-result));
-  --s-x: calc(var(--s-radius) * cos(var(--s-turn)));
-  --s-y: calc(var(--s-radius) * sin(var(--s-turn)));
+  --s-r: calc(var(--s-radius) + min(0.29, 0.96 - var(--s-radius)) * var(--s-result));
+  --s-x: calc(var(--s-r) * cos(var(--s-turn)));
+  --s-y: calc(var(--s-r) * sin(var(--s-turn)));
 }
