@@ -17,6 +17,7 @@ from .gallery import gallery_html, static_model_selectors, gallery_styles, GALLE
 from .comparison import comparison_html, comparison_styles, COMPARISON_COUNTS, comparison_filename
 from .features import features_html
 from .model_engines import validate_engine_models
+from .synth import PATCHES, synth_bindings, synth_html
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS = (96, 192, 384)
@@ -94,7 +95,7 @@ def single_html(template, models, presets, count, preset=None, *, home=False):
         '@@AMPLITUDE_STOPS@@': stops(range(25, 101, 5), state['amplitude'], lambda value: f'{value}%', target_prefix='tick-amplitude'),
         '@@DENSITIES@@': ' / '.join(
             f'<strong aria-current="page">{value}点</strong>' if value == count
-            else f'<a href="{"index.html" if value == 192 else f"samples-{value}.html"}">{value}点</a>'
+            else f'<a href="samples-{value}.html">{value}点</a>'
             for value in COUNTS
         ),
     }
@@ -116,11 +117,14 @@ def _populate(root, destination):
     models = load_models(root / 'src')
     presets = load_presets(root / 'src', {model['id'] for model in models})
     destination.mkdir()
-    pages = [('index.html' if count == 192 else f'samples-{count}.html', count, None) for count in COUNTS]
+    pages = [(f'samples-{count}.html', count, None) for count in COUNTS]
     pages += [(preset['file'], 192, preset) for preset in presets]
     for filename, count, preset in pages:
-        html = single_html(template, models, presets, count, preset, home=filename == 'index.html')
+        html = single_html(template, models, presets, count, preset, home=filename == 'samples-192.html')
         (destination / filename).write_text(html, encoding='utf-8')
+    synth_template = (root / 'src/synth.html').read_text(encoding='utf-8')
+    for filename in PATCHES:
+        (destination / filename).write_text(synth_html(synth_template, filename), encoding='utf-8')
     for count in GALLERY_COUNTS:
         (destination / gallery_filename(count)).write_text(gallery_html(presets, models, count), encoding='utf-8')
     comparison = expand_fragments((root / 'src/compare.html').read_text(encoding='utf-8'), root / 'src')
@@ -140,7 +144,7 @@ def _populate(root, destination):
     for name in ('style.css', 'engine.css'):
         css = compose_css(root / 'src', name)
         if name == 'style.css':
-            css += '\n' + gallery_styles(models) + '\n' + model_styles(models) + '\n' + comparison_styles(models)
+            css += '\n' + gallery_styles(models) + '\n' + model_styles(models) + '\n' + comparison_styles(models) + '\n' + synth_bindings()
         else:
             validate_engine_models(models, css)
         (destination / name).write_text(static_model_selectors(css, models), encoding='utf-8')

@@ -44,7 +44,7 @@ def load_presets(source, model_ids=None):
 
 
 def preset_links(presets, selected=None):
-    links = ['<a href="index.html">標準の画面<span>192点・自動再生</span></a>']
+    links = ['<a href="samples-192.html">曲線エディター<span>192点・停止状態</span></a>']
     for preset in presets:
         current = ' aria-current="page"' if selected and preset['file'] == selected['file'] else ''
         links.append(

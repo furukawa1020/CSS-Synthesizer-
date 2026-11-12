@@ -16,7 +16,7 @@ from .json_data import load_json
 
 MAX_ARCHIVE_BYTES = 16 * 1024 * 1024
 MAX_MEMBER_BYTES = 2 * 1024 * 1024
-MAX_TOTAL_BYTES = 8 * 1024 * 1024
+MAX_TOTAL_BYTES = 9 * 1024 * 1024
 
 
 def _digest(data):

@@ -60,7 +60,7 @@ class PresetTests(unittest.TestCase):
                     self.assertEqual(float(parser.values['--amplitude-raw']), preset['amplitude'] / 100)
                     self.assertTrue(audit_html(html, 192)['ok'])
             standard = InitialStateParser()
-            standard.feed((output / 'index.html').read_text())
+            standard.feed((output / 'samples-192.html').read_text())
             self.assertEqual(standard.checked, {'model': 'lissajous', 'time': 'stop'})
             self.assertCountEqual(standard.initials, ['2.00', '90°', '70%'])
 
@@ -122,4 +122,4 @@ class PresetTests(unittest.TestCase):
         self.assertNotIn('<script>', links)
         self.assertIn('&lt;script&gt;', links)
         self.assertEqual(links.count('aria-current="page"'), 1)
-        self.assertIn('href="index.html"', links)
+        self.assertIn('href="samples-192.html"', links)
