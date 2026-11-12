@@ -25,21 +25,36 @@ WAVE_FIELDS = (
     ('polarity', '極性', POLARITIES), ('duty', 'パルス幅', DUTIES),
 )
 MIX = (
-    ('sum', '平均', '(A + B) / 2'),
+    ('sum', '加算ミックス', 'A × (1 − b) + B × b'),
     ('difference', '差分', '(A − B) / 2'),
     ('product', '掛け算', 'A × B'),
-    ('amplitude', '振幅変調', 'A × (1 + B) / 2'),
-    ('phase', '位相変調', 'Aの位相に 90° × B を足す'),
+    ('amplitude', '振幅変調', 'A × (1 + d × B) / (1 + d)'),
+    ('phase', '位相変調', 'Aの位相に 90° × d × B を足す'),
+    ('solo-a', '波Aだけ', '波Aを出力へ送る'),
+    ('solo-b', '波Bだけ', '波Bを出力へ送る'),
 )
 VIEWS = (
     ('wave', '波形', '横 = 波の進み · 縦 = 合成波'),
     ('xy', 'XY軌道', '横 = 波A · 縦 = 波B'),
     ('polar', '輪郭', '角度 = 波の進み · 半径 = 合成波'),
 )
+BALANCES = tuple((str(n / 4), f'A {100 - 25 * n}% ／ B {25 * n}%') for n in range(5))
+DEPTHS = tuple((str(n / 4), f'{n * 25}%') for n in range(5))
+GAINS = (('0.5', '50%'), ('1', '100%'), ('1.25', '125%'), ('1.5', '150%'), ('2', '200%'))
+SHAPES = (('clip', '±1で飽和', '飽和'), ('rectify', '全波整流', '全波整流'),
+          ('fold', '折り返し', '折り返し'))
+RADII = (('0.4', '小'), ('0.63', '中'), ('0.72', '大'))
+
+OUTPUT_NUMBERS = (
+    ('balance', 'AとBの比率', BALANCES), ('depth', '変調の深さ', DEPTHS),
+    ('gain', '出力ゲイン', GAINS), ('radius', '基準半径', RADII),
+)
+
 DEFAULTS = {'a-cycles': '2', 'b-cycles': '3', 'mix': 'sum', 'view': 'wave',
             'a-phase': '0deg', 'b-phase': '0deg', 'a-level': '1.0', 'b-level': '1.0',
             'a-wave': 'sine', 'b-wave': 'sine',
-            'a-polarity': '1', 'b-polarity': '1', 'a-duty': '180deg', 'b-duty': '180deg'}
+            'a-polarity': '1', 'b-polarity': '1', 'a-duty': '180deg', 'b-duty': '180deg',
+            'balance': '0.5', 'depth': '1.0', 'gain': '1', 'shape': 'clip', 'radius': '0.63'}
 
 
 def select(key, label, options, values, *, prefix=''):
@@ -65,13 +80,14 @@ def wave_controls(key, values):
 
 
 def synth_bindings():
-    lines = []
-    for key in ('a', 'b'):
-        for name, _, options in WAVE_FIELDS[1:]:
-            for value, _ in options:
-                lines.append(f'.synth:has(#s-{key}-{name} option[value="{value}"]:checked)'
-                             f' {{--s-{key}-{name}: {value};}}')
-    for group, options in (('mix', MIX), ('view', VIEWS)):
+    numeric_fields = [(f'{key}-{name}', options) for key in ('a', 'b')
+                      for name, _, options in WAVE_FIELDS[1:]]
+    numeric_fields.extend((name, options) for name, _, options in OUTPUT_NUMBERS)
+    lines = [
+        f'.synth:has(#s-{key} option[value="{value}"]:checked) {{--s-{key}: {value};}}'
+        for key, options in numeric_fields for value, _ in options
+    ]
+    for group, options in (('mix', MIX), ('view', VIEWS), ('shape', SHAPES)):
         for value, _, _ in options:
             lines.append(f'.synth:has(#s-{group} option[value="{value}"]:checked)'
                          f' [data-{group}="{value}"] {{display: inline;}}')
@@ -103,6 +119,9 @@ def synth_html(template, filename):
         'SAMPLE_INTERVALS': str(SAMPLE_COUNT - 1),
         'TRACES': ''.join(trace(channel) for channel in ('a', 'b', 'out')),
         'MIX': select('mix', '混ぜ方', MIX, values),
+        **{key.upper(): select(key, label, options, values) for key, label, options in OUTPUT_NUMBERS},
+        'SHAPE': select('shape', '出力の加工', SHAPES, values),
+        'SHAPE_EQUATION': equations('shape', SHAPES),
         'VIEW': select('view', '描き方', VIEWS, values),
         'WAVE_A': wave_controls('a', values),
         'WAVE_B': wave_controls('b', values),
