@@ -174,6 +174,12 @@
   min-block-size: 2.75rem;
   cursor: pointer;
 }
+.s-advanced summary::after {
+  content: "＋";
+  float: inline-end;
+  margin-inline: .4em;
+}
+.s-advanced[open] summary::after { content: "−"; }
 .s-pulse-control { display: none; }
 .s-wave-a:has(#s-a-wave option[value="square"]:checked) .s-pulse-control,
 .s-wave-b:has(#s-b-wave option[value="square"]:checked) .s-pulse-control { display: block; }
@@ -189,3 +195,44 @@
 .synth:has(#s-mix option[value="sum"]:checked) .s-balance-control,
 .synth:has(#s-mix option:is([value="amplitude"], [value="phase"]):checked) .s-depth-control,
 .synth:has(#s-view option[value="polar"]:checked) .s-radius-control { display: block; }
+
+.s-clock-readout {
+  font-variant-numeric: tabular-nums;
+  min-inline-size: 6.5ch;
+  counter-reset: s-tick round(down, calc(mod(var(--s-time), 360deg) / 1deg), 1);
+}
+.s-clock-readout::after { content: counter(s-tick) "°"; }
+.s-caption .s-equations { margin-inline-start: auto; }
+.synth:not(:has(#s-grid:checked)) .s-plot { background-image: none; }
+.s-timing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  padding-block: .3rem;
+  border-bottom: 1px solid var(--s-rule);
+}
+.s-timing .s-control { grid-template-columns: auto minmax(4.8rem, 1fr); }
+.s-manual-control { display: none; }
+.synth:has(#s-manual:checked) .s-manual-control { display: block; }
+
+@media print {
+  .s-body, .synth, .s-stage { background: #fff; color: #111; }
+  .synth { --s-out-ink: #111; max-inline-size: none; padding: 0; }
+  .synth .s-form { animation-play-state: paused !important; }
+  .synth .s-caption { background: #fff; color: #111; border-color: #777; }
+  .s-skip, .s-header a, .s-patches, .s-instruction, .s-actions, .s-guide, .s-footer { display: none; }
+  .s-figure { position: static; break-inside: avoid; }
+  .s-stage { border: 1px solid #777; }
+  .synth .s-plot { background-image: none; }
+  .s-dot { background: none; border: 1px solid currentColor; }
+  .s-trace-a { color: #94432e; }
+  .s-trace-b { color: #28558e; }
+  .s-timing, .s-controls { break-inside: avoid; }
+  .synth .s-control select {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    min-block-size: auto;
+  }
+  .s-advanced::details-content { content-visibility: visible; }
+}
