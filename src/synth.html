@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="二つの波を調整し、合成波・XY軌道・輪郭を作るHTMLとCSSの視覚シンセサイザー。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>CSS Synthesizer — 波を合成する</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="engine.css">
+</head>
+<body class="s-body">
+  <a class="s-skip" href="#s-controls">調整へ移動</a>
+  <main class="synth">
+    <header class="s-header">
+      <h1>CSS Synthesizer</h1>
+      <a href="samples-192.html">曲線エディター</a>
+    </header>
+    <nav class="s-patches" aria-label="合成の見本"><span>見本</span> @@PATCH_LINKS@@</nav>
+    <p class="s-instruction">@@INSTRUCTION@@</p>
+    <p class="s-unsupported">波の描画に必要なCSSに対応していません。最新のChromeまたはEdgeで開いてください。</p>
+    <form class="s-form">
+      <figure class="s-figure" aria-labelledby="s-result">
+        <figcaption class="s-caption">
+          <h2 id="s-result">描画結果</h2>
+          <div class="s-equations"><span class="s-mix-equation">@@MIX_EQUATION@@</span> @@VIEW_EQUATION@@</div>
+        </figcaption>
+        <div class="s-stage" aria-hidden="true"><div class="s-plot" style="--s-intervals:@@SAMPLE_INTERVALS@@">@@TRACES@@</div></div>
+      </figure>
+      <div class="s-actions">
+        <fieldset class="s-transport">
+          <legend>時間</legend>
+          <label><input type="radio" name="transport" id="s-zero" checked> 先頭</label>
+          <label><input type="radio" name="transport" id="s-play"> 再生</label>
+          <label><input type="radio" name="transport" id="s-pause"> 一時停止</label>
+        </fieldset>
+        <fieldset class="s-trace-options">
+          <legend>元の波を表示</legend>
+          <label class="s-trace-key-a"><input type="checkbox" id="s-trace-a"> 波A</label>
+          <label class="s-trace-key-b"><input type="checkbox" id="s-trace-b"> 波B</label>
+        </fieldset>
+        <button type="reset">見本の設定に戻す</button>
+      </div>
+      <div class="s-controls" id="s-controls">
+        <fieldset class="s-output">
+          <legend>出力</legend>
+          @@VIEW@@
+          <div class="s-mix-control">@@MIX@@</div>
+          <p class="s-xy-note">XYでは波Aと波Bをそのまま縦横へ送ります。</p>
+        </fieldset>
+        @@WAVE_A@@
+        @@WAVE_B@@
+      </div>
+    </form>
+    <details class="s-guide">
+      <summary>波と合成の仕組み</summary>
+      <p>周期数は画面左から右までに波が何回繰り返すか、位相は波の開始位置、振幅は波の大きさです。元の波を表示すると、合成波と同じ横位置で比べられます。</p>
+      <p>「再生」で波Aと波Bの位相が12秒かけてそれぞれ1周、2周します。「一時停止」中も波を編集できます。「先頭」は波の設定を保ったまま時刻だけを戻します。</p>
+      <p>輪郭では半径を「0.63 + 0.29 × 合成波」とし、円に沿って描きます。描画は192点です。見本を開くと、その見本の開始値になります。</p>
+    </details>
+    <footer class="s-footer">
+      <a href="gallery.html">曲線ギャラリー</a>
+      <a href="compare.html">曲線の比較</a>
+      <a href="https://github.com/furukawa1020/CSS-Synthesizer-">ソースコード</a>
+    </footer>
+  </main>
+</body>
+</html>

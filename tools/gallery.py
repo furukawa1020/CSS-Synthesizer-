@@ -50,10 +50,10 @@ def gallery_html(presets, models, count=96):
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
 <title>形の一覧 — CSS 視覚シンセサイザー</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="engine.css"></head>
-<body class="gallery-page"><a class="skip-link" href="#gallery-index">形の索引へ進む</a><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">標準の画面へ ↗</a></header>
+<body class="gallery-page"><a class="skip-link" href="#gallery-index">形の索引へ進む</a><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="samples-192.html">標準の画面へ ↗</a></header>
 <main class="gallery-main"><h1>遊ぶ形を選ぶ</h1><details class="gallery-about"><summary>この一覧について</summary><p class="gallery-intro">静止した初期状態を比較できます。図は96点、開いた画面は192点です。すべて時計 t = 0 で停止して始まります。縦横を同じ倍率で描いています。</p>
 <p class="gallery-intro">別ページへ移動するため、現在の調整値や時間の保持は保証しません。操作状態を保存する一覧ではありません。</p><p class="gallery-intro">図を隠しても点のHTMLは残ります。性能向上を保証する操作ではありません。</p></details>
-''' + filters + totals + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="index.html">標準の画面へ戻る</a></footer></body></html>
+''' + filters + totals + '<fieldset class="gallery-layout"><legend>一覧の表示</legend><div class="view-choices"><label><input id="gallery-figures" type="radio" name="gallery-layout" checked><span>図と値</span></label><label><input id="gallery-values" type="radio" name="gallery-layout"><span>値だけ</span></label></div></fieldset>' + '''<ol class="gallery-list">''' + '\n'.join(rows) + '''</ol></main><footer class="gallery-main"><span>HTML + CSS · 視覚の実験</span><a href="samples-192.html">標準の画面へ戻る</a></footer></body></html>
 '''
     result = result.replace('図は96点', f'図は{count}点').replace('<p>96点・', f'<p>{count}点・')
     navigation = '<nav class="gallery-density" aria-label="一覧の図ごとの点数">各図の点数 ' + ' / '.join(f'<strong aria-current="page">{n}点</strong>' if n == count else f'<a href="{gallery_filename(n)}">{n}点</a>' for n in GALLERY_COUNTS) + '</nav>'

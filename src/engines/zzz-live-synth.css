@@ -1,0 +1,80 @@
+@property --s-clock {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes synth-clock {
+  from { --s-clock: 0deg; }
+  to { --s-clock: 360deg; }
+}
+
+.synth .s-plot {
+  animation: synth-clock 12s linear infinite paused;
+}
+
+.synth:has(#s-play:checked) .s-plot { animation-play-state: running; }
+.synth:has(#s-zero:checked) .s-plot { animation-name: none; }
+
+.synth .s-dot {
+  --s-u: calc(var(--s-i) / var(--s-intervals));
+  --s-turn: calc(var(--s-u) * 360deg);
+  --s-a-angle: calc(var(--s-turn) * var(--s-a-cycles) + var(--s-a-phase) + var(--s-clock));
+  --s-b-angle: calc(var(--s-turn) * var(--s-b-cycles) + var(--s-b-phase) + 2 * var(--s-clock));
+  --s-b-unit: sin(var(--s-b-angle));
+  --s-b: calc(var(--s-b-unit) * var(--s-b-level));
+  --s-a-render-angle: var(--s-a-angle);
+  --s-a-unit: sin(var(--s-a-render-angle));
+  --s-a: calc(var(--s-a-unit) * var(--s-a-level));
+  --s-result: calc((var(--s-a) + var(--s-b)) / 2);
+  --s-x: calc(2 * var(--s-u) - 1);
+  --s-y: var(--s-result);
+  left: calc(50% + var(--s-x) * 46%);
+  top: calc(50% - var(--s-y) * 46%);
+}
+
+.synth:has(#s-a-wave option[value="triangle"]:checked) .s-dot {
+  --s-a-unit: calc(asin(sin(var(--s-a-render-angle))) / 90deg);
+}
+.synth:has(#s-b-wave option[value="triangle"]:checked) .s-dot {
+  --s-b-unit: calc(asin(sin(var(--s-b-angle))) / 90deg);
+}
+.synth:has(#s-a-wave option[value="square"]:checked) .s-dot {
+  --s-a-unit: sign(sin(var(--s-a-render-angle)));
+}
+.synth:has(#s-b-wave option[value="square"]:checked) .s-dot {
+  --s-b-unit: sign(sin(var(--s-b-angle)));
+}
+.synth:has(#s-a-wave option[value="saw"]:checked) .s-dot {
+  --s-a-unit: calc(mod(var(--s-a-render-angle), 360deg) / 180deg - 1);
+}
+.synth:has(#s-b-wave option[value="saw"]:checked) .s-dot {
+  --s-b-unit: calc(mod(var(--s-b-angle), 360deg) / 180deg - 1);
+}
+
+.synth:has(#s-mix option[value="difference"]:checked) .s-trace-out .s-dot {
+  --s-result: calc((var(--s-a) - var(--s-b)) / 2);
+}
+.synth:has(#s-mix option[value="product"]:checked) .s-trace-out .s-dot {
+  --s-result: calc(var(--s-a) * var(--s-b));
+}
+.synth:has(#s-mix option[value="amplitude"]:checked) .s-trace-out .s-dot {
+  --s-result: calc(var(--s-a) * (1 + var(--s-b)) / 2);
+}
+.synth:has(#s-mix option[value="phase"]:checked):not(:has(#s-view option[value="xy"]:checked)) .s-trace-out .s-dot {
+  --s-a-render-angle: calc(var(--s-a-angle) + 90deg * var(--s-b));
+  --s-result: var(--s-a);
+}
+
+.synth .s-trace-a .s-dot { --s-y: var(--s-a); }
+.synth .s-trace-b .s-dot { --s-y: var(--s-b); }
+
+.synth:has(#s-view option[value="xy"]:checked) .s-trace-out .s-dot {
+  --s-x: var(--s-a);
+  --s-y: var(--s-b);
+}
+.synth:has(#s-view option[value="polar"]:checked) .s-trace-out .s-dot {
+  --s-radius: calc(0.63 + 0.29 * var(--s-result));
+  --s-x: calc(var(--s-radius) * cos(var(--s-turn)));
+  --s-y: calc(var(--s-radius) * sin(var(--s-turn)));
+}

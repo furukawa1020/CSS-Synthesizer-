@@ -40,7 +40,7 @@ def features_html():
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'none'; object-src 'none'; base-uri 'none'">
 <title>CSS機能の構文診断 — CSS 視覚シンセサイザー</title><link rel="stylesheet" href="style.css"><style>''' + '\n'.join(rules) + '''</style></head>
-<body class="features-page"><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="index.html">描画画面へ</a></header>
+<body class="features-page"><header class="page-header"><h1>CSS 視覚シンセサイザー</h1><a class="guide-link" href="samples-192.html">描画画面へ</a></header>
 <main class="features-main"><h1>CSS機能の構文診断</h1>
 <p>このページの「構文対応」は、ブラウザが実際の<code>@supports</code>条件を受理した結果です。JavaScriptは使いません。</p>
 <p>構文を受理することと、入力・描画・フォーカス・性能が正しく動くことは別です。この表だけで動作を保証しません。「構文未対応」でも代替表示がある機能があります。組み合わせで必要な条件は描画画面の案内も確認してください。</p>
@@ -52,6 +52,6 @@ def features_html():
 <div><dt>@counter-styleの桁埋め</dt><dd>要手動確認。3桁に埋める表示例：<output class="feature-pad" aria-label="カウンターの3桁表示例"></output>。000ならこの例のpad指定が反映されています。位相の換算値の正しさは別途照合します。</dd></div>
 <div><dt>MathML</dt><dd>要手動確認。平方根の例<math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>4</mn></msqrt><mo>=</mo><mn>2</mn></math>を表示します。数式の配置と読み上げは別々に確認します。</dd></div>
 <div><dt>入力・読み上げ・性能</dt><dd>要手動確認。タッチ、キーボード、値の読み上げ、実OS設定、実端末での描画性能は構文の表では測れません。</dd></div></dl>
-<p><a href="index.html">描画画面で操作する</a> · <a href="https://github.com/furukawa1020/CSS-Synthesizer-/issues/3">残る実機検証</a></p></section>
-</main><footer class="features-main"><span>HTML + CSS · 構文診断</span><a href="index.html">描画画面へ戻る</a></footer></body></html>
+<p><a href="samples-192.html">描画画面で操作する</a> · <a href="https://github.com/furukawa1020/CSS-Synthesizer-/issues/3">残る実機検証</a></p></section>
+</main><footer class="features-main"><span>HTML + CSS · 構文診断</span><a href="samples-192.html">描画画面へ戻る</a></footer></body></html>
 '''

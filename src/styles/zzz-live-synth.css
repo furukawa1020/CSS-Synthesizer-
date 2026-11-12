@@ -1,0 +1,159 @@
+.s-body {
+  margin: 0;
+  background: #f7f6ef;
+  color: #171a16;
+  font: 1rem/1.45 system-ui, sans-serif;
+}
+.synth {
+  --s-a-ink: #a83e25;
+  --s-b-ink: #274f9c;
+  --s-out-ink: #d8f88a;
+  --s-paper: #f7f6ef;
+  --s-rule: #b6b6aa;
+  max-inline-size: 76rem;
+  padding: 0 clamp(.8rem, 3vw, 2.5rem) 1.5rem;
+  margin-inline: auto;
+  color-scheme: light;
+}
+.synth a { color: inherit; text-underline-offset: .23em; }
+.synth :focus-visible, .s-skip:focus-visible { outline: 3px solid #2558aa; outline-offset: 3px; }
+.s-skip:not(:focus) { position: absolute; clip-path: inset(50%); }
+.s-header, .s-patches, .s-actions, .s-caption, .s-footer {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .4rem 1.25rem;
+}
+.s-header {
+  justify-content: space-between;
+  padding-block: .65rem;
+  border-bottom: 1px solid currentColor;
+}
+.s-header h1 { margin: 0; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 680; letter-spacing: -.045em; }
+.s-patches { align-items: center; gap: .1rem .45rem; margin-top: .4rem; }
+.s-patches a { display: inline-flex; align-items: center; min-block-size: 2.75rem; padding-inline: .45rem; }
+.s-patches a[aria-current="page"] { font-weight: 750; text-decoration-thickness: .18em; }
+.s-instruction { margin: 0 0 .5rem; }
+.s-figure { margin: 0; }
+.s-caption { justify-content: space-between; border-bottom: 1px solid #50574e; padding: .45rem .75rem; background: #1a211e; color: #f4f5eb; }
+.s-caption h2 { font-size: 1rem; margin: 0; }
+.s-equations { font-size: .9rem; }
+.s-equations [data-mix], .s-equations [data-view] { display: none; }
+.s-mix-equation { margin-inline-end: .7em; color: var(--s-out-ink); }
+.s-stage {
+  display: grid;
+  place-items: center;
+  background: #151c19;
+  color-scheme: dark;
+  block-size: clamp(12rem, 45svh, 32rem);
+  overflow: hidden;
+}
+.s-plot {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  background-image: linear-gradient(90deg, transparent calc(50% - .5px), #79837a calc(50% - .5px), #79837a calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(transparent calc(50% - .5px), #79837a calc(50% - .5px), #79837a calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(90deg, #333d36 1px, transparent 1px),
+    linear-gradient(#333d36 1px, transparent 1px);
+  background-size: auto, auto, 10% 25%, 10% 25%;
+}
+.s-trace { position: absolute; inset: 0; color: var(--s-out-ink); }
+.s-trace-a, .s-trace-b { display: none; }
+.s-trace-a { color: #ff997c; }
+.s-trace-b { color: #9cb9ff; }
+.synth:has(#s-view option[value="wave"]:checked):has(#s-trace-a:checked) .s-trace-a,
+.synth:has(#s-view option[value="wave"]:checked):has(#s-trace-b:checked) .s-trace-b { display: block; }
+.s-dot {
+  position: absolute;
+  inline-size: 2px;
+  block-size: 2px;
+  border-radius: 50%;
+  background: currentColor;
+  translate: -50% -50%;
+}
+.s-trace-out .s-dot { inline-size: 4px; block-size: 4px; }
+.synth:not(:has(#s-view option[value="wave"]:checked)) .s-plot {
+  inline-size: min(100%, clamp(12rem, 45svh, 32rem));
+  block-size: auto;
+  aspect-ratio: 1;
+}
+.s-actions {
+  align-items: center;
+  min-block-size: 3.25rem;
+  border-bottom: 1px solid currentColor;
+  padding-block: .2rem;
+}
+.synth fieldset { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+.synth legend { padding: 0; font-weight: 720; }
+.s-actions fieldset { display: flex; flex-wrap: wrap; gap: .15rem .7rem; }
+.s-actions legend { float: inline-start; margin: .7rem .65rem 0 0; }
+.s-actions label { display: inline-flex; align-items: center; gap: .25rem; min-block-size: 2.75rem; cursor: pointer; }
+.s-actions input { margin: 0; accent-color: #294a34; }
+.s-actions button {
+  margin-inline-start: auto;
+  padding: .25rem .55rem;
+  min-block-size: 2.75rem;
+  border: 1px solid var(--s-rule);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.s-trace-key-a, .s-wave-a legend { color: var(--s-a-ink); }
+.s-trace-key-b, .s-wave-b legend { color: var(--s-b-ink); }
+.s-controls {
+  display: grid;
+  grid-template-columns: minmax(10rem, .75fr) repeat(2, minmax(0, 1fr));
+  gap: .65rem 1.4rem;
+  margin-top: .6rem;
+}
+.s-controls fieldset { padding-top: .35rem; }
+.s-control {
+  display: grid;
+  grid-template-columns: minmax(4rem, .7fr) minmax(0, 1fr);
+  align-items: center;
+  gap: .35rem;
+  min-block-size: 2.9rem;
+}
+.s-control select {
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 2.75rem;
+  padding-inline: .35rem;
+  font: inherit;
+  background: var(--s-paper);
+  color: inherit;
+  border: 1px solid var(--s-rule);
+  border-radius: 0;
+}
+.s-xy-note { display: none; margin: .4rem 0; font-size: .9rem; }
+.synth:has(#s-view option[value="xy"]:checked) :is(.s-mix-control, .s-mix-equation) { display: none; }
+.synth:has(#s-view option[value="xy"]:checked) .s-xy-note { display: block; }
+.synth:not(:has(#s-view option[value="wave"]:checked)) .s-trace-options { display: none; }
+.s-guide, .s-footer { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--s-rule); }
+.s-guide summary { cursor: pointer; }
+.s-guide p { max-inline-size: 56ch; }
+.s-unsupported { display: none; }
+@supports not (selector(main:has(option:checked)) and (left: calc(1px * sin(1deg))) and (left: calc(1px * mod(30deg, 360deg) / 180deg))) {
+  .synth .s-unsupported { display: block; }
+  .synth .s-form { display: none; }
+}
+@media (max-width: 48rem) {
+  .s-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .s-output { grid-column: 1 / -1; }
+  .synth .s-output { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem .8rem; }
+  .s-xy-note { grid-column: 1 / -1; }
+  .s-actions button { margin-inline-start: 0; }
+}
+@media (max-width: 28rem) {
+  .s-control { grid-template-columns: 1fr; margin-bottom: .35rem; }
+  .s-actions { gap: .2rem .65rem; }
+  .s-caption { gap: .2rem .6rem; }
+}
+@media (forced-colors: active) {
+  .s-stage { border: 1px solid CanvasText; }
+  .s-dot { forced-color-adjust: none; background: CanvasText; }
+  .s-trace-a .s-dot { background: LinkText; }
+  .s-trace-b .s-dot { background: GrayText; }
+}
