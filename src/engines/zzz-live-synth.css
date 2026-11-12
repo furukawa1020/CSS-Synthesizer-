@@ -9,18 +9,20 @@
   to { --s-clock: 360deg; }
 }
 
-.synth .s-plot {
-  animation: synth-clock 12s linear infinite paused;
+.synth .s-form {
+  animation: synth-clock var(--s-duration) linear infinite paused;
+  --s-time: var(--s-clock);
 }
 
-.synth:has(#s-play:checked) .s-plot { animation-play-state: running; }
-.synth:has(#s-zero:checked) .s-plot { animation-name: none; }
+.synth:has(#s-play:checked) .s-form { animation-play-state: running; }
+.synth:has(#s-zero:checked) .s-form { animation-name: none; }
+.synth:has(#s-manual:checked) .s-form { --s-time: var(--s-position); }
 
 .synth .s-dot {
   --s-u: calc(var(--s-i) / var(--s-intervals));
   --s-turn: calc(var(--s-u) * 360deg);
-  --s-a-angle: calc(var(--s-turn) * var(--s-a-cycles) + var(--s-a-phase) + var(--s-clock));
-  --s-b-angle: calc(var(--s-turn) * var(--s-b-cycles) + var(--s-b-phase) + 2 * var(--s-clock));
+  --s-a-angle: calc(var(--s-turn) * var(--s-a-cycles) + var(--s-a-phase) + var(--s-time));
+  --s-b-angle: calc(var(--s-turn) * var(--s-b-cycles) + var(--s-b-phase) + 2 * var(--s-time));
   --s-b-unit: sin(var(--s-b-angle));
   --s-b: calc(var(--s-b-unit) * var(--s-b-level) * var(--s-b-polarity));
   --s-a-render-angle: var(--s-a-angle);

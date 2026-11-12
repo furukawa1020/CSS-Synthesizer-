@@ -24,7 +24,7 @@ python3 -m tools.package
 | ファイル | 役割 |
 | --- | --- |
 | `index.html` | 二信号の合成を始める制作画面 |
-| `synth-*.html` | 相殺・XYの円・輪郭の編集可能な見本 |
+| `synth-*.html` | 相殺・XYの円・輪郭・パルス変調・折り返しの編集可能な見本 |
 | `samples-96.html`・`samples-192.html`・`samples-384.html` | 従来の曲線エディター |
 | `preset-*.html`・`gallery*.html` | 従来の曲線の停止例と一覧 |
 | `compare*.html` | 共有した入力と時計で曲線を比較 |

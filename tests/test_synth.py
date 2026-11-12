@@ -46,4 +46,15 @@ class SynthTests(unittest.TestCase):
                 self.assertEqual(markup.current, [filename])
                 self.assertEqual(markup.trace_points, 3 * SAMPLE_COUNT)
                 self.assertIn(('input', 's-zero', 'radio', True), markup.controls)
+                self.assertIn(('input', 's-manual', 'radio', False), markup.controls)
+                self.assertIn(('input', 's-grid', 'checkbox', True), markup.controls)
                 self.assertIn(('button', None, 'reset', False), markup.controls)
+
+
+    def test_effect_presets_set_only_the_intended_defaults(self):
+        _, pulse, _ = PATCHES['synth-pulse.html']
+        _, fold, _ = PATCHES['synth-fold.html']
+        self.assertEqual((pulse['mix'], pulse['b-wave'], pulse['b-duty']),
+                         ('amplitude', 'square', '90deg'))
+        self.assertEqual((fold['view'], fold['mix'], fold['shape'], fold['gain']),
+                         ('polar', 'solo-a', 'fold', '2'))

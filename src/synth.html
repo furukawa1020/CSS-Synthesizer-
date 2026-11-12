@@ -23,6 +23,7 @@
       <figure class="s-figure" aria-labelledby="s-result">
         <figcaption class="s-caption">
           <h2 id="s-result">描画結果</h2>
+          <span class="s-clock-readout" aria-hidden="true">時刻 </span>
           <div class="s-equations"><span class="s-mix-equation">@@MIX_EQUATION@@</span> @@VIEW_EQUATION@@ <span class="s-shape-note">@@SHAPE_EQUATION@@</span></div>
         </figcaption>
         <div class="s-stage" aria-hidden="true"><div class="s-plot" style="--s-intervals:@@SAMPLE_INTERVALS@@">@@TRACES@@</div></div>
@@ -33,13 +34,19 @@
           <label><input type="radio" name="transport" id="s-zero" checked> 先頭</label>
           <label><input type="radio" name="transport" id="s-play"> 再生</label>
           <label><input type="radio" name="transport" id="s-pause"> 一時停止</label>
+          <label><input type="radio" name="transport" id="s-manual"> 手動</label>
         </fieldset>
         <fieldset class="s-trace-options">
           <legend>元の波を表示</legend>
           <label class="s-trace-key-a"><input type="checkbox" id="s-trace-a"> 波A</label>
           <label class="s-trace-key-b"><input type="checkbox" id="s-trace-b"> 波B</label>
         </fieldset>
+        <label><input type="checkbox" id="s-grid" checked> 方眼</label>
         <button type="reset">見本の設定に戻す</button>
+      </div>
+      <div class="s-timing">
+        @@DURATION@@
+        <div class="s-manual-control">@@POSITION@@</div>
       </div>
       <div class="s-controls" id="s-controls">
         <fieldset class="s-output">
@@ -65,9 +72,10 @@
     <details class="s-guide">
       <summary>波と合成の仕組み</summary>
       <p>周期数は画面左から右までに波が何回繰り返すか、位相は波の開始位置、振幅は波の大きさです。元の波を表示すると、合成波と同じ横位置で比べられます。</p>
-      <p>「再生」で波Aと波Bの位相が12秒かけてそれぞれ1周、2周します。「一時停止」中も波を編集できます。「先頭」は波の設定を保ったまま時刻だけを戻します。</p>
+      <p>時計1周で波Aと波Bの位相はそれぞれ1周、2周します。再生の1周を変えると時計位置が移ることがあります。「手動」で角度を指定でき、「再生」に戻すと元の時計を継続します。「先頭」は波の設定を保ったまま時刻を0°に戻します。</p>
       <p>加算ミックスの b はBの比率、変調の d は深さです。矩形波のパルス幅は一周期のうち正になる割合です。極性を反転すると波全体の正負が入れ替わります。</p>
       <p>出力ゲインは合成後に掛かります。飽和は±1で頭打ちにし、全波整流は飽和後に負の値を正に移します。折り返しでは±1を越えた部分を内側へ戻します。XYでは二つの入力を直接描きます。</p>
+      <p>図を残すときはブラウザの「印刷」から紙やPDFにできます。</p>
       <p>輪郭は基準半径に加工後の出力を足し引きして描きます。半周期刻みなど、始点と終点の波の値が異なる設定では輪郭が開きます。見本を開くと、その見本の開始値になります。</p>
     </details>
     <footer class="s-footer">
