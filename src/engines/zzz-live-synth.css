@@ -22,10 +22,10 @@
   --s-a-angle: calc(var(--s-turn) * var(--s-a-cycles) + var(--s-a-phase) + var(--s-clock));
   --s-b-angle: calc(var(--s-turn) * var(--s-b-cycles) + var(--s-b-phase) + 2 * var(--s-clock));
   --s-b-unit: sin(var(--s-b-angle));
-  --s-b: calc(var(--s-b-unit) * var(--s-b-level));
+  --s-b: calc(var(--s-b-unit) * var(--s-b-level) * var(--s-b-polarity));
   --s-a-render-angle: var(--s-a-angle);
   --s-a-unit: sin(var(--s-a-render-angle));
-  --s-a: calc(var(--s-a-unit) * var(--s-a-level));
+  --s-a: calc(var(--s-a-unit) * var(--s-a-level) * var(--s-a-polarity));
   --s-result: calc((var(--s-a) + var(--s-b)) / 2);
   --s-x: calc(2 * var(--s-u) - 1);
   --s-y: var(--s-result);
@@ -40,10 +40,12 @@
   --s-b-unit: calc(asin(sin(var(--s-b-angle))) / 90deg);
 }
 .synth:has(#s-a-wave option[value="square"]:checked) .s-dot {
-  --s-a-unit: sign(sin(var(--s-a-render-angle)));
+  --s-a-pulse-phase: mod(var(--s-a-render-angle), 360deg);
+  --s-a-unit: sign(min(var(--s-a-pulse-phase), var(--s-a-duty) - var(--s-a-pulse-phase)));
 }
 .synth:has(#s-b-wave option[value="square"]:checked) .s-dot {
-  --s-b-unit: sign(sin(var(--s-b-angle)));
+  --s-b-pulse-phase: mod(var(--s-b-angle), 360deg);
+  --s-b-unit: sign(min(var(--s-b-pulse-phase), var(--s-b-duty) - var(--s-b-pulse-phase)));
 }
 .synth:has(#s-a-wave option[value="saw"]:checked) .s-dot {
   --s-a-unit: calc(mod(var(--s-a-render-angle), 360deg) / 180deg - 1);

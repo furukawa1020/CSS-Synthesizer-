@@ -167,3 +167,13 @@
   .s-trace-a .s-dot { background: LinkText; }
   .s-trace-b .s-dot { background: GrayText; }
 }
+
+.s-advanced { margin-top: .45rem; border-top: 1px solid var(--s-rule); }
+.s-advanced summary {
+  align-content: center;
+  min-block-size: 2.75rem;
+  cursor: pointer;
+}
+.s-pulse-control { display: none; }
+.s-wave-a:has(#s-a-wave option[value="square"]:checked) .s-pulse-control,
+.s-wave-b:has(#s-b-wave option[value="square"]:checked) .s-pulse-control { display: block; }
