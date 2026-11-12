@@ -10,6 +10,7 @@
   --s-out-ink: #d8f88a;
   --s-paper: #f7f6ef;
   --s-rule: #b6b6aa;
+  --s-stage-size: clamp(12rem, 45svh, 32rem);
   max-inline-size: 76rem;
   padding: 0 clamp(.8rem, 3vw, 2.5rem) 1.5rem;
   margin-inline: auto;
@@ -45,7 +46,7 @@
   place-items: center;
   background: #151c19;
   color-scheme: dark;
-  block-size: clamp(12rem, 45svh, 32rem);
+  block-size: var(--s-stage-size);
   overflow: hidden;
 }
 .s-plot {
@@ -74,7 +75,7 @@
 }
 .s-trace-out .s-dot { inline-size: 4px; block-size: 4px; }
 .synth:not(:has(#s-view option[value="wave"]:checked)) .s-plot {
-  inline-size: min(100%, clamp(12rem, 45svh, 32rem));
+  inline-size: min(100%, var(--s-stage-size));
   block-size: auto;
   aspect-ratio: 1;
 }
@@ -150,6 +151,15 @@
   .s-control { grid-template-columns: 1fr; margin-bottom: .35rem; }
   .s-actions { gap: .2rem .65rem; }
   .s-caption { gap: .2rem .6rem; }
+}
+@media (max-width: 36rem) and (min-height: 32rem) {
+  html:has(.s-body) { scroll-padding-block-start: 15rem; }
+  .synth { --s-stage-size: clamp(9rem, 27svh, 12rem); }
+  .s-figure {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+  }
 }
 @media (forced-colors: active) {
   .s-stage { border: 1px solid CanvasText; }
